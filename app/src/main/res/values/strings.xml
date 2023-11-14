@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">UCI_CaCx</string>
+    <string name="uci_cacx">UCI CaCx</string>
+    <string name="app_sub_title">App that helps in data collection during the screening of cervical cancer</string>
+</resources>
