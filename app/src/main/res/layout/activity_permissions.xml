@@ -38,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_text"
                 android:textColor="@color/black"
-                android:fontFamily="@font/sora_regular"
-                android:textSize="@dimen/small"
+                android:fontFamily="@font/sora_light"
+                android:textSize="@dimen/smaller"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:layout_marginBottom="10dp"/>

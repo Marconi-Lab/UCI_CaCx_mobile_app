@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/uci_cacx"
         android:textColor="@color/white"
-        android:fontFamily="@font/sans"
+        android:fontFamily="@font/sora_semi_bold"
         android:textSize="30sp"/>
 
     <TextView
@@ -30,7 +30,7 @@
         android:text="@string/app_sub_title"
         android:gravity="center"
         android:textColor="@color/white"
-        android:fontFamily="@font/sans_light"
+        android:fontFamily="@font/sora_regular"
         android:textSize="@dimen/smallest"/>
 
 

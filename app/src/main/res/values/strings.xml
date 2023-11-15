@@ -10,4 +10,14 @@
     <string name="permissions_request">Permissions\' Request</string>
     <string name="permission_text">You are required to allow a few permissions for easy use of the app</string>
     <string name="allow_permissions">Allow Permissions</string>
+    <string name="welcome_cx">Welcome to UCI Cervical Cancer Screening app</string>
+    <string name="what_you_can_do">What you can do</string>
+    <string name="screen_patient">Screen Patient</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="patient_s_identification">Patient\'s Identification - 1</string>
+    <string name="patient_s_identification_2">Patient\'s Identification - 2</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="identification_category">Identification Category</string>
 </resources>

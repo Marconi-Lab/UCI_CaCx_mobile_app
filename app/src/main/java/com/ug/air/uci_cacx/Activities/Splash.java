@@ -25,14 +25,14 @@ public class Splash extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        startSplashTimeout(3000);
+        startSplashTimeout(4000);
     }
 
     private void startSplashTimeout(int timeout) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, Login.class));
+                startActivity(new Intent(Splash.this, Home.class));
             }
         }, timeout);
     }
