@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.ug.air.uci_cacx.Fragments.Contraceptives;
 import com.ug.air.uci_cacx.Fragments.Identification;
 import com.ug.air.uci_cacx.R;
 
@@ -22,7 +23,8 @@ public class Screening extends AppCompatActivity {
         setContentView(R.layout.activity_screening);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, new Identification());
+//        fragmentTransaction.add(R.id.fragment_container, new Identification());
+        fragmentTransaction.add(R.id.fragment_container, new Contraceptives());
         fragmentTransaction.commit();
     }
 }

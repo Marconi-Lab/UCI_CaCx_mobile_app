@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Residence">
+    tools:context=".Fragments.Parity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Patient's Place of Residence"
+            android:text="Risk Factor Information - 4"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,22 +47,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="District *"
+                    android:text="Parity *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
                 <EditText
-                    android:id="@+id/district"
-                    android:layout_width="match_parent"
+                    android:id="@+id/parity"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:autofillHints="emailAddress"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
@@ -71,22 +70,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sub County *"
+                    android:text="Age at sexual debut *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
                 <EditText
-                    android:id="@+id/sub_county"
-                    android:layout_width="match_parent"
+                    android:id="@+id/age"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
@@ -95,50 +94,27 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Parish *"
+                    android:text="Number of sexual partners *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
                 <EditText
-                    android:id="@+id/parish"
-                    android:layout_width="match_parent"
+                    android:id="@+id/partners"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
                     android:paddingBottom="18dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Village *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-                <EditText
-                    android:id="@+id/village"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/primary_edit_text"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/small"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp"/>
 
             </LinearLayout>
 
@@ -177,6 +153,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
 
 </LinearLayout>

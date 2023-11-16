@@ -45,8 +45,6 @@ public class Contact_2 extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_contact_2, container, false);
 
-        view = inflater.inflate(R.layout.fragment_category, container, false);
-
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -88,6 +86,7 @@ public class Contact_2 extends Fragment {
                 else {
                     linearLayout.setVisibility(View.GONE);
                 }
+                editText.setText("");
             }
         });
 

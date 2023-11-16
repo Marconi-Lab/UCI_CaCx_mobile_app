@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Residence">
+    tools:context=".Fragments.Origin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Patient's Place of Residence"
+            android:text="Patient's Place of Origin"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 

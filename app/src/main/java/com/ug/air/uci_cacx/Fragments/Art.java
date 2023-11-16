@@ -4,6 +4,7 @@ import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.text.Edits;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,13 +18,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
-public class Category extends Fragment {
+
+public class Art extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
@@ -31,18 +32,17 @@ public class Category extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    TextView textView;
-    EditText editText;
-    String radio_button, nin_number, text;
-    public static  final String CATEGORY ="category";
-    public static  final String NIN ="category_nin";
-    public static  final String NIN_TEXT ="category_nin_title";
+    EditText editText_regimen, editText_years;
+    String art, years, regimen;
+    public static  final String ART ="on_ART";
+    public static  final String LONG ="years_on_ART";
+    public static  final String REGIMEN ="art_regimen";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_category, container, false);
+        view = inflater.inflate(R.layout.fragment_art, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -50,28 +50,26 @@ public class Category extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        radioGroup = view.findViewById(R.id.radioGroup);
+        radioGroup = view.findViewById(R.id.radioGroup_1);
+        editText_regimen = view.findViewById(R.id.regimen);
+        editText_years = view.findViewById(R.id.years);
         linearLayout = view.findViewById(R.id.nin_layout);
-        textView = view.findViewById(R.id.nin_name);
-        editText = view.findViewById(R.id.nin_number);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                radio_button = selectedRadioButton.getText().toString();
+                art = selectedRadioButton.getText().toString();
 
                 linearLayout.setVisibility(View.VISIBLE);
-                if (radio_button.equals("National")) {
-                    textView.setText("National Identification Number");
-                }
-                else if (radio_button.equals("Refugee")) {
-                    textView.setText("Refugee Number");
+                if (art.equals("Yes")) {
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    textView.setText("Passport Number");
+                    linearLayout.setVisibility(View.GONE);
+                    editText_regimen.setText("");
+                    editText_years.setText("");
                 }
-                editText.setText("");
             }
         });
 
@@ -82,7 +80,7 @@ public class Category extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Height());
+                fr.replace(R.id.fragment_container, new Hiv_status());
                 fr.commit();
             }
         });
@@ -90,9 +88,13 @@ public class Category extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nin_number = editText.getText().toString().trim();
+                regimen = editText_regimen.getText().toString().trim();
+                years = editText_years.getText().toString().trim();
 
-                if (nin_number.isEmpty() || radio_button.isEmpty()) {
+                if (art.isEmpty()){
+                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else if(art.equals("Yes") && (regimen.isEmpty() || years.isEmpty())){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -105,32 +107,32 @@ public class Category extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(CATEGORY, radio_button);
-        editor.putString(NIN, nin_number);
-        editor.putString(NIN_TEXT, textView.getText().toString());
+        editor.putString(ART, art);
+        editor.putString(REGIMEN, regimen);
+        editor.putString(LONG, years);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Contact_1());
+        fr.replace(R.id.fragment_container, new Parity());
         fr.addToBackStack(null);
         fr.commit();
     }
 
-    private void load_data() {
-        text = sharedPreferences.getString(NIN_TEXT, "");
-        radio_button = sharedPreferences.getString(CATEGORY, "");
-        nin_number = sharedPreferences.getString(NIN, "");
+    public void load_data(){
+        art = sharedPreferences.getString(ART, "");
+        regimen = sharedPreferences.getString(REGIMEN, "");
+        years = sharedPreferences.getString(LONG, "");
     }
 
-    private void update_views() {
+    private void update_views(){
+        if (!art.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, art);
 
-        if (!radio_button.isEmpty()){
-            linearLayout.setVisibility(View.VISIBLE);
-            textView.setText(text);
-            editText.setText(nin_number);
-            FunctionalUtils.setRadioButton(radioGroup, radio_button);
+            if (art.equals("Yes")){
+                linearLayout.setVisibility(View.VISIBLE);
+                editText_years.setText(years);
+                editText_regimen.setText(regimen);
+            }
         }
     }
-
-
 }
