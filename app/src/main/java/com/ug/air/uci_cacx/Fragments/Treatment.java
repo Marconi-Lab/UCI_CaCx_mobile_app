@@ -13,29 +13,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
+import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
-public class Contact_1 extends Fragment {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+public class Treatment extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
+    LinearLayout linearLayout;
     Button next_btn, back_btn;
-    EditText editText_tribe, editText_language, editText_contact, editText_alternative;
-    String tribe, language, contact, alternative;
-    public static  final String TRIBE ="tribe";
-    public static  final String LANGUAGE ="preferred_language";
-    public static  final String CONTACT ="contact";
-    public static  final String ALTERNATIVE ="alternative_contact";
+    String treatment;
+    public static  final String TREATMENT ="treatment";
+    List<String> checkBoxList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_contact_1, container, false);
+        view = inflater.inflate(R.layout.fragment_treatment, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -43,18 +51,33 @@ public class Contact_1 extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        editText_tribe = view.findViewById(R.id.tribe);
-        editText_language = view.findViewById(R.id.language);
-        editText_contact = view.findViewById(R.id.contact);
-        editText_alternative = view.findViewById(R.id.alternative);
+        linearLayout = view.findViewById(R.id.nin_layout);
 
-        update_views();
+        load_data();
+
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            if (linearLayout.getChildAt(i) instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
+                String value = checkBox.getText().toString();
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        if (isChecked){
+                            checkBoxList.add(value);
+                        }
+                        else {
+                            checkBoxList.remove(value);
+                        }
+                    }
+                });
+            }
+        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Category());
+                fr.replace(R.id.fragment_container, new Screening_2());
                 fr.commit();
             }
         });
@@ -62,12 +85,9 @@ public class Contact_1 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tribe = editText_tribe.getText().toString().trim();
-                language = editText_language.getText().toString().trim();
-                contact = editText_contact.getText().toString().trim();
-                alternative = editText_alternative.getText().toString().trim();
+                treatment = FunctionalUtils.convertListToString(checkBoxList);
 
-                if (tribe.isEmpty() || language.isEmpty() || contact.isEmpty()){
+                if (treatment.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -76,26 +96,25 @@ public class Contact_1 extends Fragment {
             }
         });
 
+
         return view;
     }
 
     private void save_data() {
-        editor.putString(TRIBE, tribe);
-        editor.putString(LANGUAGE, language);
-        editor.putString(CONTACT, contact);
-        editor.putString(ALTERNATIVE, alternative);
+        editor.putString(TREATMENT, treatment);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Contact_2());
+        fr.replace(R.id.fragment_container, new Visit());
         fr.addToBackStack(null);
         fr.commit();
     }
 
-    private void update_views() {
-        editText_tribe.setText(sharedPreferences.getString(TRIBE, ""));
-        editText_language.setText(sharedPreferences.getString(LANGUAGE, ""));
-        editText_contact.setText(sharedPreferences.getString(CONTACT, ""));
-        editText_alternative.setText(sharedPreferences.getString(ALTERNATIVE, ""));
+    private void load_data(){
+        treatment = sharedPreferences.getString(TREATMENT, "");
+
+        checkBoxList.clear();
+        checkBoxList = Arrays.asList(treatment.split(", "));
+        FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
     }
 }

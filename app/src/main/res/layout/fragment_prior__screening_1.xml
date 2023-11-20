@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Tobacco">
+    tools:context=".Fragments.Prior_Screening_1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Risk Factor Information - 1"
+            android:text="Screening behavior - 1"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,13 +47,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tobacco Use *"
+                    android:text="Prior Cacx Screening  *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_1"
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
@@ -64,8 +64,7 @@
                         android:text="Yes"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
+                        android:textColor="@color/black"/>
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -78,6 +77,53 @@
                 </RadioGroup>
 
                 <LinearLayout
+                    android:id="@+id/check_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="What was the screening method *"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/big"
+                        android:textColor="@color/black"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="VIA"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginTop="10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pap Smear"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HPV"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/nin_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,60 +131,31 @@
                     android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/nin_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="For how long?"
+                        android:text="Enter any other method used *"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup_2"
+                    <EditText
+                        android:id="@+id/other"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Less than 1 year"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="1 - 4 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="5 - 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="above 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"/>
-
-                    </RadioGroup>
-
+                        android:background="@drawable/primary_edit_text"
+                        android:layout_marginTop="10dp"
+                        android:textSize="@dimen/small"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColorHint="@color/gray"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="18dp"
+                        android:paddingBottom="18dp"/>
 
                 </LinearLayout>
+
 
             </LinearLayout>
 

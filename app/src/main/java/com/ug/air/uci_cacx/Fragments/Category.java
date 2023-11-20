@@ -125,10 +125,12 @@ public class Category extends Fragment {
     private void update_views() {
 
         if (!radio_button.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, radio_button);
+
             linearLayout.setVisibility(View.VISIBLE);
             textView.setText(text);
             editText.setText(nin_number);
-            FunctionalUtils.setRadioButton(radioGroup, radio_button);
+
         }
     }
 

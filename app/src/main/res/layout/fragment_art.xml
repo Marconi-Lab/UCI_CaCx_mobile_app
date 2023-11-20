@@ -64,7 +64,8 @@
                         android:text="Yes"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"

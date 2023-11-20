@@ -29,27 +29,26 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Contraceptives extends Fragment {
+public class Symptoms extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
-    LinearLayout linearLayout, linearLayout_2, linearLayout_3;
+    LinearLayout linearLayout, linearLayout_2;
     Button next_btn, back_btn;
-    RadioGroup radioGroup, radioGroup2;
+    RadioGroup radioGroup;
     EditText editText;
-    String contra, method, other, months;
-    public static  final String CONTRA ="contraceptives_used";
-    public static  final String MONTHS ="duration_on_contraceptives";
-    public static  final String CONTRA_METHOD ="contraceptives_method";
-    public static  final String OTHER_CONTRA ="other_contraceptives_method";
+    String sym, symptoms, other;
+    public static  final String SYM ="patient_with_symptoms";
+    public static  final String SYMPTOMS ="symptoms";
+    public static  final String OTHER_SYM ="other_symptoms";
     List<String> checkBoxList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_contraceptives, container, false);
+        view = inflater.inflate(R.layout.fragment_symptoms, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -58,37 +57,23 @@ public class Contraceptives extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup);
-        linearLayout_2 = view.findViewById(R.id.nin_layout);
-        radioGroup2 = view.findViewById(R.id.radioGroup_1);
-        linearLayout_3 = view.findViewById(R.id.con_layout);
         linearLayout = view.findViewById(R.id.check_layout);
+        linearLayout_2 = view.findViewById(R.id.nin_layout);
         editText = view.findViewById(R.id.other);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                contra = selectedRadioButton.getText().toString();
+                sym = selectedRadioButton.getText().toString();
 
-                if (contra.equals("Yes")) {
+                if (sym.equals("Yes")) {
                     linearLayout.setVisibility(View.VISIBLE);
-                    linearLayout_3.setVisibility(View.VISIBLE);
                 }
                 else {
                     linearLayout.setVisibility(View.GONE);
-                    linearLayout_3.setVisibility(View.GONE);
-                    method = "";
-                    months = "";
                     editText.setText("");
                 }
-            }
-        });
-
-        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                RadioButton selectedRadioButton = view.findViewById(checkedId);
-                months = selectedRadioButton.getText().toString();
             }
         });
 
@@ -107,12 +92,12 @@ public class Contraceptives extends Fragment {
                             if (value.equals("Other")){
                                 linearLayout_2.setVisibility(View.VISIBLE);
                             }
-                        }
-                        else {
-                            if (value.equals("Other")){
+                            else {
                                 linearLayout_2.setVisibility(View.GONE);
                                 editText.setText("");
                             }
+                        }
+                        else {
                             checkBoxList.remove(value);
                         }
                     }
@@ -124,7 +109,7 @@ public class Contraceptives extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Parity());
+                fr.replace(R.id.fragment_container, new Contraceptives());
                 fr.commit();
             }
         });
@@ -133,15 +118,14 @@ public class Contraceptives extends Fragment {
             @Override
             public void onClick(View view) {
                 other = editText.getText().toString().trim();
-                method = FunctionalUtils.convertListToString(checkBoxList);
+                symptoms = FunctionalUtils.convertListToString(checkBoxList);
 
-                if (contra.isEmpty()) {
+                if (sym.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (contra.equals("Yes") && ( method.isEmpty() || months.isEmpty())){
+                else if (sym.equals("Yes") && symptoms.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (method.contains("Other") && other.isEmpty()){
+                } else if (symptoms.contains("Other") && other.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -154,45 +138,39 @@ public class Contraceptives extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(CONTRA, contra);
-        editor.putString(CONTRA_METHOD, method);
-        editor.putString(OTHER_CONTRA, other);
-        editor.putString(MONTHS, months);
+        editor.putString(SYM, sym);
+        editor.putString(SYMPTOMS, symptoms);
+        editor.putString(OTHER_SYM, other);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Symptoms());
+        fr.replace(R.id.fragment_container, new Prior_Screening_1());
         fr.addToBackStack(null);
         fr.commit();
     }
 
     private void load_data(){
-        contra = sharedPreferences.getString(CONTRA, "");
-        method = sharedPreferences.getString(CONTRA_METHOD, "");
-        other = sharedPreferences.getString(OTHER_CONTRA, "");
-        months = sharedPreferences.getString(MONTHS, "");
+        sym = sharedPreferences.getString(SYM, "");
+        symptoms = sharedPreferences.getString(SYMPTOMS, "");
+        other = sharedPreferences.getString(OTHER_SYM, "");
     }
 
     private void update_views(){
+        if (!sym.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, sym);
 
-        if (!contra.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup, contra);
-
-            if (contra.equals("Yes")){
+            if (sym.equals("Yes")){
                 linearLayout.setVisibility(View.VISIBLE);
-                linearLayout_3.setVisibility(View.VISIBLE);
-                FunctionalUtils.setRadioButton(radioGroup2, months);
 
                 checkBoxList.clear();
-                checkBoxList = Arrays.asList(method.split(", "));
+                checkBoxList = Arrays.asList(symptoms.split(", "));
                 FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
 
-                if (method.contains("Other")){
+                if (symptoms.contains("Other")){
                     linearLayout_2.setVisibility(View.VISIBLE);
                     editText.setText(other);
                 }
             }
         }
     }
-
 }

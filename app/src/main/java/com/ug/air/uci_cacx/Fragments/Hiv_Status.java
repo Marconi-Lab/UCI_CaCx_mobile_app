@@ -22,27 +22,26 @@ import android.widget.Toast;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
-
-public class Art extends Fragment {
+public class Hiv_Status extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
+    EditText editText_viral, editText_diagnosis;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    EditText editText_regimen, editText_years;
-    String art, years, regimen;
-    int year;
-    public static  final String ART ="on_ART";
-    public static  final String LONG ="years_on_ART";
-    public static  final String REGIMEN ="art_regimen";
+    String hiv, diagnosed, cid;
+    int viral;
+    public static  final String HIV ="hiv_status";
+    public static  final String DIAGNOSED ="diagnosed_for_hiv";
+    public static  final String CID ="viral_load";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_art, container, false);
+        view = inflater.inflate(R.layout.fragment_hiv_status, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -51,24 +50,24 @@ public class Art extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup_1);
-        editText_regimen = view.findViewById(R.id.regimen);
-        editText_years = view.findViewById(R.id.years);
+        linearLayout = view.findViewById(R.id.nin_layout);
+        editText_viral = view.findViewById(R.id.cid);
+        editText_diagnosis = view.findViewById(R.id.diagnosed);
         linearLayout = view.findViewById(R.id.nin_layout);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                art = selectedRadioButton.getText().toString();
+                hiv = selectedRadioButton.getText().toString();
 
-                linearLayout.setVisibility(View.VISIBLE);
-                if (art.equals("Yes")) {
+                if (hiv.equals("Positive")) {
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     linearLayout.setVisibility(View.GONE);
-                    editText_regimen.setText("");
-                    editText_years.setText("");
+                    editText_diagnosis.setText("");
+                    editText_viral.setText("");
                 }
             }
         });
@@ -80,7 +79,7 @@ public class Art extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Hiv_Status());
+                fr.replace(R.id.fragment_container, new Tobacco());
                 fr.commit();
             }
         });
@@ -88,13 +87,13 @@ public class Art extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                regimen = editText_regimen.getText().toString().trim();
-                years = editText_years.getText().toString().trim();
+                diagnosed = editText_diagnosis.getText().toString().trim();
+                cid = editText_viral.getText().toString().trim();
 
-                if (art.isEmpty()){
+                if (hiv.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if(art.equals("Yes") && (regimen.isEmpty() || years.isEmpty())){
+                else if (hiv.equals("Positive") && (cid.isEmpty() || diagnosed.isEmpty())) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -103,41 +102,46 @@ public class Art extends Fragment {
             }
         });
 
+
         return view;
     }
 
     private void save_data() {
-        editor.putString(ART, art);
-        editor.putString(REGIMEN, regimen);
-        if (years.isEmpty()){
-            editor.putInt(LONG, 0);
+        editor.putString(HIV, hiv);
+        editor.putString(DIAGNOSED, diagnosed);
+        if (cid.isEmpty()){
+            editor.putInt(CID, 0);
         }
         else {
-            editor.putInt(LONG, Integer.parseInt(years));
+            editor.putInt(CID, Integer.parseInt(cid));
         }
 
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Parity());
+        if (hiv.equals("Positive")){
+            fr.replace(R.id.fragment_container, new Art());
+        }
+        else {
+            fr.replace(R.id.fragment_container, new Parity());
+        }
         fr.addToBackStack(null);
         fr.commit();
     }
 
-    public void load_data(){
-        art = sharedPreferences.getString(ART, "");
-        regimen = sharedPreferences.getString(REGIMEN, "");
-        year = sharedPreferences.getInt(LONG, 0);
+    private void load_data(){
+        hiv = sharedPreferences.getString(HIV, "");
+        diagnosed = sharedPreferences.getString(DIAGNOSED, "");
+        viral = sharedPreferences.getInt(CID, 0);
     }
 
     private void update_views(){
-        if (!art.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup, art);
 
-            if (art.equals("Yes")){
-                linearLayout.setVisibility(View.VISIBLE);
-                FunctionalUtils.checkZeroValue(editText_years, year);
-                editText_regimen.setText(regimen);
+        if (!hiv.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, hiv);
+            if (hiv.equals("Positive")){
+                editText_diagnosis.setText(diagnosed);
+                FunctionalUtils.checkZeroValue(editText_viral, viral);
             }
         }
     }

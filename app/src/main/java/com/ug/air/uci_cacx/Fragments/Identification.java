@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
+import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
 public class Identification extends Fragment {
 
@@ -99,6 +100,8 @@ public class Identification extends Fragment {
         editText_screening_number.setText(screening);
         editText_first_name.setText(first);
         editText_last_name.setText(last);
-        editText_age.setText(String.valueOf(age));
+
+        FunctionalUtils.checkZeroValue(editText_age, age);
+//        editText_age.setText(String.valueOf(age));
     }
 }

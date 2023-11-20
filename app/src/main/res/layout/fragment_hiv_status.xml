@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Hiv_status">
+    tools:context=".Fragments.Hiv_Status">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,8 @@
                         android:text="Negative"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -72,7 +73,8 @@
                         android:text="Positive"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Tobacco">
+    tools:context=".Fragments.Visit">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Risk Factor Information - 1"
+            android:text="Observations and Next Visit"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,10 +47,62 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tobacco Use *"
+                    android:text="Any other Observations/ recommendations *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/recco"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textMultiLine"
+                    android:gravity="start|top"
+                    android:hint="Enter text here..."
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="When is the next visit *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/visit"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text"
+                    android:hint="Select date"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:drawableEnd="@drawable/ic_calendar"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Does the patient want to get pop-up message reminders for their next visit? *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
 
                 <RadioGroup
                     android:id="@+id/radioGroup_1"
@@ -77,68 +129,40 @@
 
                 </RadioGroup>
 
-                <LinearLayout
-                    android:id="@+id/nin_layout"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:text="Does the patient want to get any other information about cancer?"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
 
-                    <TextView
-                        android:id="@+id/nin_name"
+                <RadioGroup
+                    android:id="@+id/radioGroup_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Yes"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:text="For how long?"
+                        android:textSize="@dimen/small"
                         android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_marginBottom="-10dp"/>
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup_2"
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_height="match_parent"
+                        android:text="No"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
 
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Less than 1 year"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
+                </RadioGroup>
 
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="1 - 4 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="5 - 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="above 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"/>
-
-                    </RadioGroup>
-
-
-                </LinearLayout>
 
             </LinearLayout>
 

@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -21,23 +21,26 @@ import android.widget.Toast;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
-public class Tobacco extends Fragment {
+
+public class Visit extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
+    EditText editText_reco, editText_visit;
     RadioGroup radioGroup1, radioGroup2;
-    LinearLayout linearLayout;
-    String tobacco, years;
-    public static  final String TOBACCO ="tobacco_use";
-    public static  final String YEARS ="years_on_tobacco";
+    String recco, visit, reminder, cancer;
+    public static  final String NEXT_VISIT ="next_visit";
+    public static  final String OBSERVE ="clinician_observations";
+    public static  final String REMINDER ="next_visit_message_reminders";
+    public static  final String INFORMATION ="get_information_about_cancer";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tobacco, container, false);
+        view = inflater.inflate(R.layout.fragment_visit, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -45,23 +48,16 @@ public class Tobacco extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
+        editText_reco = view.findViewById(R.id.recco);
+        editText_visit = view.findViewById(R.id.visit);
         radioGroup1 = view.findViewById(R.id.radioGroup_1);
         radioGroup2 = view.findViewById(R.id.radioGroup_2);
-        linearLayout = view.findViewById(R.id.nin_layout);
 
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                tobacco = selectedRadioButton.getText().toString();
-
-                if (tobacco.equals("Yes")) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    linearLayout.setVisibility(View.GONE);
-                    years = "";
-                }
+                reminder = selectedRadioButton.getText().toString();
             }
         });
 
@@ -69,7 +65,7 @@ public class Tobacco extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                years = selectedRadioButton.getText().toString();
+                cancer = selectedRadioButton.getText().toString();
             }
         });
 
@@ -80,7 +76,7 @@ public class Tobacco extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Origin());
+                fr.replace(R.id.fragment_container, new Referred());
                 fr.commit();
             }
         });
@@ -88,16 +84,16 @@ public class Tobacco extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recco = editText_reco.getText().toString().trim();
+                visit = editText_visit.getText().toString().trim();
 
-                if (tobacco.isEmpty()) {
+                if (recco.isEmpty() || visit.isEmpty() || cancer.isEmpty() || reminder.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (tobacco.equals("Yes") && years.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please provide the duration", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     save_data();
                 }
+
             }
         });
 
@@ -105,31 +101,32 @@ public class Tobacco extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(TOBACCO, tobacco);
-        editor.putString(YEARS, years);
+        editor.putString(REMINDER, reminder);
+        editor.putString(OBSERVE, recco);
+        editor.putString(NEXT_VISIT, visit);
+        editor.putString(INFORMATION, cancer);
         editor.apply();
 
-        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Hiv_Status());
-        fr.addToBackStack(null);
-        fr.commit();
+        Toast.makeText(requireActivity(), "This is the end", Toast.LENGTH_SHORT).show();
     }
 
-    private void load_data() {
-        tobacco = sharedPreferences.getString(TOBACCO, "");
-        years = sharedPreferences.getString(YEARS, "");
+    private void load_data(){
+        reminder = sharedPreferences.getString(REMINDER, "");
+        recco = sharedPreferences.getString(OBSERVE, "");
+        visit = sharedPreferences.getString(NEXT_VISIT, "");
+        cancer = sharedPreferences.getString(INFORMATION, "");
     }
 
-    private void update_views() {
+    private void update_views(){
+        editText_reco.setText(recco);
+        editText_visit.setText(visit);
 
-        if (!tobacco.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup1, tobacco);
+        if (!reminder.isEmpty()) {
+            FunctionalUtils.setRadioButton(radioGroup1, reminder);
+        }
 
-            if (tobacco.equals("Yes")) {
-                linearLayout.setVisibility(View.VISIBLE);
-                FunctionalUtils.setRadioButton(radioGroup2, years);
-            }
-
+        if (!cancer.isEmpty()) {
+            FunctionalUtils.setRadioButton(radioGroup2, cancer);
         }
     }
 }

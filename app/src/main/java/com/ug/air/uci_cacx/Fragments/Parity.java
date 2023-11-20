@@ -1,7 +1,7 @@
 package com.ug.air.uci_cacx.Fragments;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
-import static com.ug.air.uci_cacx.Fragments.Hiv_status.HIV;
+import static com.ug.air.uci_cacx.Fragments.Hiv_Status.HIV;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,11 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
+import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
 public class Parity extends Fragment {
 
@@ -63,7 +62,7 @@ public class Parity extends Fragment {
                     fr.replace(R.id.fragment_container, new Art());
                 }
                 else {
-                    fr.replace(R.id.fragment_container, new Hiv_status());
+                    fr.replace(R.id.fragment_container, new Hiv_Status());
                 }
                 fr.commit();
             }
@@ -101,8 +100,8 @@ public class Parity extends Fragment {
     }
 
     private void update_views(){
-        editText_parity.setText(String.valueOf(sharedPreferences.getInt(PARITY, 0)));
-        editText_partners.setText(String.valueOf(sharedPreferences.getInt(PARTNER, 0)));
-        editText_debut.setText(String.valueOf(sharedPreferences.getInt(DEBUT, 0)));
+        FunctionalUtils.checkZeroValue(editText_parity, sharedPreferences.getInt(PARITY, 0));
+        FunctionalUtils.checkZeroValue(editText_partners, sharedPreferences.getInt(PARTNER, 0));
+        FunctionalUtils.checkZeroValue(editText_debut, sharedPreferences.getInt(DEBUT, 0));
     }
 }

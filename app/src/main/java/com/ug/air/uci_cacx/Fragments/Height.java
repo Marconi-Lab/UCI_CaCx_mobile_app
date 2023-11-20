@@ -112,10 +112,11 @@ public class Height extends Fragment {
     }
 
     private void update_views() {
-        editText_weight.setText(String.valueOf(weight));
-        editText_height.setText(String.valueOf(height));
-        editText_systolic.setText(String.valueOf(systolic));
-        editText_diastolic.setText(String.valueOf(diastolic));
+        FunctionalUtils.checkZeroValueFloat(editText_weight, weight);
+        FunctionalUtils.checkZeroValue(editText_height, height);
+        FunctionalUtils.checkZeroValue(editText_systolic, systolic);
+        FunctionalUtils.checkZeroValue(editText_diastolic, diastolic);
+
     }
 
 }

@@ -61,7 +61,6 @@
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:autofillHints="emailAddress"
                     android:inputType="textCapSentences"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"

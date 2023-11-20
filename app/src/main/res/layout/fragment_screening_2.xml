@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Contact_2">
+    tools:context=".Fragments.Screening_2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Patient's Additional Information - 2"
+            android:text="Current Visit - Screening - 2"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,13 +47,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Level of Eduction *"
+                    android:text="Screening Results  *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_1"
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
@@ -61,7 +61,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Not Available"
+                        android:text="Negative"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"
@@ -70,7 +70,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Primary"
+                        android:text="Positive"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"
@@ -79,7 +79,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Secondary"
+                        android:text="Suspicious of Cancer"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"
@@ -88,131 +88,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Tertiary"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="Widowed"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/small" />
-
-                </RadioGroup>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Martial Status *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-                <RadioGroup
-                    android:id="@+id/radioGroup_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Single"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Married"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Divorced"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
-
-                </RadioGroup>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Religion *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-
-                <RadioGroup
-                    android:id="@+id/radioGroup_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Catholic"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Anglican"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Pentecostal"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Muslim"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="No Religion"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Other"
+                        android:text="Unknown"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
@@ -220,100 +96,120 @@
                 </RadioGroup>
 
                 <LinearLayout
-                    android:id="@+id/other_layout"
+                    android:id="@+id/pap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="20dp"
                     android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Pap Smear screening results *"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="Enter Religion *"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
+                        android:textColor="@color/black" />
 
-                    <EditText
-                        android:id="@+id/other"
+                    <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/primary_edit_text"
-                        android:layout_marginTop="10dp"
-                        android:textSize="@dimen/small"
+                        android:text="LSIL"
                         android:fontFamily="@font/sora_regular"
-                        android:textColorHint="@color/gray"
-                        android:autofillHints="emailAddress"
-                        android:inputType="textCapCharacters"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp"
-                        android:paddingTop="18dp"
-                        android:paddingBottom="18dp"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HSIL"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ASCUS"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ASC-H"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="AGC"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Squamous cancer cells"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
 
                 </LinearLayout>
 
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/hpv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Level of Income *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone">
 
-                <RadioGroup
-                    android:id="@+id/radioGroup_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <RadioButton
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Not Available"
+                        android:layout_height="wrap_content"
+                        android:text="HPV screening results *"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Below 250,000 Ugx"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="250,000 - 500,000 Ugx"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="500,000 - 1,000,000 Ugx"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="above 1,000,000 ugx"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
+                        android:textSize="@dimen/big"
                         android:textColor="@color/black" />
 
-                </RadioGroup>
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HPV16"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HPV18"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HPV45"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other High"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

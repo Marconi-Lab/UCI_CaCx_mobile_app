@@ -87,7 +87,7 @@ public class Origin extends Fragment {
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Origin());
+        fr.replace(R.id.fragment_container, new Tobacco());
         fr.addToBackStack(null);
         fr.commit();
     }

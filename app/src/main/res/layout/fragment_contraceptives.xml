@@ -52,67 +52,100 @@
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Yes"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
+
+                </RadioGroup>
+
 
                 <LinearLayout
                     android:id="@+id/check_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contraceptives method used *"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/big"
+                        android:textColor="@color/black" />
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Pills"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Condoms"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="IUD"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Injectable"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Implant"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Traditional"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
 
                     <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Others"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="None"
+                        android:text="Other"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"/>
 
@@ -143,12 +176,61 @@
                         android:textSize="@dimen/small"
                         android:fontFamily="@font/sora_regular"
                         android:textColorHint="@color/gray"
-                        android:autofillHints="emailAddress"
                         android:inputType="textCapCharacters"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
                         android:paddingTop="18dp"
                         android:paddingBottom="18dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/con_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/big"
+                        android:text="For how long has the patient been using this method(s) *"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Less than 6 months"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"/>
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="6 - 12 months"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"/>
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="More than 12 months"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"/>
+
+                    </RadioGroup>
 
                 </LinearLayout>
 
