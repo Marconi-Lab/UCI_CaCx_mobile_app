@@ -1,6 +1,7 @@
 package com.ug.air.uci_cacx.Fragments;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Prior_Screening_2.PRIOR_SCREEN_METHOD;
 import static com.ug.air.uci_cacx.Fragments.Screening_1.SCREEN_METHOD;
 
 import android.content.Context;
@@ -10,13 +11,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Screening_2 extends Fragment {
+public class Prior_screening_3 extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
@@ -38,9 +39,9 @@ public class Screening_2 extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     String result, pap, hpv, method;
-    public static  final String RESULT ="screening_result";
-    public static  final String PAP ="pap_smear_screening_result";
-    public static  final String HPV ="hpv_screening_result";
+    public static  final String RESULT_1 ="prior_screening_result";
+    public static  final String PAP_1 ="prior_pap_smear_screening_result";
+    public static  final String HPV_1 ="prior_hpv_screening_result";
     List<String> checkBoxList_1 = new ArrayList<>();
     List<String> checkBoxList_2 = new ArrayList<>();
 
@@ -48,12 +49,12 @@ public class Screening_2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_screening_2, container, false);
+        view = inflater.inflate(R.layout.fragment_prior_screening_3, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        method = sharedPreferences.getString(SCREEN_METHOD, "");
+        method = sharedPreferences.getString(PRIOR_SCREEN_METHOD, "");
 
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
@@ -129,12 +130,7 @@ public class Screening_2 extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                if (method.equals("VIA")){
-                    fr.replace(R.id.fragment_container, new Photo_4());
-                }
-                else {
-                    fr.replace(R.id.fragment_container, new Screening_1());
-                }
+                fr.replace(R.id.fragment_container, new Prior_Screening_2());
                 fr.commit();
             }
         });
@@ -169,21 +165,21 @@ public class Screening_2 extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(RESULT, result);
-        editor.putString(PAP, pap);
-        editor.putString(HPV, hpv);
+        editor.putString(RESULT_1, result);
+        editor.putString(PAP_1, pap);
+        editor.putString(HPV_1, hpv);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Treatment());
+        fr.replace(R.id.fragment_container, new Prior_Treatment());
         fr.addToBackStack(null);
         fr.commit();
     }
 
     private void load_data(){
-        result = sharedPreferences.getString(RESULT, "");
-        pap = sharedPreferences.getString(PAP, "");
-        hpv = sharedPreferences.getString(HPV, "");
+        result = sharedPreferences.getString(RESULT_1, "");
+        pap = sharedPreferences.getString(PAP_1, "");
+        hpv = sharedPreferences.getString(HPV_1, "");
     }
 
     private void update_views(){

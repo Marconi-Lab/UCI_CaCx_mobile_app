@@ -3,6 +3,7 @@ package com.ug.air.uci_cacx.Fragments;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.ug.air.uci_cacx.Activities.Home;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
@@ -28,22 +30,26 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Treatment extends Fragment {
+public class Clinicians extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
-    String treatment;
-    public static  final String TREATMENT ="treatment";
+    String staff, available;
+    public static  final String AVAILABLE ="screening staff";
+    public static final String DATE = "created_on";
+    public static final String COMPLETE = "complete_form";
+    public static final String FILENAME = "filename";
     List<String> checkBoxList = new ArrayList<>();
+    List<String> staffList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_treatment, container, false);
+        view = inflater.inflate(R.layout.fragment_clinicians, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -51,33 +57,36 @@ public class Treatment extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        linearLayout = view.findViewById(R.id.nin_layout);
+        linearLayout = view.findViewById(R.id.staff_layout);
 
-        load_data();
+        staff = "John Mathews, Musisi Norbels, Senoga Mark";
+        staffList.clear();
+        staffList = Arrays.asList(staff.split(", "));
 
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList.add(value);
-                        }
-                        else {
-                            checkBoxList.remove(value);
-                        }
+        for (String staff : staffList){
+            CheckBox checkBox = new CheckBox(requireActivity());
+            checkBox.setText(staff);
+            checkBox.setChecked(false);
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        checkBoxList.add(staff);
+                    } else {
+                        checkBoxList.remove(staff);
                     }
-                });
-            }
+                }
+            });
+
+            linearLayout.addView(checkBox);
         }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Screening_2());
+                fr.replace(R.id.fragment_container, new Visit());
                 fr.commit();
             }
         });
@@ -85,9 +94,9 @@ public class Treatment extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                treatment = FunctionalUtils.convertListToString(checkBoxList);
+                available = FunctionalUtils.convertListToString(checkBoxList);
 
-                if (treatment.isEmpty()){
+                if (available.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -96,25 +105,13 @@ public class Treatment extends Fragment {
             }
         });
 
-
         return view;
     }
 
     private void save_data() {
-        editor.putString(TREATMENT, treatment);
+        editor.putString(AVAILABLE, available);
         editor.apply();
-
-        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Visit());
-        fr.addToBackStack(null);
-        fr.commit();
-    }
-
-    private void load_data(){
-        treatment = sharedPreferences.getString(TREATMENT, "");
-
-        checkBoxList.clear();
-        checkBoxList = FunctionalUtils.convertStringToList(treatment);
-        FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
+        FunctionalUtils.save_file(requireActivity(), true);
+        startActivity(new Intent(requireActivity(), Home.class));
     }
 }

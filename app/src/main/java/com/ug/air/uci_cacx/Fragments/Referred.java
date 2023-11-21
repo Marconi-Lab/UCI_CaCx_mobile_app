@@ -51,7 +51,7 @@ public class Referred extends Fragment {
                 String prior = sharedPreferences.getString(PRIOR, "");
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
                 if (prior.equals("Yes")) {
-                    fr.replace(R.id.fragment_container, new Prior_Screening_2());
+                    fr.replace(R.id.fragment_container, new Prior_Treatment());
                 }
                 else {
                     fr.replace(R.id.fragment_container, new Prior_Screening_1());

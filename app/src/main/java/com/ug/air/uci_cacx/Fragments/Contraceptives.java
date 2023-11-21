@@ -138,7 +138,7 @@ public class Contraceptives extends Fragment {
                 if (contra.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (contra.equals("Yes") && ( method.isEmpty() || months.isEmpty())){
+                else if (contra.equals("Yes") && (method.isEmpty() || months.isEmpty())){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else if (method.contains("Other") && other.isEmpty()){
@@ -184,7 +184,7 @@ public class Contraceptives extends Fragment {
                 FunctionalUtils.setRadioButton(radioGroup2, months);
 
                 checkBoxList.clear();
-                checkBoxList = Arrays.asList(method.split(", "));
+                checkBoxList = FunctionalUtils.convertStringToList(method);
                 FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
 
                 if (method.contains("Other")){

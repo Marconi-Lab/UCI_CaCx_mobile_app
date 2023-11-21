@@ -107,7 +107,10 @@ public class Visit extends Fragment {
         editor.putString(INFORMATION, cancer);
         editor.apply();
 
-        Toast.makeText(requireActivity(), "This is the end", Toast.LENGTH_SHORT).show();
+        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new Clinicians());
+        fr.addToBackStack(null);
+        fr.commit();
     }
 
     private void load_data(){

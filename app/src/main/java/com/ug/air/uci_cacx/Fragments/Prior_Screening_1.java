@@ -1,6 +1,12 @@
 package com.ug.air.uci_cacx.Fragments;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Prior_Screening_2.PRIOR_OTHER_SCREENING_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Prior_Screening_2.PRIOR_SCREEN_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Prior_Treatment.TREATMENT_1;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.HPV_1;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.PAP_1;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.RESULT_1;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,10 +43,8 @@ public class Prior_Screening_1 extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     EditText editText;
-    String prior, method, other;
+    String prior;
     public static  final String PRIOR ="prior_cacx_screening";
-    public static  final String PRIOR_METHOD ="prior_screening_method";
-    public static  final String OTHER_METHOD ="other_prior_screening_method";
     List<String> checkBoxList = new ArrayList<>();
 
     @Override
@@ -56,50 +60,14 @@ public class Prior_Screening_1 extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup);
-        linearLayout = view.findViewById(R.id.check_layout);
-        linearLayout_2 = view.findViewById(R.id.nin_layout);
-        editText = view.findViewById(R.id.other);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 prior = selectedRadioButton.getText().toString();
-
-                if (prior.equals("Yes")) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    linearLayout.setVisibility(View.GONE);
-                    editText.setText("");
-                }
             }
         });
-
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList.add(value);
-                            if (value.equals("Other")){
-                                linearLayout_2.setVisibility(View.VISIBLE);
-                            }
-                            else {
-                                linearLayout_2.setVisibility(View.GONE);
-                                editText.setText("");
-                            }
-                        }
-                        else {
-                            checkBoxList.remove(value);
-                        }
-                    }
-                });
-            }
-        }
 
         load_data();
         update_views();
@@ -116,15 +84,8 @@ public class Prior_Screening_1 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                other = editText.getText().toString().trim();
-                method = FunctionalUtils.convertListToString(checkBoxList);
 
                 if (prior.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (prior.equals("Yes") && method.isEmpty()) {
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                } else if (method.contains("Other") && other.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -139,8 +100,6 @@ public class Prior_Screening_1 extends Fragment {
 
     private void save_data() {
         editor.putString(PRIOR, prior);
-        editor.putString(PRIOR_METHOD, method);
-        editor.putString(OTHER_METHOD, other);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -148,6 +107,13 @@ public class Prior_Screening_1 extends Fragment {
             fr.replace(R.id.fragment_container, new Prior_Screening_2());
         }
         else {
+            editor.putString(PRIOR_SCREEN_METHOD, "");
+            editor.putString(PRIOR_OTHER_SCREENING_METHOD, "");
+            editor.putString(RESULT_1, "");
+            editor.putString(PAP_1, "");
+            editor.putString(HPV_1, "");
+            editor.putString(TREATMENT_1, "");
+            editor.apply();
             fr.replace(R.id.fragment_container, new Referred());
         }
         fr.addToBackStack(null);
@@ -156,26 +122,11 @@ public class Prior_Screening_1 extends Fragment {
 
     private void load_data(){
         prior = sharedPreferences.getString(PRIOR, "");
-        method = sharedPreferences.getString(PRIOR_METHOD, "");
-        other = sharedPreferences.getString(OTHER_METHOD, "");
     }
 
     private void update_views(){
         if (!prior.isEmpty()){
             FunctionalUtils.setRadioButton(radioGroup, prior);
-
-            if (prior.equals("Yes")){
-                linearLayout.setVisibility(View.VISIBLE);
-
-                checkBoxList.clear();
-                checkBoxList = Arrays.asList(method.split(", "));
-                FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
-
-                if (method.contains("Other")){
-                    linearLayout_2.setVisibility(View.VISIBLE);
-                    editText.setText(other);
-                }
-            }
         }
     }
 }

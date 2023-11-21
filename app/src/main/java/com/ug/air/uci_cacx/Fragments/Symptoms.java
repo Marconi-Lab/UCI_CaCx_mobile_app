@@ -163,7 +163,7 @@ public class Symptoms extends Fragment {
                 linearLayout.setVisibility(View.VISIBLE);
 
                 checkBoxList.clear();
-                checkBoxList = Arrays.asList(symptoms.split(", "));
+                checkBoxList = FunctionalUtils.convertStringToList(symptoms);
                 FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
 
                 if (symptoms.contains("Other")){

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Prior_Screening_1">
+    tools:context=".Fragments.Clinicians">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Screening behavior - 1"
+            android:text="Available Clinicians"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,34 +47,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Prior Cacx Screening  *"
+                    android:text="Screening staff *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
+                <LinearLayout
+                    android:id="@+id/staff_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Yes"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="No"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
-
-                </RadioGroup>
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -89,27 +75,33 @@
 
             <Button
                 android:id="@+id/back"
+                style="@style/Custom.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
-                android:text="@string/back"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/light_blue"
                 android:fontFamily="@font/sora_regular"
-                android:textSize="@dimen/bigger"
+                android:text="@string/back"
                 android:textColor="@color/blue"
-                style="@style/Custom.OutlinedButton"
-                android:backgroundTint="@color/light_blue"/>
+                android:textSize="@dimen/bigger" />
 
             <Button
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
-                android:text="@string/next"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/sora_regular"
-                android:textSize="@dimen/bigger"
-                android:textColor="@color/white"/>
+                android:text="Save Form"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bigger" />
 
         </RelativeLayout>
 

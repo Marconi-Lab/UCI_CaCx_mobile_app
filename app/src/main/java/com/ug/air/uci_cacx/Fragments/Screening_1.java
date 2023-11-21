@@ -1,6 +1,20 @@
 package com.ug.air.uci_cacx.Fragments;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Photo_1.IMAGE_NAME;
+import static com.ug.air.uci_cacx.Fragments.Photo_1.IMAGE_PATH;
+import static com.ug.air.uci_cacx.Fragments.Photo_2.IMAGE_NAME_2;
+import static com.ug.air.uci_cacx.Fragments.Photo_2.IMAGE_PATH_2;
+import static com.ug.air.uci_cacx.Fragments.Photo_3.IMAGE_NAME_3;
+import static com.ug.air.uci_cacx.Fragments.Photo_3.IMAGE_PATH_3;
+import static com.ug.air.uci_cacx.Fragments.Photo_4.IMAGE_NAME_4;
+import static com.ug.air.uci_cacx.Fragments.Photo_4.IMAGE_PATH_4;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.HPV_1;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.PAP_1;
+import static com.ug.air.uci_cacx.Fragments.Prior_screening_3.RESULT_1;
+import static com.ug.air.uci_cacx.Fragments.Screening_2.HPV;
+import static com.ug.air.uci_cacx.Fragments.Screening_2.PAP;
+import static com.ug.air.uci_cacx.Fragments.Screening_2.RESULT;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,7 +45,7 @@ public class Screening_1 extends Fragment {
     RadioGroup radioGroup;
     LinearLayout linearLayout;
     EditText editText;
-    String method, other;
+    String method, other, old_method;
     public static  final String SCREEN_METHOD ="screening_method";
     public static  final String OTHER_SCREENING_METHOD ="other_screening_method";
 
@@ -102,13 +116,27 @@ public class Screening_1 extends Fragment {
     private void save_data() {
         editor.putString(SCREEN_METHOD, method);
         editor.putString(OTHER_SCREENING_METHOD, other);
-        editor.apply();
+        if (!method.equals(old_method)) {
+            editor.putString(RESULT, "");
+            editor.putString(PAP, "");
+            editor.putString(HPV, "");
+        }
+            editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
         if (method.equals("VIA")){
             fr.replace(R.id.fragment_container, new Photo_1());
         }
         else {
+            editor.putString(IMAGE_NAME, "");
+            editor.putString(IMAGE_PATH, "");
+            editor.putString(IMAGE_NAME_2, "");
+            editor.putString(IMAGE_PATH_2, "");
+            editor.putString(IMAGE_NAME_3, "");
+            editor.putString(IMAGE_PATH_3, "");
+            editor.putString(IMAGE_NAME_4, "");
+            editor.putString(IMAGE_PATH_4, "");
+            editor.apply();
             fr.replace(R.id.fragment_container, new Screening_2());
         }
         fr.addToBackStack(null);
@@ -116,15 +144,15 @@ public class Screening_1 extends Fragment {
     }
 
     private void load_data() {
-        method = sharedPreferences.getString(SCREEN_METHOD, "");
+        old_method = sharedPreferences.getString(SCREEN_METHOD, "");
         other = sharedPreferences.getString(OTHER_SCREENING_METHOD, "");
     }
 
     private void update_views() {
-        if (!method.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup, method);
+        if (!old_method.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, old_method);
 
-            if (method.equals("Other")){
+            if (old_method.equals("Other")){
                 editText.setText(other);
             }
         }

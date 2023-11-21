@@ -1,6 +1,9 @@
 package com.ug.air.uci_cacx.Fragments;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Art.ART;
+import static com.ug.air.uci_cacx.Fragments.Art.LONG;
+import static com.ug.air.uci_cacx.Fragments.Art.REGIMEN;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -123,6 +126,10 @@ public class Hiv_Status extends Fragment {
             fr.replace(R.id.fragment_container, new Art());
         }
         else {
+            editor.putString(ART, "");
+            editor.putString(REGIMEN, "");
+            editor.putInt(LONG, 0);
+            editor.apply();
             fr.replace(R.id.fragment_container, new Parity());
         }
         fr.addToBackStack(null);

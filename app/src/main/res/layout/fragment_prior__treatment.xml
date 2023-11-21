@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Prior_Screening_1">
+    tools:context=".Fragments.Prior_Treatment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Screening behavior - 1"
+            android:text="Screening - 4"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,34 +47,75 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Prior Cacx Screening  *"
+                    android:text="Prior Treatment given *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
+                <LinearLayout
+                    android:id="@+id/nin_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
-                    <RadioButton
+                    <CheckBox
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Yes"
+                        android:layout_height="wrap_content"
+                        android:text="Cryotherapy"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:layout_marginBottom="-10dp"/>
 
-                    <RadioButton
+                    <CheckBox
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="No"
+                        android:layout_height="wrap_content"
+                        android:text="LEEP"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:layout_marginBottom="-10dp"/>
 
-                </RadioGroup>
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CKC"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thermo coagulation"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Referred"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No treatment given"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"/>
+
+                </LinearLayout>
 
 
             </LinearLayout>
