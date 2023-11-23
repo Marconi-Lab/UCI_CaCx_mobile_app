@@ -61,7 +61,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/screen"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
                 app:cardElevation="5dp"
                 app:cardCornerRadius="10dp"
                 android:layout_weight="5"
@@ -87,6 +87,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/screen_patient"
                         android:textColor="@color/black"
+                        android:gravity="center"
                         android:fontFamily="@font/sora_semi_bold"/>
 
                 </LinearLayout>
@@ -94,12 +95,114 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/incomplete"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
                 app:cardElevation="5dp"
                 app:cardCornerRadius="10dp"
                 android:layout_weight="5"
                 android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/file"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="View Incomplete Forms"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/sora_semi_bold"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/upload"
+                android:layout_width="0dp"
+                android:layout_height="170dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_weight="5"
+                android:layout_margin="10dp"
+                android:focusable="true"
+                android:clickable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/upload"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Upload Complete Forms"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/sora_semi_bold"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="170dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_weight="5"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/feedback"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="View Expert Feedback"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/sora_semi_bold"/>
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 

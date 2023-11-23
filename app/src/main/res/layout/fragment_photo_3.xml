@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Photo_3">
+    tools:context=".Fragments.Patient.Photo_3">
 
     <LinearLayout
         android:layout_width="match_parent"

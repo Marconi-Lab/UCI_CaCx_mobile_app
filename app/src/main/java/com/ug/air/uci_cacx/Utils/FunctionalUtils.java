@@ -1,22 +1,18 @@
 package com.ug.air.uci_cacx.Utils;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
-import static com.ug.air.uci_cacx.Fragments.Clinicians.COMPLETE;
-import static com.ug.air.uci_cacx.Fragments.Clinicians.DATE;
-import static com.ug.air.uci_cacx.Fragments.Clinicians.FILENAME;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.COMPLETE;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.DATE;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import com.ug.air.uci_cacx.Fragments.Clinicians;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -156,5 +152,4 @@ public class FunctionalUtils {
         editor.commit();
 
     }
-
 }

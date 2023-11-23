@@ -8,21 +8,51 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ug.air.uci_cacx.R;
+import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
 public class Home extends AppCompatActivity {
 
-    CardView home_card;
+    CardView screening, incomplete, upload, expert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        home_card = findViewById(R.id.screen);
-        home_card.setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.screen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Home.this, Screening.class));
+            }
+        });
+
+        findViewById(R.id.incomplete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                Intent intent = new Intent(Home.this, Forms.class);
+//                bundle.putString("Fragment", "incomplete");
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                Intent intent = new Intent(Home.this, Forms.class);
+//                bundle.putString("Fragment", "complete");
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                startActivity(new Intent(Home.this, Screening.class));
             }
         });
     }

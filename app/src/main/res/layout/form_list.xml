@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginEnd="10dp"
+            android:text="Patient: UCI456"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sora_medium"
+            android:textSize="@dimen/big"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginStart="10dp"
+            android:text="Saved on: 12-12-2023_09:45:43"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/sora_regular"
+            android:textSize="@dimen/small"
+            android:gravity="end"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

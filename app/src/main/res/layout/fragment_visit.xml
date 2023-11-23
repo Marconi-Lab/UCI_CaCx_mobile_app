@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Visit">
+    tools:context=".Fragments.Patient.Visit">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,22 +78,47 @@
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
-                <EditText
-                    android:id="@+id/visit"
-                    android:layout_width="150dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/primary_edit_text"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/small"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColorHint="@color/gray"
-                    android:inputType="text"
-                    android:hint="Select date"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp"
-                    android:drawableEnd="@drawable/ic_calendar"/>
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/visit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="18dp"
+                        android:paddingBottom="18dp"
+                        android:background="@drawable/primary_edit_text"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="@dimen/small"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColorHint="@color/gray"/>
+
+                    <Button
+                        android:id="@+id/select"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:layout_marginStart="10dp"
+                        style="@style/Custom.OutlinedButton"
+                        android:backgroundTint="@color/light_blue"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="18dp"
+                        android:paddingBottom="18dp"
+                        android:textSize="@dimen/small"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColorHint="@color/gray"
+                        android:text="Select Date"
+                        />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
