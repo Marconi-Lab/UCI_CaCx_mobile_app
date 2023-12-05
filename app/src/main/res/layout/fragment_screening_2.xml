@@ -56,7 +56,8 @@
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -79,7 +80,16 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Suspicious of Cancer"
+                        android:text="Suspicious of cancer"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Abnormal"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"
@@ -95,121 +105,165 @@
 
                 </RadioGroup>
 
-                <LinearLayout
-                    android:id="@+id/pap"
+                <RadioGroup
+                    android:id="@+id/radioGroup_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone">
 
-                    <TextView
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pap Smear screening results *"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:textColor="@color/black" />
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="LSIL"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HSIL"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="ASCUS"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="ASC-H"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="AGC"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Squamous cancer cells"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/hpv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HPV screening results *"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:textColor="@color/black" />
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="HPV16"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
                         android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="HPV18"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
+                        android:textColor="@color/black"
                         android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="HPV45"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
+                        android:textColor="@color/black"
                         android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
+                    <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Other High"
+                        android:layout_height="match_parent"
+                        android:text="Other high"
                         android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
 
-                </LinearLayout>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="LGSIL"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="HSIL"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="LSIL"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Suspicious of cancer"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
+
+                </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/nin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suspicious of Cancer  *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Invasive"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Cancer"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="CIN1"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="CIN2"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No malignancy seen"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"/>
+
+
+                </RadioGroup>
+
+
+            </LinearLayout>
 
             </LinearLayout>
 

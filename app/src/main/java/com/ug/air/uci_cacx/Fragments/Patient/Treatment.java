@@ -15,7 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
@@ -31,10 +34,13 @@ public class Treatment extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     LinearLayout linearLayout;
+    RadioGroup radioGroup_1, radioGroup_2;
+    EditText editText_reason;
     Button next_btn, back_btn;
-    String treatment;
+    String treatment, reason, given;
     public static  final String TREATMENT ="treatment";
-    List<String> checkBoxList = new ArrayList<>();
+    public static  final String GIVEN_TREATMENT ="when_treatment_was_given";
+    public static  final String POSTPONE ="reason_for_postponing";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,26 +55,35 @@ public class Treatment extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         linearLayout = view.findViewById(R.id.nin_layout);
+        radioGroup_1 = view.findViewById(R.id.radioGroup);
+        radioGroup_2 = view.findViewById(R.id.radioGroup_2);
+        editText_reason = view.findViewById(R.id.reason);
+
+        radioGroup_1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                treatment = selectedRadioButton.getText().toString();
+            }
+        });
+
+        radioGroup_2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                given = selectedRadioButton.getText().toString();
+
+                if (given.equals("Postponed")){
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    linearLayout.setVisibility(View.GONE);
+                    reason = "";
+                }
+            }
+        });
 
         load_data();
-
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList.add(value);
-                        }
-                        else {
-                            checkBoxList.remove(value);
-                        }
-                    }
-                });
-            }
-        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +97,13 @@ public class Treatment extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                treatment = FunctionalUtils.convertListToString(checkBoxList);
+                reason = editText_reason.getText().toString().trim();
 
-                if (treatment.isEmpty()){
+                if (treatment.isEmpty() || given.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (given.equals("Postponed") && reason.isEmpty()) {
+                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+                } else {
                     save_data();
                 }
             }
@@ -99,6 +115,8 @@ public class Treatment extends Fragment {
 
     private void save_data() {
         editor.putString(TREATMENT, treatment);
+        editor.putString(GIVEN_TREATMENT, given);
+        editor.putString(POSTPONE, reason);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -109,9 +127,18 @@ public class Treatment extends Fragment {
 
     private void load_data(){
         treatment = sharedPreferences.getString(TREATMENT, "");
+        reason = sharedPreferences.getString(POSTPONE, "");
+        given = sharedPreferences.getString(GIVEN_TREATMENT, "");
 
-        checkBoxList.clear();
-        checkBoxList = FunctionalUtils.convertStringToList(treatment);
-        FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
+        if (!treatment.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup_1, treatment);
+        }
+
+        if (!given.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup_2, given);
+            if (given.equals("Postponed")){
+                editText_reason.setText(reason);
+            }
+        }
     }
 }

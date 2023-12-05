@@ -132,6 +132,7 @@ public class Nok_1 extends Fragment {
                     else {
                         linearLayout.setVisibility(View.GONE);
                         editText_nin.setText("");
+                        nin_id = "";
                     }
                 }
                 else if (selectedSpinner == spinnerList.get(2)) {

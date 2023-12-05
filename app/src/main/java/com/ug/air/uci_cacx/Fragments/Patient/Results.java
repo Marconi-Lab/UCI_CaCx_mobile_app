@@ -6,7 +6,6 @@ import static com.ug.air.uci_cacx.Fragments.Patient.Photo_2.IMAGE_PATH_2;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_3.IMAGE_PATH_3;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_4.IMAGE_PATH_4;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_1.SCREEN_METHOD;
-import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -81,7 +80,7 @@ public class Results extends Fragment {
         editor = sharedPreferences.edit();
 
         method = sharedPreferences.getString(SCREEN_METHOD, "");
-        clinician = sharedPreferences.getString(RESULT, "");
+//        clinician = sharedPreferences.getString(RESULT, "");
         
         save_btn = view.findViewById(R.id.send);
         fill_btn = view.findViewById(R.id.form);

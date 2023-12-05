@@ -88,47 +88,12 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Other"
+                        android:text="Colposcopy"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
 
                 </RadioGroup>
-
-                <LinearLayout
-                    android:id="@+id/nin_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/nin_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:text="Enter other screening method"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
-
-                    <EditText
-                        android:id="@+id/nin_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/primary_edit_text"
-                        android:layout_marginTop="10dp"
-                        android:textSize="@dimen/small"
-                        android:fontFamily="@font/sora_regular"
-                        android:textColorHint="@color/gray"
-                        android:autofillHints="emailAddress"
-                        android:inputType="textCapCharacters"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp"
-                        android:paddingTop="18dp"
-                        android:paddingBottom="18dp"/>
-
-                </LinearLayout>
 
             </LinearLayout>
 

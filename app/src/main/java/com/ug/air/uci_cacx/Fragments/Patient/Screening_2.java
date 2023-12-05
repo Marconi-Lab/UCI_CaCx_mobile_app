@@ -2,6 +2,9 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_1.SCREEN_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Patient.Treatment.GIVEN_TREATMENT;
+import static com.ug.air.uci_cacx.Fragments.Patient.Treatment.POSTPONE;
+import static com.ug.air.uci_cacx.Fragments.Patient.Treatment.TREATMENT;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -32,15 +35,15 @@ public class Screening_2 extends Fragment {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
-    LinearLayout linearLayout_1, linearLayout_2;
+    LinearLayout linearLayout;
     Button next_btn, back_btn;
-    RadioGroup radioGroup;
-    String result, pap, hpv, method;
-    public static  final String RESULT ="screening_result";
+    RadioGroup radioGroup, radioGroup2, radioGroup3, radioGroup4;
+    String result, pap, hpv, method, via, col, susp;
+    public static  final String RESULT_VIA ="via_screening_result";
+    public static  final String SUSPICIOUS ="suspicious_of_cancer";
+    public static  final String RESULT_COL ="Colposcopy_screening_result";
     public static  final String PAP ="pap_smear_screening_result";
     public static  final String HPV ="hpv_screening_result";
-    List<String> checkBoxList_1 = new ArrayList<>();
-    List<String> checkBoxList_2 = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,8 +60,26 @@ public class Screening_2 extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup);
-        linearLayout_1 = view.findViewById(R.id.pap);
-        linearLayout_2 = view.findViewById(R.id.hpv);
+        radioGroup2 = view.findViewById(R.id.radioGroup_2);
+        radioGroup3 = view.findViewById(R.id.radioGroup_3);
+        radioGroup4 = view.findViewById(R.id.radioGroup_4);
+        linearLayout = view.findViewById(R.id.nin_layout);
+
+        if (method.equals("VIA") || method.equals("Colposcopy")){
+            radioGroup.setVisibility(View.VISIBLE);
+            radioGroup2.setVisibility(View.GONE);
+            radioGroup3.setVisibility(View.GONE);
+        }
+        else if (method.equals("HPV")) {
+            radioGroup.setVisibility(View.GONE);
+            radioGroup2.setVisibility(View.VISIBLE);
+            radioGroup3.setVisibility(View.GONE);
+        }
+        else {
+            radioGroup.setVisibility(View.GONE);
+            radioGroup2.setVisibility(View.GONE);
+            radioGroup3.setVisibility(View.VISIBLE);
+        }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -66,62 +87,50 @@ public class Screening_2 extends Fragment {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 result = selectedRadioButton.getText().toString();
 
-                if (result.equals("Positive")) {
-                    if (method.equals("Pap Smear")){
-                        linearLayout_1.setVisibility(View.VISIBLE);
-                        linearLayout_2.setVisibility(View.GONE);
-                    }
-                    else if (method.equals("HPV")){
-                        linearLayout_2.setVisibility(View.VISIBLE);
-                        linearLayout_1.setVisibility(View.GONE);
-                    }
+                if (result.equals("Suspicious of cancer")){
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    linearLayout_1.setVisibility(View.GONE);
-                    linearLayout_2.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.GONE);
+                    susp = "";
                 }
+            }
+        });
 
+        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                result = selectedRadioButton.getText().toString();
+            }
+        });
+
+        radioGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                result = selectedRadioButton.getText().toString();
+
+                if (result.equals("Suspicious of cancer")){
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    linearLayout.setVisibility(View.GONE);
+                    susp = "";
+                }
+            }
+        });
+
+        radioGroup4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                susp = selectedRadioButton.getText().toString();
             }
         });
 
         load_data();
         update_views();
-
-        for (int i = 0; i < linearLayout_1.getChildCount(); i++) {
-            if (linearLayout_1.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout_1.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList_1.add(value);
-                        }
-                        else {
-                            checkBoxList_1.remove(value);
-                        }
-                    }
-                });
-            }
-        }
-
-        for (int i = 0; i < linearLayout_2.getChildCount(); i++) {
-            if (linearLayout_2.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout_2.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList_2.add(value);
-                        }
-                        else {
-                            checkBoxList_2.remove(value);
-                        }
-                    }
-                });
-            }
-        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,20 +150,10 @@ public class Screening_2 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (method.equals("Pap Smear")){
-                    pap = FunctionalUtils.convertListToString(checkBoxList_1);
-                }
-                else {
-                    hpv = FunctionalUtils.convertListToString(checkBoxList_2);
-                }
-
                 if (result.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (method.equals("Pap Smear") && pap.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (method.equals("HPV") && hpv.isEmpty()){
+                else if (result.equals("Suspicious of cancer") && susp.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -167,41 +166,97 @@ public class Screening_2 extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(RESULT, result);
-        editor.putString(PAP, pap);
-        editor.putString(HPV, hpv);
+        switch (method) {
+            case "VIA":
+                editor.putString(RESULT_VIA, result);
+                editor.putString(RESULT_COL, "");
+                editor.putString(HPV, "");
+                editor.putString(PAP, "");
+                break;
+            case "Colposcopy":
+                editor.putString(RESULT_COL, result);
+                editor.putString(RESULT_VIA, "");
+                editor.putString(HPV, "");
+                editor.putString(PAP, "");
+                break;
+            case "HPV":
+                editor.putString(HPV, result);
+                editor.putString(RESULT_COL, "");
+                editor.putString(RESULT_VIA, "");
+                editor.putString(PAP, "");
+                break;
+            default:
+                editor.putString(PAP, result);
+                editor.putString(RESULT_COL, "");
+                editor.putString(RESULT_VIA, "");
+                editor.putString(HPV, "");
+
+                break;
+        }
+        editor.putString(SUSPICIOUS, susp);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Treatment());
+        if (result.equals("Positive")){
+            fr.replace(R.id.fragment_container, new Treatment());
+        }
+        else {
+            editor.putString(TREATMENT, "");
+            editor.putString(GIVEN_TREATMENT, "");
+            editor.putString(POSTPONE, "");
+            editor.apply();
+            fr.replace(R.id.fragment_container, new Visit());
+        }
         fr.addToBackStack(null);
         fr.commit();
     }
 
     private void load_data(){
-        result = sharedPreferences.getString(RESULT, "");
+        via = sharedPreferences.getString(RESULT_VIA, "");
+        col = sharedPreferences.getString(RESULT_COL, "");
         pap = sharedPreferences.getString(PAP, "");
         hpv = sharedPreferences.getString(HPV, "");
+        susp = sharedPreferences.getString(SUSPICIOUS, "");
     }
 
     private void update_views(){
-        if (!result.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup, result);
-
-            if (result.equals("Positive")){
-                if (method.equals("Pap Smear")){
-                    linearLayout_1.setVisibility(View.VISIBLE);
-                    checkBoxList_1.clear();
-                    checkBoxList_1 = FunctionalUtils.convertStringToList(pap);
-                    FunctionalUtils.checkBoxes(linearLayout_1, checkBoxList_1);
-                }
-                else if (method.equals("HPV")){
-                    linearLayout_2.setVisibility(View.VISIBLE);
-                    checkBoxList_2.clear();
-                    checkBoxList_2 = FunctionalUtils.convertStringToList(hpv);
-                    FunctionalUtils.checkBoxes(linearLayout_2, checkBoxList_2);
-                }
+        if (!via.isEmpty() || !col.isEmpty()){
+            radioGroup.setVisibility(View.VISIBLE);
+            radioGroup2.setVisibility(View.GONE);
+            radioGroup3.setVisibility(View.GONE);
+            FunctionalUtils.setRadioButton(radioGroup, via);
+            if (!susp.isEmpty()){
+                linearLayout.setVisibility(View.VISIBLE);
+                FunctionalUtils.setRadioButton(radioGroup4, susp);
             }
         }
+        if (!col.isEmpty()){
+            radioGroup.setVisibility(View.VISIBLE);
+            radioGroup2.setVisibility(View.GONE);
+            radioGroup3.setVisibility(View.GONE);
+            FunctionalUtils.setRadioButton(radioGroup, col);
+            if (!susp.isEmpty()){
+                linearLayout.setVisibility(View.VISIBLE);
+                FunctionalUtils.setRadioButton(radioGroup4, susp);
+            }
+        }
+        if (!hpv.isEmpty()){
+            radioGroup.setVisibility(View.GONE);
+            radioGroup2.setVisibility(View.VISIBLE);
+            radioGroup3.setVisibility(View.GONE);
+            FunctionalUtils.setRadioButton(radioGroup2, hpv);
+            susp = "";
+        }
+        if (!pap.isEmpty()){
+            radioGroup.setVisibility(View.GONE);
+            radioGroup2.setVisibility(View.GONE);
+            radioGroup3.setVisibility(View.VISIBLE);
+            FunctionalUtils.setRadioButton(radioGroup3, pap);
+            if (!susp.isEmpty()){
+                linearLayout.setVisibility(View.VISIBLE);
+                FunctionalUtils.setRadioButton(radioGroup4, susp);
+            }
+        }
+
     }
 }

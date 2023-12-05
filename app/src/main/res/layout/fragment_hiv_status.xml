@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="What's the patient's viral load/CD4 count?"
+                        android:text="What's the patient's most recent viral load/CD4 count?"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 

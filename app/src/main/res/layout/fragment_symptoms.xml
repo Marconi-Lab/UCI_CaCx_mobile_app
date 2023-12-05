@@ -64,7 +64,8 @@
                         android:text="Yes"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -87,46 +88,63 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="What symptoms does the patient have *"
+                        android:text="What symptom does the patient have *"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
                         android:textColor="@color/black"/>
 
-                    <CheckBox
+                    <RadioGroup
+                        android:id="@+id/radioGroup_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Abnormal vaginal bleeding"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp">
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Abnormal vaginal discharge"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Abnormal vaginal bleeding"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Abnormal vaginal growth"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Abnormal vaginal discharge"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Abnormal urinary symptoms"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Abnormal vaginal growth"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="-10dp"/>
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Other"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Urinary symptoms"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="-10dp"/>
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Other"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/small"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="-10dp"/>
+
+                    </RadioGroup>
 
                 </LinearLayout>
 
@@ -142,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="Enter any other symptoms *"
+                        android:text="Specify the other symptom(s) *"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 

@@ -115,32 +115,51 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="For how long have you been on antiretroviral therapy (ART)?"
+                        android:text="When did the patient begin ART?"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Please enter value in years"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/smaller"
-                        android:textColor="@color/light_gray"/>
+                        android:orientation="horizontal"
+                        android:weightSum="10"
+                        android:layout_marginTop="10dp">
 
-                    <EditText
-                        android:id="@+id/years"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/primary_edit_text"
-                        android:layout_marginTop="10dp"
-                        android:textSize="@dimen/small"
-                        android:fontFamily="@font/sora_regular"
-                        android:textColorHint="@color/gray"
-                        android:inputType="number"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp"
-                        android:paddingTop="18dp"
-                        android:paddingBottom="18dp"/>
+                        <TextView
+                            android:id="@+id/when"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp"
+                            android:background="@drawable/primary_edit_text"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="@dimen/small"
+                            android:fontFamily="@font/sora_regular"
+                            android:textColorHint="@color/gray"/>
+
+                        <Button
+                            android:id="@+id/select"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:layout_marginStart="10dp"
+                            style="@style/Custom.OutlinedButton"
+                            android:backgroundTint="@color/light_blue"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp"
+                            android:textSize="@dimen/small"
+                            android:fontFamily="@font/sora_regular"
+                            android:textColorHint="@color/gray"
+                            android:text="Select Date"
+                            />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

@@ -14,35 +14,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
-import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tobacco extends Fragment {
+
+public class Contact_3 extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
-    Button next_btn, back_btn;
-    Spinner spinner_units;
-    EditText editText_duration;
-    RadioGroup radioGroup1;
     LinearLayout linearLayout;
-    String tobacco, duration, units;
-    int time;
-    public static  final String TOBACCO ="tobacco_use";
-    public static  final String DURATION ="for_how_long_on_tobacco";
-    public static  final String UNITS ="units";
+    Button next_btn, back_btn;
+    Spinner spinner_religion;
+    EditText editText_income;
+    String religion, income;
+    public static  final String RELIGION ="religion";
+    public static  final String INCOME ="level_of_income";
     List<Spinner> spinnerList = new ArrayList<>();
     ArrayAdapter<CharSequence> adapter1;
 
@@ -50,7 +46,7 @@ public class Tobacco extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tobacco, container, false);
+        view = inflater.inflate(R.layout.fragment_contact_3, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -58,39 +54,18 @@ public class Tobacco extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        radioGroup1 = view.findViewById(R.id.radioGroup_1);
-        linearLayout = view.findViewById(R.id.nin_layout);
-        editText_duration = view.findViewById(R.id.duration);
-
-        radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                RadioButton selectedRadioButton = view.findViewById(checkedId);
-                tobacco = selectedRadioButton.getText().toString();
-
-                if (tobacco.equals("Yes")) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    linearLayout.setVisibility(View.GONE);
-                    editText_duration.setText("");
-                    units = "";
-                    setSpinner(0, adapter1, "Select one");
-                }
-            }
-        });
+        editText_income = view.findViewById(R.id.income);
 
         initializeSpinners();
         setupSpinnerListeners();
 
         load_data();
-        update_views();
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Height());
+                fr.replace(R.id.fragment_container, new Nok_2());
                 fr.commit();
             }
         });
@@ -98,12 +73,9 @@ public class Tobacco extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                duration = editText_duration.getText().toString().trim();
+                income = editText_income.getText().toString().trim();
 
-                if (tobacco.isEmpty()) {
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (tobacco.equals("Yes") && (duration.isEmpty() || units.isEmpty())){
+                if (income.isEmpty() || religion.equals("Select one")) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -116,9 +88,9 @@ public class Tobacco extends Fragment {
     }
 
     private void initializeSpinners() {
-        spinner_units = view.findViewById(R.id.spinner_units);
+        spinner_religion = view.findViewById(R.id.spinner_religion);
 
-        spinnerList.add(spinner_units);
+        spinnerList.add(spinner_religion);
     }
 
     private void setupSpinnerListeners() {
@@ -129,10 +101,7 @@ public class Tobacco extends Fragment {
                 String selectedItem = parentView.getItemAtPosition(position).toString();
 
                 if (selectedSpinner == spinnerList.get(0)) {
-                    units = selectedItem;
-                    if (units.equals("Select one")){
-                        units = "";
-                    }
+                    religion = selectedItem;
                 }
             }
 
@@ -148,42 +117,25 @@ public class Tobacco extends Fragment {
         }
 
         adapter1 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.units, android.R.layout.simple_spinner_item);
+                requireActivity(), R.array.religion, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerList.get(0).setAdapter(adapter1);
     }
 
-
-    private void save_data() {
-        editor.putString(TOBACCO, tobacco);
-        editor.putString(DURATION, duration);
-        editor.putString(UNITS, units);
+    private void save_data(){
+        editor.putString(RELIGION, religion);
+        editor.putString(INCOME, income);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Hiv_Status());
+        fr.replace(R.id.fragment_container, new Height());
         fr.addToBackStack(null);
         fr.commit();
     }
 
-    private void load_data() {
-        tobacco = sharedPreferences.getString(TOBACCO, "");
-        duration = sharedPreferences.getString(DURATION, "");
-        units = sharedPreferences.getString(UNITS, "");
-    }
-
-    private void update_views() {
-
-        if (!tobacco.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup1, tobacco);
-
-            if (tobacco.equals("Yes")) {
-                linearLayout.setVisibility(View.VISIBLE);
-                editText_duration.setText(duration);
-                setSpinner(0, adapter1, units);
-            }
-
-        }
+    private void load_data(){
+        editText_income.setText(sharedPreferences.getString(INCOME, ""));
+        setSpinner(0, adapter1, sharedPreferences.getString(RELIGION, ""));
     }
 
     private void setSpinner(int index, ArrayAdapter<CharSequence> adapter, String value){

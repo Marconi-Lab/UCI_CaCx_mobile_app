@@ -4,6 +4,8 @@ import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.COMPLETE;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.DATE;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
+import static com.ug.air.uci_cacx.Fragments.Patient.Identification.FIRST_NAME;
+import static com.ug.air.uci_cacx.Fragments.Patient.Identification.LAST_NAME;
 import static com.ug.air.uci_cacx.Fragments.Patient.Identification.SCREENING_NUMBER;
 
 import android.content.Context;
@@ -107,7 +109,7 @@ public class FunctionalUtils {
     public static String generate_uuid(){
         UUID uuid = UUID.randomUUID();
         String shortUUID = uuid.toString().replaceAll("-", "");
-        shortUUID = shortUUID.substring(0, 8);
+        shortUUID = shortUUID.substring(0, 7);
         return shortUUID;
     }
 
@@ -126,6 +128,10 @@ public class FunctionalUtils {
         UUID uuid = UUID.randomUUID();
         String filename = uuid.toString();
 
+        String screening_number = FunctionalUtils.generate_uuid();
+        screening_number = "PNS-" + screening_number;
+
+        editor.putString(SCREENING_NUMBER, screening_number);
         editor.putString(DATE, formattedDate);
         editor.putBoolean(COMPLETE, status);
         editor.putString(FILENAME, filename);
@@ -199,12 +205,14 @@ public class FunctionalUtils {
             SharedPreferences sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
 
             String date = sharedPreferences.getString(DATE, "");
-            String screening = sharedPreferences.getString(SCREENING_NUMBER, "");
+            String first_name = sharedPreferences.getString(FIRST_NAME, "");
+            String last_name = sharedPreferences.getString(LAST_NAME, "");
+            String name = first_name + " " + last_name;
 
             Log.d("TAGGING", "getDataFromSharedPreferences: " + date);
-            Log.d("TAGGING", "getDataFromSharedPreferences: " + screening);
+            Log.d("TAGGING", "getDataFromSharedPreferences: " + name);
 
-            Form form = new Form("Patient: " + screening, "Saved on: " + date);
+            Form form = new Form("Patient: " + name, "Saved on: " + date);
             formList.add(form);
 
         }

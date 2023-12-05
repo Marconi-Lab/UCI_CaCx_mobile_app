@@ -93,82 +93,33 @@
                         android:textSize="@dimen/big"
                         android:textColor="@color/black" />
 
-                    <CheckBox
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pills"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
+                        android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="-10dp"/>
+                        android:background="@drawable/primary_edit_text"
+                        android:orientation="vertical"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp">
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Condoms"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
+                        <Spinner
+                            android:id="@+id/spinner_contra"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
 
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="IUD"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Injectable"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Implant"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Traditional"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Other"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/nin_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="How long have you been using this method? *"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="Enter your other contraceptive method *"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 
                     <EditText
-                        android:id="@+id/other"
+                        android:id="@+id/using"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/primary_edit_text"
@@ -182,57 +133,7 @@
                         android:paddingTop="18dp"
                         android:paddingBottom="18dp"/>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/con_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:text="For how long has the patient been using this method(s) *"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Less than 6 months"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="6 - 12 months"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="More than 12 months"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"/>
-
-                    </RadioGroup>
-
-                </LinearLayout>
+            </LinearLayout>
 
 
             </LinearLayout>

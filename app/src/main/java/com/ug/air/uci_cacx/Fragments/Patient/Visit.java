@@ -1,6 +1,9 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Patient.Screening_1.SCREEN_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_COL;
+import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_VIA;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -89,8 +92,16 @@ public class Visit extends Fragment {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String via = sharedPreferences.getString(RESULT_VIA, "");
+                String col = sharedPreferences.getString(RESULT_COL, "");
+
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Referred());
+                if (via.equals("Positive") || col.equals("Positive")){
+                    fr.replace(R.id.fragment_container, new Treatment());
+                }
+                else {
+                    fr.replace(R.id.fragment_container, new Screening_2());
+                }
                 fr.commit();
             }
         });
@@ -122,7 +133,15 @@ public class Visit extends Fragment {
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Clinicians());
+
+
+        String method = sharedPreferences.getString(SCREEN_METHOD, "");
+        if (method.equals("VIA")){
+            fr.replace(R.id.fragment_container, new Clinicians());
+        }
+        else{
+            fr.replace(R.id.fragment_container, new Results());
+        }
         fr.addToBackStack(null);
         fr.commit();
     }

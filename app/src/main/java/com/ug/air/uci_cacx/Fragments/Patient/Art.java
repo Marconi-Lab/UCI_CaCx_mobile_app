@@ -2,6 +2,7 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,14 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
+
+import java.util.Calendar;
 
 
 public class Art extends Fragment {
@@ -31,11 +36,13 @@ public class Art extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    EditText editText_regimen, editText_years;
+    EditText editText_regimen;
+    Button select_btn;
+    TextView textView_years;
     String art, years, regimen;
     int year;
     public static  final String ART ="on_ART";
-    public static  final String LONG ="years_on_ART";
+    public static  final String LONG ="ART_initial_date";
     public static  final String REGIMEN ="art_regimen";
 
     @Override
@@ -52,8 +59,9 @@ public class Art extends Fragment {
 
         radioGroup = view.findViewById(R.id.radioGroup_1);
         editText_regimen = view.findViewById(R.id.regimen);
-        editText_years = view.findViewById(R.id.years);
+        textView_years = view.findViewById(R.id.when);
         linearLayout = view.findViewById(R.id.nin_layout);
+        select_btn = view.findViewById(R.id.select);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -68,13 +76,20 @@ public class Art extends Fragment {
                 else {
                     linearLayout.setVisibility(View.GONE);
                     editText_regimen.setText("");
-                    editText_years.setText("");
+                    textView_years.setText("");
                 }
             }
         });
 
         load_data();
         update_views();
+
+        select_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open_dialog();
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +104,7 @@ public class Art extends Fragment {
             @Override
             public void onClick(View view) {
                 regimen = editText_regimen.getText().toString().trim();
-                years = editText_years.getText().toString().trim();
+                years = textView_years.getText().toString().trim();
 
                 if (art.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
@@ -109,13 +124,7 @@ public class Art extends Fragment {
     private void save_data() {
         editor.putString(ART, art);
         editor.putString(REGIMEN, regimen);
-        if (years.isEmpty()){
-            editor.putInt(LONG, 0);
-        }
-        else {
-            editor.putInt(LONG, Integer.parseInt(years));
-        }
-
+        editor.putString(LONG, years);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -127,7 +136,7 @@ public class Art extends Fragment {
     public void load_data(){
         art = sharedPreferences.getString(ART, "");
         regimen = sharedPreferences.getString(REGIMEN, "");
-        year = sharedPreferences.getInt(LONG, 0);
+        years = sharedPreferences.getString(LONG, "");
     }
 
     private void update_views(){
@@ -136,9 +145,26 @@ public class Art extends Fragment {
 
             if (art.equals("Yes")){
                 linearLayout.setVisibility(View.VISIBLE);
-                FunctionalUtils.checkZeroValue(editText_years, year);
+                textView_years.setText(years);
                 editText_regimen.setText(regimen);
             }
         }
+    }
+
+    private void open_dialog(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(requireActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                textView_years.setText(day + "/" + (month+1) + "/" + year);
+            }
+        }, year, month, day);
+
+        dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dialog.show();
     }
 }

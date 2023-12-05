@@ -2,6 +2,7 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_2.PRIOR_SCREEN_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Treatment.TREATMENT_1;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,10 +38,6 @@ public class Prior_screening_3 extends Fragment {
     RadioGroup radioGroup;
     String result, pap, hpv, method;
     public static  final String RESULT_1 ="prior_screening_result";
-    public static  final String PAP_1 ="prior_pap_smear_screening_result";
-    public static  final String HPV_1 ="prior_hpv_screening_result";
-    List<String> checkBoxList_1 = new ArrayList<>();
-    List<String> checkBoxList_2 = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,71 +54,17 @@ public class Prior_screening_3 extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup);
-        linearLayout_1 = view.findViewById(R.id.pap);
-        linearLayout_2 = view.findViewById(R.id.hpv);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 result = selectedRadioButton.getText().toString();
-
-                if (result.equals("Positive")) {
-                    if (method.equals("Pap Smear")){
-                        linearLayout_1.setVisibility(View.VISIBLE);
-                        linearLayout_2.setVisibility(View.GONE);
-                    }
-                    else if (method.equals("HPV")){
-                        linearLayout_2.setVisibility(View.VISIBLE);
-                        linearLayout_1.setVisibility(View.GONE);
-                    }
-                }
-                else {
-                    linearLayout_1.setVisibility(View.GONE);
-                    linearLayout_2.setVisibility(View.GONE);
-                }
-
             }
         });
 
         load_data();
         update_views();
-
-        for (int i = 0; i < linearLayout_1.getChildCount(); i++) {
-            if (linearLayout_1.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout_1.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList_1.add(value);
-                        }
-                        else {
-                            checkBoxList_1.remove(value);
-                        }
-                    }
-                });
-            }
-        }
-
-        for (int i = 0; i < linearLayout_2.getChildCount(); i++) {
-            if (linearLayout_2.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout_2.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList_2.add(value);
-                        }
-                        else {
-                            checkBoxList_2.remove(value);
-                        }
-                    }
-                });
-            }
-        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,20 +79,7 @@ public class Prior_screening_3 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (method.equals("Pap Smear")){
-                    pap = FunctionalUtils.convertListToString(checkBoxList_1);
-                }
-                else {
-                    hpv = FunctionalUtils.convertListToString(checkBoxList_2);
-                }
-
                 if (result.isEmpty()) {
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (method.equals("Pap Smear") && pap.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (method.equals("HPV") && hpv.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -163,40 +93,28 @@ public class Prior_screening_3 extends Fragment {
 
     private void save_data() {
         editor.putString(RESULT_1, result);
-        editor.putString(PAP_1, pap);
-        editor.putString(HPV_1, hpv);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Prior_Treatment());
+        if (result.equals("Positive")){
+            fr.replace(R.id.fragment_container, new Prior_Treatment());
+        }
+        else {
+            editor.putString(TREATMENT_1, "");
+            editor.apply();
+            fr.replace(R.id.fragment_container, new Screening_1());
+        }
         fr.addToBackStack(null);
         fr.commit();
     }
 
     private void load_data(){
         result = sharedPreferences.getString(RESULT_1, "");
-        pap = sharedPreferences.getString(PAP_1, "");
-        hpv = sharedPreferences.getString(HPV_1, "");
     }
 
     private void update_views(){
         if (!result.isEmpty()){
             FunctionalUtils.setRadioButton(radioGroup, result);
-
-            if (result.equals("Positive")){
-                if (method.equals("Pap Smear")){
-                    linearLayout_1.setVisibility(View.VISIBLE);
-                    checkBoxList_1.clear();
-                    checkBoxList_1 = FunctionalUtils.convertStringToList(pap);
-                    FunctionalUtils.checkBoxes(linearLayout_1, checkBoxList_1);
-                }
-                else if (method.equals("HPV")){
-                    linearLayout_2.setVisibility(View.VISIBLE);
-                    checkBoxList_2.clear();
-                    checkBoxList_2 = FunctionalUtils.convertStringToList(hpv);
-                    FunctionalUtils.checkBoxes(linearLayout_2, checkBoxList_2);
-                }
-            }
         }
     }
 }

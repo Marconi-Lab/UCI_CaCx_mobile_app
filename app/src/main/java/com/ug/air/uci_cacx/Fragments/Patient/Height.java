@@ -60,7 +60,7 @@ public class Height extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Identification());
+                fr.replace(R.id.fragment_container, new Contact_3());
                 fr.commit();
             }
         });
@@ -98,7 +98,7 @@ public class Height extends Fragment {
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Category());
+        fr.replace(R.id.fragment_container, new Tobacco());
         fr.addToBackStack(null);
         fr.commit();
 

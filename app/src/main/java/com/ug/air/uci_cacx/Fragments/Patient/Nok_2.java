@@ -172,10 +172,10 @@ public class Nok_2 extends Fragment {
         editor.putString(NOK_DISTRICT, district);
         editor.apply();
 
-//        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-//        fr.replace(R.id.fragment_container, new Nok_1());
-//        fr.addToBackStack(null);
-//        fr.commit();
+        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new Contact_3());
+        fr.addToBackStack(null);
+        fr.commit();
     }
 
     private void load_data(){

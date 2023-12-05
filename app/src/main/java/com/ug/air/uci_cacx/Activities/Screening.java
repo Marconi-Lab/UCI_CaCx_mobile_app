@@ -15,9 +15,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.ug.air.uci_cacx.Fragments.Patient.Citizen;
+import com.ug.air.uci_cacx.Fragments.Patient.Height;
 import com.ug.air.uci_cacx.Fragments.Patient.Identification;
 import com.ug.air.uci_cacx.Fragments.Patient.Nok_1;
+import com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1;
 import com.ug.air.uci_cacx.Fragments.Patient.Residence;
+import com.ug.air.uci_cacx.Fragments.Patient.Tobacco;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 

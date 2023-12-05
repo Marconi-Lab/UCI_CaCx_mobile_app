@@ -1,8 +1,6 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
-import static com.ug.air.uci_cacx.Fragments.Patient.Prior_screening_3.HPV_1;
-import static com.ug.air.uci_cacx.Fragments.Patient.Prior_screening_3.PAP_1;
 import static com.ug.air.uci_cacx.Fragments.Patient.Prior_screening_3.RESULT_1;
 
 import android.content.Context;
@@ -34,10 +32,8 @@ public class Prior_Screening_2 extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    EditText editText;
-    String method, other, old_method;
+    String method, old_method;
     public static  final String PRIOR_SCREEN_METHOD ="prior_screening_method";
-    public static  final String PRIOR_OTHER_SCREENING_METHOD ="prior_other_screening_method";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,21 +49,12 @@ public class Prior_Screening_2 extends Fragment {
 
         radioGroup = view.findViewById(R.id.radioGroup);
         linearLayout = view.findViewById(R.id.nin_layout);
-        editText = view.findViewById(R.id.nin_number);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 method = selectedRadioButton.getText().toString();
-
-                if (method.equals("Other")) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    linearLayout.setVisibility(View.GONE);
-                    editText.setText("");
-                }
             }
         });
 
@@ -86,12 +73,9 @@ public class Prior_Screening_2 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                other = editText.getText().toString().trim();
+
 
                 if (method.isEmpty()) {
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (method.equals("Other") && other.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -105,11 +89,8 @@ public class Prior_Screening_2 extends Fragment {
 
     private void save_data() {
         editor.putString(PRIOR_SCREEN_METHOD, method);
-        editor.putString(PRIOR_OTHER_SCREENING_METHOD, other);
         if (!method.equals(old_method)){
             editor.putString(RESULT_1, "");
-            editor.putString(PAP_1, "");
-            editor.putString(HPV_1, "");
         }
         editor.apply();
 
@@ -121,16 +102,11 @@ public class Prior_Screening_2 extends Fragment {
 
     private void load_data() {
         old_method = sharedPreferences.getString(PRIOR_SCREEN_METHOD, "");
-        other = sharedPreferences.getString(PRIOR_OTHER_SCREENING_METHOD, "");
     }
 
     private void update_views() {
         if (!old_method.isEmpty()){
             FunctionalUtils.setRadioButton(radioGroup, old_method);
-
-            if (old_method.equals("Other")){
-                editText.setText(other);
-            }
         }
     }
 }

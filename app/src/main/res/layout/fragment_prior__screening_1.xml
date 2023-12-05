@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Screening behavior - 1"
+            android:text="Screening Information - 1"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Prior Cacx Screening  *"
+                    android:text="Reason for visit  *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
@@ -61,20 +61,99 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Yes"
+                        android:text="Initial Screening"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="No"
+                        android:text="Rescreening at 1 year"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Rescreening at 3 year2"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Rescreening at 5 year2"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Post treatment followup at 6 weeks"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Post treatment followup at 1 year"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Other"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
 
                 </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/nin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other reasons for the visit? *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"/>
+
+            </LinearLayout>
 
 
             </LinearLayout>

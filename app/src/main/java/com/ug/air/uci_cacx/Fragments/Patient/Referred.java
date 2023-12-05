@@ -1,7 +1,7 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
-import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1.PRIOR;
+//import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1.PRIOR;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -47,15 +47,15 @@ public class Referred extends Fragment {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String prior = sharedPreferences.getString(PRIOR, "");
+//                String prior = sharedPreferences.getString(PRIOR, "");
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                if (prior.equals("Yes")) {
-                    fr.replace(R.id.fragment_container, new Prior_Treatment());
-                }
-                else {
-                    fr.replace(R.id.fragment_container, new Prior_Screening_1());
-                }
-                fr.commit();
+//                if (prior.equals("Yes")) {
+//                    fr.replace(R.id.fragment_container, new Prior_Treatment());
+//                }
+//                else {
+//                    fr.replace(R.id.fragment_container, new Prior_Screening_1());
+//                }
+//                fr.commit();
             }
         });
 

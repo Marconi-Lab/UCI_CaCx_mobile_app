@@ -73,6 +73,15 @@
                         android:text="No"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Unknown"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
 
                 </RadioGroup>
@@ -81,62 +90,75 @@
                     android:id="@+id/nin_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:weightSum="10">
 
-                    <TextView
-                        android:id="@+id/nin_name"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/big"
-                        android:text="For how long?"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="20dp"/>
+                        android:layout_weight="4"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical">
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <RadioButton
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Less than 1 year"
+                            android:layout_height="wrap_content"
+                            android:text="For how long *"
                             android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="1 - 4 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="5 - 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
-                            android:textColor="@color/black"
-                            android:layout_marginBottom="-10dp"/>
-
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="above 10 years"
-                            android:fontFamily="@font/sora_regular"
-                            android:textSize="@dimen/small"
+                            android:textSize="@dimen/big"
                             android:textColor="@color/black"/>
 
-                    </RadioGroup>
+                        <EditText
+                            android:id="@+id/duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/primary_edit_text"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/small"
+                            android:fontFamily="@font/sora_regular"
+                            android:textColorHint="@color/gray"
+                            android:inputType="number"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:paddingTop="18dp"
+                            android:paddingBottom="18dp"/>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Units *"
+                            android:fontFamily="@font/sora_regular"
+                            android:textSize="@dimen/big"
+                            android:textColor="@color/black"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/primary_edit_text"
+                            android:orientation="vertical"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp">
+
+                            <Spinner
+                                android:id="@+id/spinner_units"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

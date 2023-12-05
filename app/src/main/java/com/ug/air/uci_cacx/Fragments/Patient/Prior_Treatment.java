@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
@@ -32,9 +34,9 @@ public class Prior_Treatment extends Fragment {
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
+    RadioGroup radioGroup;
     String treatment;
     public static  final String TREATMENT_1 ="prior_treatment";
-    List<String> checkBoxList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,27 +50,17 @@ public class Prior_Treatment extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        linearLayout = view.findViewById(R.id.nin_layout);
+        radioGroup = view.findViewById(R.id.radioGroup);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                treatment = selectedRadioButton.getText().toString();
+            }
+        });
 
         load_data();
-
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            if (linearLayout.getChildAt(i) instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
-                String value = checkBox.getText().toString();
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked){
-                            checkBoxList.add(value);
-                        }
-                        else {
-                            checkBoxList.remove(value);
-                        }
-                    }
-                });
-            }
-        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +74,6 @@ public class Prior_Treatment extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                treatment = FunctionalUtils.convertListToString(checkBoxList);
 
                 if (treatment.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
@@ -101,7 +92,7 @@ public class Prior_Treatment extends Fragment {
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Referred());
+        fr.replace(R.id.fragment_container, new Screening_1());
         fr.addToBackStack(null);
         fr.commit();
     }
@@ -109,8 +100,8 @@ public class Prior_Treatment extends Fragment {
     private void load_data(){
         treatment = sharedPreferences.getString(TREATMENT_1, "");
 
-        checkBoxList.clear();
-        checkBoxList = FunctionalUtils.convertStringToList(treatment);
-        FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
+        if (!treatment.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, treatment);
+        }
     }
 }

@@ -49,6 +49,17 @@
         <item>Unspecified</item>
     </string-array>
 
+    <string-array name="religion">
+        <item>Select one</item>
+        <item>Catholic</item>
+        <item>Anglican</item>
+        <item>Islam</item>
+        <item>Pentecostal</item>
+        <item>Other Christian</item>
+        <item>Seventh-day Adventist</item>
+        <item>No religion</item>
+    </string-array>
+
     <string-array name="employment">
         <item>Select one</item>
         <item>Construction</item>
@@ -87,11 +98,47 @@
         <item>Father</item>
         <item>Mother</item>
         <item>Nice/Nephew</item>
+        <item>Parent</item>
         <item>Sibling</item>
         <item>Spouse</item>
         <item>Supervisee</item>
         <item>Supervisor</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="units">
+        <item>Select one</item>
+        <item>Times</item>
+        <item>Months</item>
+        <item>Years</item>
+    </string-array>
+
+    <string-array name="contraceptives">
+        <item>Select one</item>
+        <item>Condoms</item>
+        <item>Contraception method undecided</item>
+        <item>Diaphragm</item>
+        <item>Emergency contraceptive pills</item>
+        <item>Female condom</item>
+        <item>Female sterilization</item>
+        <item>Hysterectomy</item>
+        <item>IUD Contraception</item>
+        <item>Implantable contraceptive (unspecified type)</item>
+        <item>Injectable contraceptives</item>
+        <item>Intrauterine device</item>
+        <item>Lactational amenorrhea</item>
+        <item>Levonorgestrel</item>
+        <item>Male condom</item>
+        <item>Medroxyprogesterone acetate</item>
+        <item>Natural family planning</item>
+        <item>Norplant (implantable contraceptive)</item>
+        <item>Not applicable</item>
+        <item>Oral contraception</item>
+        <item>Other</item>
+        <item>Sexual abstinence</item>
+        <item>Tubal ligation procedure</item>
+        <item>Unknown</item>
+        <item>Vasectomy</item>
     </string-array>
 
 </resources>
