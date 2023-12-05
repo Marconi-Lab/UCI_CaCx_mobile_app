@@ -23,7 +23,7 @@
             android:text="Patient: UCI456"
             android:textColor="@color/black"
             android:fontFamily="@font/sora_medium"
-            android:textSize="@dimen/big"
+            android:textSize="@dimen/small"
             android:layout_gravity="center_vertical"/>
 
         <TextView
@@ -35,7 +35,7 @@
             android:text="Saved on: 12-12-2023_09:45:43"
             android:textColor="@color/gray"
             android:fontFamily="@font/sora_regular"
-            android:textSize="@dimen/small"
+            android:textSize="@dimen/smaller"
             android:gravity="end"/>
 
     </LinearLayout>

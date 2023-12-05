@@ -4,6 +4,7 @@ import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.COMPLETE;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.DATE;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
+import static com.ug.air.uci_cacx.Fragments.Patient.Identification.SCREENING_NUMBER;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,10 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.ug.air.uci_cacx.Models.Form;
+
+import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -152,4 +159,57 @@ public class FunctionalUtils {
         editor.commit();
 
     }
+
+    public static List<String> getSharedPreferencesFileNames(Context context) {
+        List<String> fileNames = new ArrayList<>();
+
+        // Get the list of SharedPreferences files in the shared_prefs folder
+        File sharedPrefsDir = new File(context.getApplicationInfo().dataDir + "/shared_prefs");
+        File[] files = sharedPrefsDir.listFiles();
+
+        // Iterate over the files and extract the filenames
+        if (files != null) {
+            for (File file : files) {
+                String fileName = file.getName();
+                if (fileName.endsWith(".xml") && !fileName.equals("shared_pref.xml") && !fileName.equals("credentials.xml")) {
+                    String preferenceName = fileName.substring(0, fileName.length() - 4);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
+                    boolean status = sharedPreferences.getBoolean(COMPLETE, false);
+
+                    if (status){
+                        fileNames.add(preferenceName);
+                        Log.d("TAG", "getSharedPreferencesFileNames: " + fileNames);
+                    }
+
+                }
+            }
+        }
+
+        return fileNames;
+    }
+
+    public static List<Form> getDataFromSharedPreferences(Context context, List<String> fileNames) {
+
+        List<Form> formList = new ArrayList<>();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
+        for (String fileName : fileNames) {
+            Log.d("TAGGING", "getDataFromSharedPreferences: " + fileName);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+
+            String date = sharedPreferences.getString(DATE, "");
+            String screening = sharedPreferences.getString(SCREENING_NUMBER, "");
+
+            Log.d("TAGGING", "getDataFromSharedPreferences: " + date);
+            Log.d("TAGGING", "getDataFromSharedPreferences: " + screening);
+
+            Form form = new Form("Patient: " + screening, "Saved on: " + date);
+            formList.add(form);
+
+        }
+
+        return formList;
+    }
+
 }

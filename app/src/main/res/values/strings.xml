@@ -20,4 +20,12 @@
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="identification_category">Identification Category</string>
+
+    <string-array name="region">
+        <item>Select one</item>
+        <item>Northern</item>
+        <item>Central</item>
+        <item>Eastern</item>
+        <item>Western</item>
+    </string-array>
 </resources>

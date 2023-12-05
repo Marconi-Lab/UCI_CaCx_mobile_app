@@ -94,14 +94,6 @@
                         android:textColor="@color/black"
                         android:layout_marginBottom="-10dp"/>
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="Widowed"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/small" />
-
                 </RadioGroup>
 
                 <TextView
@@ -144,6 +136,14 @@
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sora_regular"
+                        android:text="Widowed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small" />
 
                 </RadioGroup>
 
@@ -203,7 +203,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="No Religion"
+                        android:text="No religion"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"

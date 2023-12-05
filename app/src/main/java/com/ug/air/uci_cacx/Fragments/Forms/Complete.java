@@ -3,20 +3,47 @@ package com.ug.air.uci_cacx.Fragments.Forms;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.ug.air.uci_cacx.Adapters.FormAdapter;
+import com.ug.air.uci_cacx.Models.Form;
 import com.ug.air.uci_cacx.R;
+import com.ug.air.uci_cacx.Utils.FunctionalUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Complete extends Fragment {
 
+    View view;
+    List<Form> formList = new ArrayList<>();
+    FormAdapter formAdapter;
+    RecyclerView recyclerView;
+    Button upload;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_complete, container, false);
+        view = inflater.inflate(R.layout.fragment_complete, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        upload = view.findViewById(R.id.upload);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        List<String> sharedPreferenceFilenames = FunctionalUtils.getSharedPreferencesFileNames(requireActivity());
+        formList = FunctionalUtils.getDataFromSharedPreferences(requireActivity(), sharedPreferenceFilenames);
+
+        formAdapter = new FormAdapter(requireActivity(), formList);
+        recyclerView.setAdapter(formAdapter);
+
+        return view;
     }
 }

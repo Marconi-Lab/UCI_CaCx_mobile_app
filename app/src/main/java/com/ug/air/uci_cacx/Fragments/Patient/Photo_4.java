@@ -46,7 +46,7 @@ public class Photo_4 extends Fragment {
     Button next_btn, back_btn, take_btn;
     String image_name, image_path;
     public static  final String IMAGE_NAME_4 ="image_name_4";
-    public static  final String IMAGE_PATH_4 ="image_path_4";
+    public static  final String IMAGE_PATH_4 ="fourth_patient_image";
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 152;
     public static final int GALLERY_REQUEST_CODE = 105;

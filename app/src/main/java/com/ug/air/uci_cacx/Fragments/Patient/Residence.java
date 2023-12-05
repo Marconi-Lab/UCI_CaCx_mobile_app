@@ -12,8 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
@@ -23,12 +25,13 @@ public class Residence extends Fragment {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
+    Spinner spinner;
     Button next_btn, back_btn;
     EditText editText_district, editText_sub_county, editText_parish, editText_village;
-    String district, sub_county, parish, village;
+    String district, sub_county, village, region;
     public static  final String DISTRICT ="district_residence";
-    public static  final String SUB_COUNTY ="sub_county_residence";
-    public static  final String PARISH ="parish_residence";
+    public static  final String REGION ="region_residence";
+    public static  final String SUB_COUNTY ="sub-county_residence";
     public static  final String VILLAGE ="village_residence";
 
     @Override
@@ -46,7 +49,13 @@ public class Residence extends Fragment {
         editText_district = view.findViewById(R.id.district);
         editText_village = view.findViewById(R.id.village);
         editText_sub_county = view.findViewById(R.id.sub_county);
-        editText_parish = view.findViewById(R.id.parish);
+        spinner = view.findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
+                requireActivity(), R.array.region, android.R.layout.simple_spinner_item
+        );
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter1);
 
         update_views();
 
@@ -64,11 +73,15 @@ public class Residence extends Fragment {
             public void onClick(View view) {
                 district = editText_district.getText().toString().trim();
                 sub_county = editText_sub_county.getText().toString().trim();
-                parish = editText_parish.getText().toString().trim();
+//                parish = editText_parish.getText().toString().trim();
                 village = editText_village.getText().toString().trim();
+                region = spinner.getSelectedItem().toString();
 
-                if (district.isEmpty() || sub_county.isEmpty() || parish.isEmpty() || village.isEmpty()){
+                if (district.isEmpty() || sub_county.isEmpty() || region.isEmpty()  || village.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else if (region.equals("Select one")){
+                    Toast.makeText(requireActivity(), "Please select the region", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     save_data();
@@ -79,10 +92,26 @@ public class Residence extends Fragment {
         return view;
     }
 
+    private Spinner.OnItemSelectedListener spinnerListener = new Spinner.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(android.widget.AdapterView<?> adapterView, android.view.View view, int position, long l) {
+            region = spinner.getSelectedItem().toString();
+            if (region.equals("Select on")){
+                region = "";
+            }
+            Toast.makeText(requireActivity(), region, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(android.widget.AdapterView<?> adapterView) {
+            // Nothing to do here
+        }
+    };
+
     private void save_data() {
         editor.putString(DISTRICT, district);
         editor.putString(SUB_COUNTY, sub_county);
-        editor.putString(PARISH, parish);
+        editor.putString(REGION, region);
         editor.putString(VILLAGE, village);
         editor.apply();
 
@@ -95,7 +124,8 @@ public class Residence extends Fragment {
     private void update_views() {
         editText_district.setText(sharedPreferences.getString(DISTRICT, ""));
         editText_sub_county.setText(sharedPreferences.getString(SUB_COUNTY, ""));
-        editText_parish.setText(sharedPreferences.getString(PARISH, ""));
         editText_village.setText(sharedPreferences.getString(VILLAGE, ""));
+
+
     }
 }
