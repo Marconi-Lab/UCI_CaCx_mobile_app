@@ -23,9 +23,75 @@
 
     <string-array name="region">
         <item>Select one</item>
-        <item>Northern</item>
-        <item>Central</item>
-        <item>Eastern</item>
-        <item>Western</item>
+        <item>Northern Region</item>
+        <item>Central Region</item>
+        <item>Eastern Region</item>
+        <item>Western Region</item>
     </string-array>
+
+    <string-array name="education">
+        <item>Select one</item>
+        <item>Primary education</item>
+        <item>Secondary education</item>
+        <item>Tertiary eduction</item>
+        <item>Undergraduate</item>
+        <item>Non Formal education</item>
+        <item>Uneducated</item>
+    </string-array>
+
+    <string-array name="marital">
+        <item>Select one</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+        <item>Separated</item>
+        <item>Unspecified</item>
+    </string-array>
+
+    <string-array name="employment">
+        <item>Select one</item>
+        <item>Construction</item>
+        <item>Transport</item>
+        <item>Health</item>
+        <item>Mining</item>
+        <item>Tourism</item>
+        <item>Engineering</item>
+        <item>Informal</item>
+        <item>Education</item>
+        <item>Agriculture</item>
+        <item>Retail</item>
+        <item>Uniformed</item>
+        <item>Not applicable</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="nok">
+        <item>Select one</item>
+        <item>Next of Kin: With decision-making rights on the health of the patient</item>
+        <item>Contact Person: A person to contact in relation with the patient</item>
+        <item>Unspecified: Unspecified contact person </item>
+    </string-array>
+
+    <string-array name="id_type">
+        <item>Select one</item>
+        <item>NIN</item>
+        <item>Passport</item>
+    </string-array>
+
+    <string-array name="relationship">
+        <item>Select one</item>
+        <item>Aunt/Uncle</item>
+        <item>Child</item>
+        <item>Dependent</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Nice/Nephew</item>
+        <item>Sibling</item>
+        <item>Spouse</item>
+        <item>Supervisee</item>
+        <item>Supervisor</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

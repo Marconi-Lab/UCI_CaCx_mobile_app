@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Patient.Contact_2">
+    tools:context=".Fragments.Patient.Nok_2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Patient's Additional Information - 2"
+            android:text="Next of Kin Details - 2"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,88 +47,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Martial Status *"
+                    android:text="Contact Number *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/primary_edit_text"
-                    android:orientation="vertical"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp">
-
-                    <Spinner
-                        android:id="@+id/spinner_marital"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Highest Level of Eduction *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/primary_edit_text"
-                    android:orientation="vertical"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp">
-
-                    <Spinner
-                        android:id="@+id/spinner_education"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Employment Sector *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/primary_edit_text"
-                    android:orientation="vertical"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp">
-
-                    <Spinner
-                        android:id="@+id/spinner_employment"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Occupation *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
                 <EditText
-                    android:id="@+id/occupation"
+                    android:id="@+id/contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
@@ -136,7 +61,7 @@
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
@@ -145,14 +70,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name of employer *"
+                    android:text="Email"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is optional"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/smaller"
+                    android:textColor="@color/light_gray"/>
+
                 <EditText
-                    android:id="@+id/employer"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
@@ -160,7 +93,7 @@
                     android:textSize="@dimen/small"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
+                    android:inputType="textEmailAddress"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
@@ -212,6 +145,7 @@
                     android:inputType="text"
                     android:textColorHint="@color/gray"
                     android:textSize="@dimen/small"/>
+
 
             </LinearLayout>
 

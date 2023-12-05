@@ -47,58 +47,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tribe *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/tribe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/primary_edit_text"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/small"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Preferred Language *"
-                    android:fontFamily="@font/sora_regular"
-                    android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
-
-                <EditText
-                    android:id="@+id/language"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/primary_edit_text"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/small"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textCapSentences"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="Contact *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="20dp"/>
+                    android:textColor="@color/black"/>
 
                 <EditText
                     android:id="@+id/contact"
@@ -142,6 +94,62 @@
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
                     android:inputType="number"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is optional"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/smaller"
+                    android:textColor="@color/light_gray"/>
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preferred Language *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textCapSentences"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"

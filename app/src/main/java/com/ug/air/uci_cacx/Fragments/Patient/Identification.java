@@ -26,11 +26,12 @@ public class Identification extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
-    EditText editText_screening_number, editText_first_name, editText_last_name, editText_age;
-    String screening, first, last, ax;
+    EditText editText_screening_number, editText_first_name, editText_last_name, editText_age, editText_middle_name;
+    String middle, first, last, ax;
     int age;
     public static  final String SCREENING_NUMBER ="screening_number";
     public static  final String FIRST_NAME ="first_name";
+    public static  final String MIDDLE_NAME ="middle_name";
     public static  final String LAST_NAME ="last_name";
     public static  final String AGE ="age";
 
@@ -45,8 +46,9 @@ public class Identification extends Fragment {
         editor = sharedPreferences.edit();
 
         next_btn = view.findViewById(R.id.next);
+        back_btn = view.findViewById(R.id.back);
 
-        editText_screening_number = view.findViewById(R.id.screening_number);
+        editText_middle_name = view.findViewById(R.id.middle_name);
         editText_first_name = view.findViewById(R.id.first_name);
         editText_last_name = view.findViewById(R.id.last_name);
         editText_age = view.findViewById(R.id.age);
@@ -56,15 +58,24 @@ public class Identification extends Fragment {
         load_data();
         update_views();
 
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new Citizen());
+                fr.commit();
+            }
+        });
+
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                screening = editText_screening_number.getText().toString().trim();
+                middle = editText_middle_name.getText().toString().trim();
                 first = editText_first_name.getText().toString().trim();
                 last = editText_last_name.getText().toString().trim();
                 ax = editText_age.getText().toString().trim();
 
-                if (screening.isEmpty() || first.isEmpty() || last.isEmpty() || ax.isEmpty()){
+                if (first.isEmpty() || last.isEmpty() || ax.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -77,27 +88,27 @@ public class Identification extends Fragment {
     }
 
     private void save_data() {
-        editor.putString(SCREENING_NUMBER, screening);
+        editor.putString(MIDDLE_NAME, middle);
         editor.putString(FIRST_NAME, first);
         editor.putString(LAST_NAME, last);
         editor.putInt(AGE, Integer.parseInt(ax));
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Height());
+        fr.replace(R.id.fragment_container, new Contact_1());
         fr.addToBackStack(null);
         fr.commit();
     }
 
     private void load_data() {
-        screening = sharedPreferences.getString(SCREENING_NUMBER, "");
+        middle = sharedPreferences.getString(MIDDLE_NAME, "");
         first = sharedPreferences.getString(FIRST_NAME, "");
         last = sharedPreferences.getString(LAST_NAME, "");
         age = sharedPreferences.getInt(AGE, 0);
     }
 
     private void update_views() {
-        editText_screening_number.setText(screening);
+        editText_middle_name.setText(middle);
         editText_first_name.setText(first);
         editText_last_name.setText(last);
 

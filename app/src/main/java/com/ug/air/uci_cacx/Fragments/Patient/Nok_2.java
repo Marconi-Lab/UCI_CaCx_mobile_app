@@ -20,8 +20,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,34 +29,32 @@ import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contact_2 extends Fragment {
+
+public class Nok_2 extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
-    Spinner spinner_marital, spinner_education, spinner_sector, spinner_region;
-    EditText editText_employer, editText_occupation;
+    Spinner spinner_region;
+    EditText editText_contact, editText_email;
     AutoCompleteTextView autoCompleteTextView;
-    String marital, eduction, region, employer, occupation, sector, district;
-    public static  final String EDUCATION ="Highest_eduction_level";
-    public static  final String MARITAL ="marital_status";
-    public static  final String OCCUPATION ="occupation";
-    public static  final String REGION ="region";
-    public static  final String SECTOR ="employment_sector";
-    public static  final String EMPLOYEE ="employee";
-    public static  final String DISTRICT ="district";
+    String contact, email, region, district;
+    public static  final String NOK_EMAIL ="nok_email";
+    public static  final String NOK_REGION ="nok_region";
+    public static  final String NOK_DISTRICT ="nok_district";
+    public static  final String NOK_CONTACT ="nok_contact_number";
     List<Spinner> spinnerList = new ArrayList<>();
     ArrayList<String> districtList;
     ArrayAdapter<String> singleAdapter;
-    ArrayAdapter<CharSequence> adapter1, adapter2, adapter3, adapter4;
+    ArrayAdapter<CharSequence> adapter1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_contact_2, container, false);
+        view = inflater.inflate(R.layout.fragment_nok_2, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -66,8 +62,8 @@ public class Contact_2 extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        editText_employer = view.findViewById(R.id.employer);
-        editText_occupation = view.findViewById(R.id.occupation);
+        editText_contact = view.findViewById(R.id.contact);
+        editText_email = view.findViewById(R.id.email);
         autoCompleteTextView = view.findViewById(R.id.district);
 
         initializeSpinners();
@@ -76,13 +72,12 @@ public class Contact_2 extends Fragment {
         setupAutoComplete();
 
         load_data();
-        update_views();
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Contact_1());
+                fr.replace(R.id.fragment_container, new Nok_1());
                 fr.commit();
             }
         });
@@ -90,13 +85,11 @@ public class Contact_2 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                employer = editText_employer.getText().toString().trim();
-                occupation = editText_occupation.getText().toString().trim();
+                email = editText_email.getText().toString().trim();
+                contact = editText_contact.getText().toString().trim();
                 district = autoCompleteTextView.getText().toString().trim();
 
-                if (employer.isEmpty() || occupation.isEmpty() || district.isEmpty() ||
-                        eduction.equals("Select one") || marital.equals("Select one") ||
-                        region.equals("Select one") || sector.equals("Select one")){
+                if (contact.isEmpty() || district.isEmpty() || region.equals("Select one")) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -109,14 +102,8 @@ public class Contact_2 extends Fragment {
     }
 
     private void initializeSpinners() {
-        spinner_education = view.findViewById(R.id.spinner_education);
-        spinner_marital = view.findViewById(R.id.spinner_marital);
-        spinner_sector = view.findViewById(R.id.spinner_employment);
         spinner_region = view.findViewById(R.id.spinner_region);
 
-        spinnerList.add(spinner_marital);
-        spinnerList.add(spinner_education);
-        spinnerList.add(spinner_sector);
         spinnerList.add(spinner_region);
     }
 
@@ -128,15 +115,6 @@ public class Contact_2 extends Fragment {
                 String selectedItem = parentView.getItemAtPosition(position).toString();
 
                 if (selectedSpinner == spinnerList.get(0)) {
-                    marital = selectedItem;
-                }
-                else if (selectedSpinner == spinnerList.get(1)) {
-                    eduction = selectedItem;
-                }
-                else if (selectedSpinner == spinnerList.get(2)) {
-                    sector = selectedItem;
-                }
-                else if (selectedSpinner == spinnerList.get(3)) {
                     region = selectedItem;
                 }
             }
@@ -153,24 +131,9 @@ public class Contact_2 extends Fragment {
         }
 
         adapter1 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.marital, android.R.layout.simple_spinner_item);
+                requireActivity(), R.array.region, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerList.get(0).setAdapter(adapter1);
-
-        adapter2 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.education, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerList.get(1).setAdapter(adapter2);
-
-        adapter3 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.employment, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerList.get(2).setAdapter(adapter3);
-
-        adapter4 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.region, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerList.get(3).setAdapter(adapter4);
     }
 
     private void setupAutoComplete() {
@@ -202,42 +165,24 @@ public class Contact_2 extends Fragment {
         });
     }
 
-    private void save_data() {
-        editor.putString(EDUCATION, eduction);
-        editor.putString(MARITAL, marital);
-        editor.putString(REGION, region);
-        editor.putString(DISTRICT, district);
-        editor.putString(EMPLOYEE, employer);
-        editor.putString(OCCUPATION, occupation);
-        editor.putString(SECTOR, sector);
+    private void save_data(){
+        editor.putString(NOK_CONTACT, contact);
+        editor.putString(NOK_EMAIL, email);
+        editor.putString(NOK_REGION, region);
+        editor.putString(NOK_DISTRICT, district);
         editor.apply();
 
-        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Nok_1());
-        fr.addToBackStack(null);
-        fr.commit();
+//        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+//        fr.replace(R.id.fragment_container, new Nok_1());
+//        fr.addToBackStack(null);
+//        fr.commit();
     }
 
-    private void load_data() {
-        eduction = sharedPreferences.getString(EDUCATION, "");
-        marital = sharedPreferences.getString(MARITAL, "");
-        employer = sharedPreferences.getString(EMPLOYEE, "");
-        occupation = sharedPreferences.getString(OCCUPATION, "");
-        sector = sharedPreferences.getString(SECTOR, "");
-        region = sharedPreferences.getString(REGION, "");
-        district = sharedPreferences.getString(DISTRICT, "");
-    }
-
-    private void update_views() {
-        autoCompleteTextView.setText(district);
-        editText_occupation.setText(occupation);
-        editText_employer.setText(employer);
-
-        setSpinner(0, adapter1, marital);
-        setSpinner(1, adapter2, eduction);
-        setSpinner(2, adapter3, sector);
-        setSpinner(3, adapter4, region);
-
+    private void load_data(){
+        editText_email.setText(sharedPreferences.getString(NOK_EMAIL, ""));
+        editText_contact.setText(sharedPreferences.getString(NOK_CONTACT, ""));
+        autoCompleteTextView.setText(sharedPreferences.getString(NOK_DISTRICT, ""));
+        setSpinner(0, adapter1, sharedPreferences.getString(NOK_REGION, ""));
     }
 
     private void setSpinner(int index, ArrayAdapter<CharSequence> adapter, String value){

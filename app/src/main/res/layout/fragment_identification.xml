@@ -48,23 +48,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Screening Number *"
+                    android:text="First Name *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
                 <EditText
-                    android:id="@+id/screening_number"
+                    android:id="@+id/first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
                     android:layout_marginTop="10dp"
                     android:textSize="@dimen/small"
-                    android:hint="for example UCI980"
                     android:fontFamily="@font/sora_regular"
                     android:textColorHint="@color/gray"
-                    android:autofillHints="emailAddress"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textCapSentences"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:paddingTop="18dp"
@@ -73,14 +71,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="First Name *"
+                    android:text="Middle Name"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is optional"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/smaller"
+                    android:textColor="@color/light_gray"/>
+
                 <EditText
-                    android:id="@+id/first_name"
+                    android:id="@+id/middle_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/primary_edit_text"
@@ -152,18 +158,18 @@
             android:layout_height="?actionBarSize"
             android:layout_alignParentBottom="true">
 
-<!--            <Button-->
-<!--                android:id="@+id/back"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentStart="true"-->
-<!--                android:layout_margin="10dp"-->
-<!--                android:text="@string/back"-->
-<!--                android:fontFamily="@font/sora_regular"-->
-<!--                android:textSize="@dimen/bigger"-->
-<!--                android:textColor="@color/blue"-->
-<!--                style="@style/Custom.OutlinedButton"-->
-<!--                android:backgroundTint="@color/light_blue"/>-->
+            <Button
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:text="@string/back"
+                android:fontFamily="@font/sora_regular"
+                android:textSize="@dimen/bigger"
+                android:textColor="@color/blue"
+                style="@style/Custom.OutlinedButton"
+                android:backgroundTint="@color/light_blue"/>
 
             <Button
                 android:id="@+id/next"
