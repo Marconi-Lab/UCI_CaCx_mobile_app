@@ -94,21 +94,21 @@
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 
-                    <EditText
-                        android:id="@+id/regimen"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/primary_edit_text"
+                        android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        android:textSize="@dimen/small"
-                        android:fontFamily="@font/sora_regular"
-                        android:textColorHint="@color/gray"
-                        android:autofillHints="emailAddress"
-                        android:inputType="textCapSentences"
+                        android:background="@drawable/primary_edit_text"
+                        android:orientation="vertical"
                         android:paddingStart="15dp"
-                        android:paddingEnd="15dp"
-                        android:paddingTop="18dp"
-                        android:paddingBottom="18dp"/>
+                        android:paddingEnd="15dp">
+
+                        <Spinner
+                            android:id="@+id/spinner_regime"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"

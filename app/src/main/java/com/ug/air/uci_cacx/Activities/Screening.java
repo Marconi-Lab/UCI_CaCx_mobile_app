@@ -21,6 +21,7 @@ import com.ug.air.uci_cacx.Fragments.Patient.Nok_1;
 import com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1;
 import com.ug.air.uci_cacx.Fragments.Patient.Residence;
 import com.ug.air.uci_cacx.Fragments.Patient.Tobacco;
+import com.ug.air.uci_cacx.Fragments.Patient.Visit;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
@@ -40,7 +41,7 @@ public class Screening extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.fragment_container, new Identification());
+//        fragmentTransaction.add(R.id.fragment_container, new Visit());
         fragmentTransaction.add(R.id.fragment_container, new Citizen());
         fragmentTransaction.commit();
     }

@@ -141,4 +141,35 @@
         <item>Vasectomy</item>
     </string-array>
 
+    <string-array name="regimen">
+        <item>Select one</item>
+        <item>ABC-3TC-ATV/r</item>
+        <item>ABC-3TC-EFV</item>
+        <item>ABC-3TC-NVP</item>
+        <item>ABC/3TC/DTG</item>
+        <item>AZT-3TC-LPV/r</item>
+        <item>AZT-DDI-LPV/r</item>
+        <item>AZT/3TC/DTG</item>
+        <item>OTHER FIRST LINE REGIMEN</item>
+        <item>OTHER SECOND LINE REGIMEN</item>
+        <item>OTHER SPECIFY</item>
+        <item>TDF-3TC-ATV/r</item>
+        <item>TDF-3TC-EFV</item>
+        <item>TDF-3TC-LPV/r</item>
+        <item>TDF-3TC-NVP</item>
+        <item>TDF-DDI-LPV/R</item>
+        <item>TDF-DDI-SQV/R</item>
+        <item>TDF-FTC-EFV</item>
+        <item>TDF-FTC-LPV/r</item>
+        <item>TDF-FTC-NVP</item>
+        <item>TDF/3TC/DTG</item>
+    </string-array>
+
+    <string-array name="contact">
+        <item>Select one</item>
+        <item>Live call from HW</item>
+        <item>SMS</item>
+        <item>Automated Attendant (IVR)</item>
+    </string-array>
+
 </resources>

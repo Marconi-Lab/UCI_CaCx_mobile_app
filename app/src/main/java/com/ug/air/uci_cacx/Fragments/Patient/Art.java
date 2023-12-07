@@ -13,19 +13,24 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class Art extends Fragment {
@@ -36,7 +41,7 @@ public class Art extends Fragment {
     Button next_btn, back_btn;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    EditText editText_regimen;
+    Spinner spinner_regime;
     Button select_btn;
     TextView textView_years;
     String art, years, regimen;
@@ -44,6 +49,8 @@ public class Art extends Fragment {
     public static  final String ART ="on_ART";
     public static  final String LONG ="ART_initial_date";
     public static  final String REGIMEN ="art_regimen";
+    List<Spinner> spinnerList = new ArrayList<>();
+    ArrayAdapter<CharSequence> adapter1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +65,6 @@ public class Art extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup_1);
-        editText_regimen = view.findViewById(R.id.regimen);
         textView_years = view.findViewById(R.id.when);
         linearLayout = view.findViewById(R.id.nin_layout);
         select_btn = view.findViewById(R.id.select);
@@ -75,11 +81,15 @@ public class Art extends Fragment {
                 }
                 else {
                     linearLayout.setVisibility(View.GONE);
-                    editText_regimen.setText("");
+                    regimen = "";
+                    setSpinner(0, adapter1, "Select one");
                     textView_years.setText("");
                 }
             }
         });
+
+        initializeSpinners();
+        setupSpinnerListeners();
 
         load_data();
         update_views();
@@ -103,7 +113,6 @@ public class Art extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                regimen = editText_regimen.getText().toString().trim();
                 years = textView_years.getText().toString().trim();
 
                 if (art.isEmpty()){
@@ -119,6 +128,45 @@ public class Art extends Fragment {
         });
 
         return view;
+    }
+
+    private void initializeSpinners() {
+        spinner_regime = view.findViewById(R.id.spinner_regime);
+
+        spinnerList.add(spinner_regime);
+    }
+
+    private void setupSpinnerListeners() {
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Spinner selectedSpinner = (Spinner) parentView;
+                String selectedItem = parentView.getItemAtPosition(position).toString();
+
+                if (selectedSpinner == spinnerList.get(0)) {
+                    regimen = selectedItem;
+
+                    if (regimen.equals("Select one")){
+                        regimen = "";
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+
+        // Apply the listener to each spinner
+        for (Spinner spinner : spinnerList) {
+            spinner.setOnItemSelectedListener(spinnerListener);
+        }
+
+        adapter1 = ArrayAdapter.createFromResource(
+                requireActivity(), R.array.regimen, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerList.get(0).setAdapter(adapter1);
     }
 
     private void save_data() {
@@ -146,7 +194,7 @@ public class Art extends Fragment {
             if (art.equals("Yes")){
                 linearLayout.setVisibility(View.VISIBLE);
                 textView_years.setText(years);
-                editText_regimen.setText(regimen);
+                setSpinner(0, adapter1, regimen);
             }
         }
     }
@@ -166,5 +214,14 @@ public class Art extends Fragment {
 
         dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         dialog.show();
+    }
+
+    private void setSpinner(int index, ArrayAdapter<CharSequence> adapter, String value){
+        if (value.isEmpty()){
+            spinnerList.get(index).setSelection(adapter.getPosition("Select one"));
+        }
+        else {
+            spinnerList.get(index).setSelection(adapter.getPosition(value));
+        }
     }
 }

@@ -16,18 +16,24 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class Visit extends Fragment {
@@ -36,14 +42,20 @@ public class Visit extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn, select_btn;
-    EditText editText_reco, editText_visit;
+    LinearLayout linearLayout;
+    Spinner spinner_contact;
+    EditText editText_reco, editText_contact;
     TextView textView_visit;
     RadioGroup radioGroup1, radioGroup2;
-    String recco, visit, reminder, cancer;
+    String recco, visit, reminder, cancer, contact, mode;
     public static  final String NEXT_VISIT ="next_visit";
+    public static  final String MODE_CONTACT ="mode_of_contact";
+    public static  final String NO_CONTACT ="number_to_contact";
     public static  final String OBSERVE ="clinician_observations";
     public static  final String REMINDER ="next_visit_message_reminders";
     public static  final String INFORMATION ="get_information_about_cancer";
+    List<Spinner> spinnerList = new ArrayList<>();
+    ArrayAdapter<CharSequence> adapter1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +70,9 @@ public class Visit extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         editText_reco = view.findViewById(R.id.recco);
-        textView_visit = view.findViewById(R.id.visit);
+        editText_contact = view.findViewById(R.id.contact);
+        textView_visit = view.findViewById(R.id.text_visit);
+        linearLayout = view.findViewById(R.id.nin_layout);
         select_btn = view.findViewById(R.id.select);
         radioGroup1 = view.findViewById(R.id.radioGroup_1);
         radioGroup2 = view.findViewById(R.id.radioGroup_2);
@@ -75,6 +89,16 @@ public class Visit extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 reminder = selectedRadioButton.getText().toString();
+
+                if (reminder.equals("Yes")){
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    linearLayout.setVisibility(View.GONE);
+                    mode = "";
+                    setSpinner(0, adapter1, "Select one");
+                    editText_contact.setText("");
+                }
             }
         });
 
@@ -85,6 +109,9 @@ public class Visit extends Fragment {
                 cancer = selectedRadioButton.getText().toString();
             }
         });
+
+        initializeSpinners();
+        setupSpinnerListeners();
 
         load_data();
         update_views();
@@ -111,8 +138,12 @@ public class Visit extends Fragment {
             public void onClick(View view) {
                 recco = editText_reco.getText().toString().trim();
                 visit = textView_visit.getText().toString().trim();
+                contact = editText_contact.getText().toString().trim();
 
                 if (recco.isEmpty() || visit.isEmpty() || cancer.isEmpty() || reminder.isEmpty()){
+                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else if (reminder.equals("Yes") && (mode.isEmpty() || contact.isEmpty())) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -125,11 +156,51 @@ public class Visit extends Fragment {
         return view;
     }
 
+    private void initializeSpinners() {
+        spinner_contact = view.findViewById(R.id.spinner_mode);
+
+        spinnerList.add(spinner_contact);
+    }
+
+    private void setupSpinnerListeners() {
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Spinner selectedSpinner = (Spinner) parentView;
+                String selectedItem = parentView.getItemAtPosition(position).toString();
+
+                if (selectedSpinner == spinnerList.get(0)) {
+                    mode = selectedItem;
+                    if (mode.equals("Select one")){
+                        mode = "";
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+
+        // Apply the listener to each spinner
+        for (Spinner spinner : spinnerList) {
+            spinner.setOnItemSelectedListener(spinnerListener);
+        }
+
+        adapter1 = ArrayAdapter.createFromResource(
+                requireActivity(), R.array.contact, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerList.get(0).setAdapter(adapter1);
+    }
+
     private void save_data() {
         editor.putString(REMINDER, reminder);
         editor.putString(OBSERVE, recco);
         editor.putString(NEXT_VISIT, visit);
         editor.putString(INFORMATION, cancer);
+        editor.putString(MODE_CONTACT, mode);
+        editor.putString(NO_CONTACT, contact);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -151,6 +222,8 @@ public class Visit extends Fragment {
         recco = sharedPreferences.getString(OBSERVE, "");
         visit = sharedPreferences.getString(NEXT_VISIT, "");
         cancer = sharedPreferences.getString(INFORMATION, "");
+        mode = sharedPreferences.getString(MODE_CONTACT, "");
+        contact = sharedPreferences.getString(NO_CONTACT, "");
     }
 
     private void update_views(){
@@ -159,6 +232,11 @@ public class Visit extends Fragment {
 
         if (!reminder.isEmpty()) {
             FunctionalUtils.setRadioButton(radioGroup1, reminder);
+            if (reminder.equals("Yes")){
+                linearLayout.setVisibility(View.VISIBLE);
+                editText_contact.setText(contact);
+                setSpinner(0, adapter1, mode);
+            }
         }
 
         if (!cancer.isEmpty()) {
@@ -181,5 +259,14 @@ public class Visit extends Fragment {
 
         dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         dialog.show();
+    }
+
+    private void setSpinner(int index, ArrayAdapter<CharSequence> adapter, String value){
+        if (value.isEmpty()){
+            spinnerList.get(index).setSelection(adapter.getPosition("Select one"));
+        }
+        else {
+            spinnerList.get(index).setSelection(adapter.getPosition(value));
+        }
     }
 }
