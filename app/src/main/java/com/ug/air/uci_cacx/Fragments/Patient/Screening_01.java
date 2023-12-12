@@ -1,6 +1,8 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1.REASON_VISIT;
+import static com.ug.air.uci_cacx.Fragments.Patient.Prior_screening_3.RESULT_1;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,9 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,8 +29,7 @@ import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Contraceptives extends Fragment {
+public class Screening_01 extends Fragment {
 
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
@@ -39,19 +37,17 @@ public class Contraceptives extends Fragment {
     LinearLayout linearLayout;
     Button next_btn, back_btn;
     RadioGroup radioGroup;
-    Spinner spinner_contra, spinner_using;
-    String contra, method, using;
-    public static  final String CONTRA ="contraceptives_used";
-    public static  final String MONTHS ="duration_on_contraceptives";
-    public static  final String CONTRA_METHOD ="contraceptives_method";
+    Spinner spinner_screen;
+    String screened, why_not;
+    public static  final String SCREENED ="screening_done";
+    public static  final String WHY_NOT ="why_not_screened";
     List<Spinner> spinnerList = new ArrayList<>();
-    ArrayAdapter<CharSequence> adapter1, adapter2;
-
+    ArrayAdapter<CharSequence> adapter1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_contraceptives, container, false);
+        view = inflater.inflate(R.layout.fragment_screening_01, container, false);
 
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -60,22 +56,20 @@ public class Contraceptives extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         radioGroup = view.findViewById(R.id.radioGroup);
-        linearLayout = view.findViewById(R.id.check_layout);
-//        editText_using = view.findViewById(R.id.using);
+        linearLayout = view.findViewById(R.id.nin_layout);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
-                contra = selectedRadioButton.getText().toString();
+                screened = selectedRadioButton.getText().toString();
 
-                if (contra.equals("Yes")) {
+                if (screened.equals("No")) {
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     linearLayout.setVisibility(View.GONE);
                     setSpinner(0, adapter1, "Select one");
-                    setSpinner(1, adapter2, "Select one");
                 }
             }
         });
@@ -89,8 +83,19 @@ public class Contraceptives extends Fragment {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String reason = sharedPreferences.getString(REASON_VISIT, "");
+                String result = sharedPreferences.getString(RESULT_1, "");
+
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Parity());
+                if (reason.equals("Other") || reason.equals("Initial Screening")){
+                    fr.replace(R.id.fragment_container, new Prior_Screening_1());
+                }
+                else if (result.equals("Positive")){
+                    fr.replace(R.id.fragment_container, new Prior_Treatment());
+                }
+                else {
+                    fr.replace(R.id.fragment_container, new Prior_screening_3());
+                }
                 fr.commit();
             }
         });
@@ -100,10 +105,10 @@ public class Contraceptives extends Fragment {
             public void onClick(View view) {
 //                using = editText_using.getText().toString().trim();
 
-                if (contra.isEmpty()) {
+                if (screened.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (contra.equals("Yes") && (method.isEmpty() || using.isEmpty())){
+                else if (screened.equals("No") && (why_not.isEmpty())){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -116,11 +121,9 @@ public class Contraceptives extends Fragment {
     }
 
     private void initializeSpinners() {
-        spinner_contra = view.findViewById(R.id.spinner_contra);
-        spinner_using = view.findViewById(R.id.spinner_using);
+        spinner_screen = view.findViewById(R.id.spinner_screen);
 
-        spinnerList.add(spinner_contra);
-        spinnerList.add(spinner_using);
+        spinnerList.add(spinner_screen);
     }
 
     private void setupSpinnerListeners() {
@@ -131,15 +134,9 @@ public class Contraceptives extends Fragment {
                 String selectedItem = parentView.getItemAtPosition(position).toString();
 
                 if (selectedSpinner == spinnerList.get(0)) {
-                    method = selectedItem;
-                    if (method.equals("Select one")){
-                        method = "";
-                    }
-                }
-                else if(selectedSpinner == spinnerList.get(1)){
-                    using = selectedItem;
-                    if (using.equals("Select one")){
-                        using = "";
+                    why_not = selectedItem;
+                    if (why_not.equals("Select one")){
+                        why_not = "";
                     }
                 }
             }
@@ -156,44 +153,41 @@ public class Contraceptives extends Fragment {
         }
 
         adapter1 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.contraceptives, android.R.layout.simple_spinner_item);
+                requireActivity(), R.array.screened, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerList.get(0).setAdapter(adapter1);
-
-        adapter2 = ArrayAdapter.createFromResource(
-                requireActivity(), R.array.using, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerList.get(1).setAdapter(adapter2);
     }
 
     private void save_data() {
-        editor.putString(CONTRA, contra);
-        editor.putString(CONTRA_METHOD, method);
-        editor.putString(MONTHS, using);
+        editor.putString(SCREENED, screened);
+        editor.putString(WHY_NOT, why_not);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Symptoms());
+        if (screened.equals("Yes")){
+            fr.replace(R.id.fragment_container, new Screening_1());
+        }
+        else {
+            fr.replace(R.id.fragment_container, new Visit());
+        }
         fr.addToBackStack(null);
         fr.commit();
+
     }
 
     private void load_data(){
-        contra = sharedPreferences.getString(CONTRA, "");
-        method = sharedPreferences.getString(CONTRA_METHOD, "");
-        using = sharedPreferences.getString(MONTHS, "");
+        screened = sharedPreferences.getString(SCREENED, "");
+        why_not = sharedPreferences.getString(WHY_NOT, "");
     }
 
     private void update_views(){
 
-        if (!contra.isEmpty()){
-            FunctionalUtils.setRadioButton(radioGroup, contra);
+        if (!screened.isEmpty()){
+            FunctionalUtils.setRadioButton(radioGroup, screened);
 
-            if (contra.equals("Yes")){
+            if (screened.equals("No")){
                 linearLayout.setVisibility(View.VISIBLE);
-//                editText_using.setText(using);
-                setSpinner(0, adapter1, method);
-                setSpinner(1, adapter2, using);
+                setSpinner(0, adapter1, why_not);
             }
         }
     }
@@ -206,5 +200,4 @@ public class Contraceptives extends Fragment {
             spinnerList.get(index).setSelection(adapter.getPosition(value));
         }
     }
-
 }

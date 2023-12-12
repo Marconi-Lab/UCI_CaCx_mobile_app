@@ -161,7 +161,7 @@ public class Results extends Fragment {
 
     private void run_model() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setMessage("Running model predictions, Please wait...");
+        builder.setMessage("Running model, Please wait...");
         builder.setCancelable(false);
 
         dialog = builder.create();

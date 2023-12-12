@@ -25,9 +25,6 @@ import android.widget.Toast;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Prior_Screening_1 extends Fragment {
 
     SharedPreferences.Editor editor;
@@ -117,7 +114,7 @@ public class Prior_Screening_1 extends Fragment {
             editor.putString(RESULT_1, "");
             editor.putString(TREATMENT_1, "");
             editor.apply();
-            fr.replace(R.id.fragment_container, new Screening_1());
+            fr.replace(R.id.fragment_container, new Screening_01());
         }
         else {
             fr.replace(R.id.fragment_container, new Prior_Screening_2());

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Current Visit - Screening - 2"
+            android:text="Current Visit - Screening - 3"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -246,6 +246,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="CIN2"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="CIN3"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="ASCUS"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="ASC-H"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"

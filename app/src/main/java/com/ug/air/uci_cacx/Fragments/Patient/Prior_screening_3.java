@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,9 +22,6 @@ import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Prior_screening_3 extends Fragment {
 
@@ -102,7 +97,7 @@ public class Prior_screening_3 extends Fragment {
         else {
             editor.putString(TREATMENT_1, "");
             editor.apply();
-            fr.replace(R.id.fragment_container, new Screening_1());
+            fr.replace(R.id.fragment_container, new Screening_01());
         }
         fr.addToBackStack(null);
         fr.commit();

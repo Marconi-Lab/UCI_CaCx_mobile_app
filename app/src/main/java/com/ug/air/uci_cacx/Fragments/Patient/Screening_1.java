@@ -9,8 +9,6 @@ import static com.ug.air.uci_cacx.Fragments.Patient.Photo_3.IMAGE_NAME_3;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_3.IMAGE_PATH_3;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_4.IMAGE_NAME_4;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_4.IMAGE_PATH_4;
-import static com.ug.air.uci_cacx.Fragments.Patient.Prior_Screening_1.REASON_VISIT;
-import static com.ug.air.uci_cacx.Fragments.Patient.Prior_screening_3.RESULT_1;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.HPV;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.PAP;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_COL;
@@ -27,8 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -76,21 +72,23 @@ public class Screening_1 extends Fragment {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String reason = sharedPreferences.getString(REASON_VISIT, "");
-                String result = sharedPreferences.getString(RESULT_1, "");
-
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                if (reason.equals("Other") || reason.equals("Initial Screening")){
-                    fr.replace(R.id.fragment_container, new Prior_Screening_1());
-                }
-                else if (result.equals("Positive")){
-                    fr.replace(R.id.fragment_container, new Prior_Treatment());
-                }
-                else {
-                    fr.replace(R.id.fragment_container, new Prior_screening_3());
-                }
+                fr.replace(R.id.fragment_container, new Screening_01());
                 fr.commit();
+//                String reason = sharedPreferences.getString(REASON_VISIT, "");
+//                String result = sharedPreferences.getString(RESULT_1, "");
+//
+//                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+//                if (reason.equals("Other") || reason.equals("Initial Screening")){
+//                    fr.replace(R.id.fragment_container, new Prior_Screening_1());
+//                }
+//                else if (result.equals("Positive")){
+//                    fr.replace(R.id.fragment_container, new Prior_Treatment());
+//                }
+//                else {
+//                    fr.replace(R.id.fragment_container, new Prior_screening_3());
+//                }
+//                fr.commit();
             }
         });
 

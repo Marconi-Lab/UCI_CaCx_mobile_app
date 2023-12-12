@@ -34,13 +34,12 @@ public class Contact_3 extends Fragment {
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
-    Spinner spinner_religion;
-    EditText editText_income;
+    Spinner spinner_religion, spinner_income;
     String religion, income;
     public static  final String RELIGION ="religion";
     public static  final String INCOME ="level_of_income";
     List<Spinner> spinnerList = new ArrayList<>();
-    ArrayAdapter<CharSequence> adapter1;
+    ArrayAdapter<CharSequence> adapter1, adapter2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +53,7 @@ public class Contact_3 extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        editText_income = view.findViewById(R.id.income);
+//        editText_income = view.findViewById(R.id.income);
 
         initializeSpinners();
         setupSpinnerListeners();
@@ -73,9 +72,9 @@ public class Contact_3 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                income = editText_income.getText().toString().trim();
+//                income = editText_income.getText().toString().trim();
 
-                if (income.isEmpty() || religion.equals("Select one")) {
+                if (income.isEmpty() || religion.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -89,8 +88,10 @@ public class Contact_3 extends Fragment {
 
     private void initializeSpinners() {
         spinner_religion = view.findViewById(R.id.spinner_religion);
+        spinner_income = view.findViewById(R.id.spinner_income);
 
         spinnerList.add(spinner_religion);
+        spinnerList.add(spinner_income);
     }
 
     private void setupSpinnerListeners() {
@@ -102,6 +103,15 @@ public class Contact_3 extends Fragment {
 
                 if (selectedSpinner == spinnerList.get(0)) {
                     religion = selectedItem;
+                    if (religion.equals("Select one")){
+                        religion = "";
+                    }
+                }
+                else if (selectedSpinner == spinnerList.get(1)) {
+                    income = selectedItem;
+                    if (income.equals("Select one")){
+                        income = "";
+                    }
                 }
             }
 
@@ -120,6 +130,11 @@ public class Contact_3 extends Fragment {
                 requireActivity(), R.array.religion, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerList.get(0).setAdapter(adapter1);
+
+        adapter2 = ArrayAdapter.createFromResource(
+                requireActivity(), R.array.income, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerList.get(1).setAdapter(adapter2);
     }
 
     private void save_data(){
@@ -134,8 +149,9 @@ public class Contact_3 extends Fragment {
     }
 
     private void load_data(){
-        editText_income.setText(sharedPreferences.getString(INCOME, ""));
+//        editText_income.setText(sharedPreferences.getString(INCOME, ""));
         setSpinner(0, adapter1, sharedPreferences.getString(RELIGION, ""));
+        setSpinner(1, adapter2, sharedPreferences.getString(INCOME, ""));
     }
 
     private void setSpinner(int index, ArrayAdapter<CharSequence> adapter, String value){

@@ -216,6 +216,21 @@ public class Screening_2 extends Fragment {
         col = sharedPreferences.getString(RESULT_COL, "");
         pap = sharedPreferences.getString(PAP, "");
         hpv = sharedPreferences.getString(HPV, "");
+        if (!via.isEmpty()){
+            result = via;
+        }
+        else if (!col.isEmpty()){
+            result = col;
+        }
+        else if (!pap.isEmpty()){
+            result = pap;
+        }
+        else if (!hpv.isEmpty()){
+            result = hpv;
+        }
+        else {
+            result = "";
+        }
         susp = sharedPreferences.getString(SUSPICIOUS, "");
     }
 

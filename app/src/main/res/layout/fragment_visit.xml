@@ -123,6 +123,32 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Purpose for the next visit *"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/big"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/next_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/primary_edit_text"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/small"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textMultiLine"
+                    android:gravity="start|top"
+                    android:hint="Enter text here..."
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Does the patient want to get any other information about cancer?"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"

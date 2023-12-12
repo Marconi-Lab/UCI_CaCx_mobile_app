@@ -70,6 +70,15 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="Unknown"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:text="No"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"

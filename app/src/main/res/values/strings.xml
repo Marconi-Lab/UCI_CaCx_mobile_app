@@ -21,6 +21,15 @@
     <string name="back">Back</string>
     <string name="identification_category">Identification Category</string>
 
+    <string-array name="income">
+        <item>Select one</item>
+        <item>None</item>
+        <item>Less than 250000 UGX</item>
+        <item>250000 - 500000 UGX</item>
+        <item>500000 - 1000000 UGX</item>
+        <item>Above 1000000 UGX</item>
+    </string-array>
+
     <string-array name="region">
         <item>Select one</item>
         <item>Northern Region</item>
@@ -108,7 +117,8 @@
 
     <string-array name="units">
         <item>Select one</item>
-        <item>Times</item>
+        <item>Days</item>
+        <item>Weeks</item>
         <item>Months</item>
         <item>Years</item>
     </string-array>
@@ -170,6 +180,23 @@
         <item>Live call from HW</item>
         <item>SMS</item>
         <item>Automated Attendant (IVR)</item>
+    </string-array>
+
+    <string-array name="using">
+        <item>Select one</item>
+        <item>Less than 6 months</item>
+        <item>6 - 12 months</item>
+        <item>More than 12 months</item>
+    </string-array>
+
+    <string-array name="screened">
+        <item>Select one</item>
+        <item>Cancer suspect</item>
+        <item>Onset of menstrual periods</item>
+        <item>No supplies/equipment</item>
+        <item>Refused</item>
+        <item>Infection of the cervix/vulva</item>
+        <item>Other</item>
     </string-array>
 
 </resources>

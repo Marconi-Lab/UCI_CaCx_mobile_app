@@ -1,6 +1,7 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Patient.Screening_01.SCREENED;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_1.SCREEN_METHOD;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_COL;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_VIA;
@@ -44,11 +45,12 @@ public class Visit extends Fragment {
     Button next_btn, back_btn, select_btn;
     LinearLayout linearLayout;
     Spinner spinner_contact;
-    EditText editText_reco, editText_contact;
+    EditText editText_reco, editText_contact, editText_next;
     TextView textView_visit;
     RadioGroup radioGroup1, radioGroup2;
-    String recco, visit, reminder, cancer, contact, mode;
+    String recco, visit, reminder, cancer, contact, mode, next_visit;
     public static  final String NEXT_VISIT ="next_visit";
+    public static  final String PURPOSE ="purpose_for_next_visit";
     public static  final String MODE_CONTACT ="mode_of_contact";
     public static  final String NO_CONTACT ="number_to_contact";
     public static  final String OBSERVE ="clinician_observations";
@@ -71,6 +73,7 @@ public class Visit extends Fragment {
 
         editText_reco = view.findViewById(R.id.recco);
         editText_contact = view.findViewById(R.id.contact);
+        editText_next = view.findViewById(R.id.next_visit);
         textView_visit = view.findViewById(R.id.text_visit);
         linearLayout = view.findViewById(R.id.nin_layout);
         select_btn = view.findViewById(R.id.select);
@@ -122,12 +125,19 @@ public class Visit extends Fragment {
                 String via = sharedPreferences.getString(RESULT_VIA, "");
                 String col = sharedPreferences.getString(RESULT_COL, "");
 
+                String screen = sharedPreferences.getString(SCREENED, "");
+
                 FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                if (via.equals("Positive") || col.equals("Positive")){
-                    fr.replace(R.id.fragment_container, new Treatment());
+                if (screen.equals("No")){
+                    fr.replace(R.id.fragment_container, new Screening_01());
                 }
                 else {
-                    fr.replace(R.id.fragment_container, new Screening_2());
+                    if (via.equals("Positive") || col.equals("Positive")){
+                        fr.replace(R.id.fragment_container, new Treatment());
+                    }
+                    else {
+                        fr.replace(R.id.fragment_container, new Screening_2());
+                    }
                 }
                 fr.commit();
             }
@@ -139,8 +149,9 @@ public class Visit extends Fragment {
                 recco = editText_reco.getText().toString().trim();
                 visit = textView_visit.getText().toString().trim();
                 contact = editText_contact.getText().toString().trim();
+                next_visit = editText_next.getText().toString().trim();
 
-                if (recco.isEmpty() || visit.isEmpty() || cancer.isEmpty() || reminder.isEmpty()){
+                if (recco.isEmpty() || visit.isEmpty() || cancer.isEmpty() || reminder.isEmpty() || next_visit.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else if (reminder.equals("Yes") && (mode.isEmpty() || contact.isEmpty())) {
@@ -201,6 +212,7 @@ public class Visit extends Fragment {
         editor.putString(INFORMATION, cancer);
         editor.putString(MODE_CONTACT, mode);
         editor.putString(NO_CONTACT, contact);
+        editor.putString(PURPOSE, next_visit);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -224,10 +236,12 @@ public class Visit extends Fragment {
         cancer = sharedPreferences.getString(INFORMATION, "");
         mode = sharedPreferences.getString(MODE_CONTACT, "");
         contact = sharedPreferences.getString(NO_CONTACT, "");
+        next_visit = sharedPreferences.getString(PURPOSE, "");
     }
 
     private void update_views(){
         editText_reco.setText(recco);
+        editText_next.setText(next_visit);
         textView_visit.setText(visit);
 
         if (!reminder.isEmpty()) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.Patient.Screening_1">
+    tools:context=".Fragments.Patient.Screening_01">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Current Visit - Screening - 2"
+            android:text="Current Visit - Screening - 1"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Screening method used *"
+                    android:text="Was the screening done *"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
@@ -61,7 +61,7 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="VIA"
+                        android:text="Yes"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"
@@ -70,30 +70,46 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Pap Smear"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="HPV"
-                        android:fontFamily="@font/sora_regular"
-                        android:textSize="@dimen/small"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="-10dp"/>
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Colposcopy"
+                        android:text="No"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
                         android:textColor="@color/black"/>
 
                 </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/nin_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Why not screened *"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/big"
+                        android:textColor="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/primary_edit_text"
+                        android:orientation="vertical"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp">
+
+                        <Spinner
+                            android:id="@+id/spinner_screen"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
