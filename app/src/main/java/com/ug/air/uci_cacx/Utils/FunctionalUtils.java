@@ -6,7 +6,6 @@ import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.DATE;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
 import static com.ug.air.uci_cacx.Fragments.Patient.Identification.FIRST_NAME;
 import static com.ug.air.uci_cacx.Fragments.Patient.Identification.LAST_NAME;
-import static com.ug.air.uci_cacx.Fragments.Patient.Identification.SCREENING_NUMBER;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -36,8 +35,9 @@ import java.util.UUID;
 public class FunctionalUtils {
 
     public static float bmi(int height, float weight){
-        height = (height * height) / 100;
-        float bd = weight / height;
+
+        float changed_height = (float) (height / 100.0);
+        float bd = weight / (changed_height * changed_height);
         return bd;
     }
 
@@ -128,10 +128,6 @@ public class FunctionalUtils {
         UUID uuid = UUID.randomUUID();
         String filename = uuid.toString();
 
-        String screening_number = FunctionalUtils.generate_uuid();
-        screening_number = "PNS-" + screening_number;
-
-        editor.putString(SCREENING_NUMBER, screening_number);
         editor.putString(DATE, formattedDate);
         editor.putBoolean(COMPLETE, status);
         editor.putString(FILENAME, filename);
@@ -166,7 +162,7 @@ public class FunctionalUtils {
 
     }
 
-    public static List<String> getSharedPreferencesFileNames(Context context) {
+    public static List<String> getSharedPreferencesFileNames(Context context, boolean complete) {
         List<String> fileNames = new ArrayList<>();
 
         // Get the list of SharedPreferences files in the shared_prefs folder
@@ -181,10 +177,10 @@ public class FunctionalUtils {
                     String preferenceName = fileName.substring(0, fileName.length() - 4);
                     SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
                     boolean status = sharedPreferences.getBoolean(COMPLETE, false);
+                    String first_name = sharedPreferences.getString(FIRST_NAME, "");
 
-                    if (status){
+                    if (!first_name.isEmpty() && status == complete){
                         fileNames.add(preferenceName);
-                        Log.d("TAG", "getSharedPreferencesFileNames: " + fileNames);
                     }
 
                 }
@@ -206,18 +202,53 @@ public class FunctionalUtils {
 
             String date = sharedPreferences.getString(DATE, "");
             String first_name = sharedPreferences.getString(FIRST_NAME, "");
+            String filename = sharedPreferences.getString(FILENAME, "");
             String last_name = sharedPreferences.getString(LAST_NAME, "");
             String name = first_name + " " + last_name;
 
-            Log.d("TAGGING", "getDataFromSharedPreferences: " + date);
-            Log.d("TAGGING", "getDataFromSharedPreferences: " + name);
-
-            Form form = new Form("Patient: " + name, "Saved on: " + date);
+            Form form = new Form("Patient: " + name, "Saved on: " + date, filename);
             formList.add(form);
 
         }
 
         return formList;
+    }
+
+    public static void moveSharedPreferences(Context context, String sourceFileName, String targetFileName) {
+        SharedPreferences sourceSharedPreferences = context.getSharedPreferences(sourceFileName, Context.MODE_PRIVATE);
+        SharedPreferences targetSharedPreferences = context.getSharedPreferences(targetFileName, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor targetEditor = targetSharedPreferences.edit();
+
+        // Get all key-value pairs from the source SharedPreferences
+        Map<String, ?> allEntries = sourceSharedPreferences.getAll();
+
+        // Copy all key-value pairs to the target SharedPreferences
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (value instanceof String) {
+                targetEditor.putString(key, (String) value);
+            } else if (value instanceof Integer) {
+                targetEditor.putInt(key, (Integer) value);
+            } else if (value instanceof Long) {
+                targetEditor.putLong(key, (Long) value);
+            } else if (value instanceof Float) {
+                targetEditor.putFloat(key, (Float) value);
+            } else if (value instanceof Boolean) {
+                targetEditor.putBoolean(key, (Boolean) value);
+            }
+        }
+
+        // Commit the changes to the target SharedPreferences
+        targetEditor.apply();
+
+        // Clear the source SharedPreferences to delete all key-value pairs
+        SharedPreferences.Editor sourceEditor = sourceSharedPreferences.edit();
+        sourceEditor.clear();
+        sourceEditor.apply();
+
     }
 
     public static ArrayList<String> get_countries(String value) {

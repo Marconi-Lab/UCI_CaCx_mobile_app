@@ -30,11 +30,11 @@ public class Home extends AppCompatActivity {
         findViewById(R.id.incomplete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle = new Bundle();
-//                Intent intent = new Intent(Home.this, Forms.class);
-//                bundle.putString("Fragment", "incomplete");
-//                intent.putExtras(bundle);
-//                startActivity(intent);
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(Home.this, Forms.class);
+                bundle.putString("Fragment", "incomplete");
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 

@@ -1,5 +1,7 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
+import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
 import android.content.Context;
@@ -18,9 +20,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ug.air.uci_cacx.Models.Facility;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +34,8 @@ import java.util.List;
 
 public class Clinicians extends Fragment {
 
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor, editor_2;
+    SharedPreferences sharedPreferences, sharedPreferences_2;
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
@@ -40,6 +46,7 @@ public class Clinicians extends Fragment {
     public static final String FILENAME = "filename";
     List<String> checkBoxList = new ArrayList<>();
     List<String> staffList = new ArrayList<>();
+    List<String> stringList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,16 +57,27 @@ public class Clinicians extends Fragment {
         sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        sharedPreferences_2 = requireActivity().getSharedPreferences(CREDENTIALS_PREFS, Context.MODE_PRIVATE);
+        editor_2 = sharedPreferences_2.edit();
+
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
         linearLayout = view.findViewById(R.id.staff_layout);
 
-        staff = "John Mathews, Musisi Norbels, Senoga Mark";
-        staffList.clear();
-        staffList = Arrays.asList(staff.split(", "));
+        staff = sharedPreferences_2.getString(PROVIDERS, null);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<String>>() {}.getType();
+        stringList = gson.fromJson(staff, type);
+        if (stringList == null) {
+            stringList = new ArrayList<>();
+        }
 
-        for (String staff : staffList){
+//        staff = "John Mathews, Musisi Norbels, Senoga Mark";
+//        staffList.clear();
+//        staffList = Arrays.asList(staff.split(", "));
+
+        for (String staff : stringList){
             CheckBox checkBox = new CheckBox(requireActivity());
             checkBox.setText(staff);
             checkBox.setChecked(false);

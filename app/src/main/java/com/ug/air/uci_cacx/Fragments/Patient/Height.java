@@ -9,11 +9,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
@@ -25,6 +28,7 @@ public class Height extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
+    TextView textView;
     EditText editText_height, editText_weight, editText_systolic, editText_diastolic;
     String we, he, sys, dis;
     int height, systolic, diastolic;
@@ -52,6 +56,7 @@ public class Height extends Fragment {
         editText_weight = view.findViewById(R.id.weight);
         editText_systolic = view.findViewById(R.id.systolic);
         editText_diastolic = view.findViewById(R.id.diastolic);
+        textView = view.findViewById(R.id.bmi);
 
         load_data();
         update_views();
@@ -79,6 +84,52 @@ public class Height extends Fragment {
                 else {
                     save_data();
                 }
+            }
+        });
+
+        editText_height.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                we = editText_weight.getText().toString().trim();
+                if (charSequence.length() > 0 && !we.isEmpty()){
+                    int hi = Integer.parseInt(charSequence.toString());
+                    float bmi = FunctionalUtils.bmi(hi, Float.parseFloat(we));
+                    textView.setText(String.valueOf(bmi));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        editText_weight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                he = editText_height.getText().toString().trim();
+                if (charSequence.length() > 0 && !he.isEmpty()){
+                    float we = Float.parseFloat(charSequence.toString());
+                    float bmi = FunctionalUtils.bmi(Integer.parseInt(he), we);
+                    textView.setText(String.valueOf(bmi));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

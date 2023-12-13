@@ -125,47 +125,29 @@
 
     <string-array name="contraceptives">
         <item>Select one</item>
+
         <item>Condoms</item>
-        <item>Contraception method undecided</item>
         <item>Diaphragm</item>
         <item>Emergency contraceptive pills</item>
-        <item>Female condom</item>
         <item>Female sterilization</item>
-        <item>Hysterectomy</item>
-        <item>IUD Contraception</item>
-        <item>Implantable contraceptive (unspecified type)</item>
         <item>Injectable contraceptives</item>
-        <item>Intrauterine device</item>
-        <item>Lactational amenorrhea</item>
-        <item>Levonorgestrel</item>
-        <item>Male condom</item>
-        <item>Medroxyprogesterone acetate</item>
         <item>Natural family planning</item>
-        <item>Norplant (implantable contraceptive)</item>
-        <item>Not applicable</item>
         <item>Oral contraception</item>
         <item>Other</item>
         <item>Sexual abstinence</item>
-        <item>Tubal ligation procedure</item>
         <item>Unknown</item>
         <item>Vasectomy</item>
+        <item>Intrauterine device</item>
+        <item>None</item>
     </string-array>
 
     <string-array name="regimen">
         <item>Select one</item>
-        <item>ABC-3TC-ATV/r</item>
-        <item>ABC-3TC-EFV</item>
         <item>ABC-3TC-NVP</item>
-        <item>ABC/3TC/DTG</item>
-        <item>AZT-3TC-LPV/r</item>
         <item>AZT-DDI-LPV/r</item>
-        <item>AZT/3TC/DTG</item>
         <item>OTHER FIRST LINE REGIMEN</item>
         <item>OTHER SECOND LINE REGIMEN</item>
-        <item>OTHER SPECIFY</item>
-        <item>TDF-3TC-ATV/r</item>
         <item>TDF-3TC-EFV</item>
-        <item>TDF-3TC-LPV/r</item>
         <item>TDF-3TC-NVP</item>
         <item>TDF-DDI-LPV/R</item>
         <item>TDF-DDI-SQV/R</item>

@@ -185,6 +185,7 @@ public class Art extends Fragment {
         art = sharedPreferences.getString(ART, "");
         regimen = sharedPreferences.getString(REGIMEN, "");
         years = sharedPreferences.getString(LONG, "");
+//        Toast.makeText(requireActivity(), "Initital: " + years, Toast.LENGTH_SHORT).show();
     }
 
     private void update_views(){

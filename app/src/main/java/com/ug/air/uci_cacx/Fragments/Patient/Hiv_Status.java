@@ -143,7 +143,7 @@ public class Hiv_Status extends Fragment {
         else {
             editor.putString(ART, "");
             editor.putString(REGIMEN, "");
-            editor.putInt(LONG, 0);
+            editor.putString(LONG, "");
             editor.apply();
             fr.replace(R.id.fragment_container, new Parity());
         }

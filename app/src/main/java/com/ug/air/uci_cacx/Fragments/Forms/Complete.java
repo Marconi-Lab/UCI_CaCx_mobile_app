@@ -1,5 +1,6 @@
 package com.ug.air.uci_cacx.Fragments.Forms;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.ug.air.uci_cacx.Activities.Screening;
 import com.ug.air.uci_cacx.Adapters.FormAdapter;
 import com.ug.air.uci_cacx.Models.Form;
 import com.ug.air.uci_cacx.R;
@@ -38,11 +41,23 @@ public class Complete extends Fragment {
         upload = view.findViewById(R.id.upload);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        List<String> sharedPreferenceFilenames = FunctionalUtils.getSharedPreferencesFileNames(requireActivity());
+        List<String> sharedPreferenceFilenames = FunctionalUtils.getSharedPreferencesFileNames(requireActivity(), true);
         formList = FunctionalUtils.getDataFromSharedPreferences(requireActivity(), sharedPreferenceFilenames);
 
         formAdapter = new FormAdapter(requireActivity(), formList);
         recyclerView.setAdapter(formAdapter);
+
+        formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
+            @Override
+            public void onShowClick(int position) {
+                Form form = formList.get(position);
+                String filename = form.getFilename();
+
+                FunctionalUtils.moveSharedPreferences(requireActivity(), filename, "shared_pref");
+                Intent intent = new Intent(requireActivity(), Screening.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

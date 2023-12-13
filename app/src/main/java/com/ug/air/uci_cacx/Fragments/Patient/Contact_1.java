@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,10 @@ public class Contact_1 extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
-    EditText editText_tribe, editText_language, editText_contact, editText_alternative, editText_email;
+    EditText editText_tribe, editText_contact, editText_alternative, editText_email;
     String tribe, language, contact, alternative, email;
-    public static  final String TRIBE ="tribe";
-    public static  final String LANGUAGE ="preferred_language";
+//    public static  final String TRIBE ="tribe";
+//    public static  final String LANGUAGE ="preferred_language";
     public static  final String EMAIL ="email";
     public static  final String CONTACT ="phone_number";
     public static  final String ALTERNATIVE ="alternative_contact";
@@ -45,7 +47,7 @@ public class Contact_1 extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         editText_email = view.findViewById(R.id.email);
-        editText_language = view.findViewById(R.id.language);
+//        editText_language = view.findViewById(R.id.language);
         editText_contact = view.findViewById(R.id.contact);
         editText_alternative = view.findViewById(R.id.alternative);
 
@@ -64,11 +66,11 @@ public class Contact_1 extends Fragment {
             @Override
             public void onClick(View view) {
                 email = editText_email.getText().toString().trim();
-                language = editText_language.getText().toString().trim();
+//                language = editText_language.getText().toString().trim();
                 contact = editText_contact.getText().toString().trim();
                 alternative = editText_alternative.getText().toString().trim();
 
-                if (language.isEmpty() || contact.isEmpty()){
+                if (contact.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -77,12 +79,40 @@ public class Contact_1 extends Fragment {
             }
         });
 
+        editText_contact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String userInput = charSequence.toString().toLowerCase();
+                if (charSequence.length() > 0 && charSequence.charAt(0) != '0'){
+                    next_btn.setEnabled(false);
+                    editText_contact.setError("Let the first number be 0");
+                }
+                else if (charSequence.length() < 10 || charSequence.length() > 10){
+                    next_btn.setEnabled(false);
+                    editText_contact.setError("The phone number should have 10 numbers");
+                }
+                else {
+                    next_btn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return view;
     }
 
     private void save_data() {
         editor.putString(EMAIL, email);
-        editor.putString(LANGUAGE, language);
+//        editor.putString(LANGUAGE, language);
         editor.putString(CONTACT, contact);
         editor.putString(ALTERNATIVE, alternative);
         editor.apply();
@@ -95,7 +125,7 @@ public class Contact_1 extends Fragment {
 
     private void update_views() {
         editText_email.setText(sharedPreferences.getString(EMAIL, ""));
-        editText_language.setText(sharedPreferences.getString(LANGUAGE, ""));
+//        editText_language.setText(sharedPreferences.getString(LANGUAGE, ""));
         editText_contact.setText(sharedPreferences.getString(CONTACT, ""));
         editText_alternative.setText(sharedPreferences.getString(ALTERNATIVE, ""));
     }

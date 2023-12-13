@@ -1,6 +1,9 @@
 package com.ug.air.uci_cacx.Activities;
 
-import static com.ug.air.uci_cacx.Fragments.Patient.Identification.SCREENING_NUMBER;
+
+import static com.ug.air.uci_cacx.Fragments.Patient.Citizen.CITIZEN;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.COMPLETE;
+import static com.ug.air.uci_cacx.Fragments.Patient.Identification.FIRST_NAME;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,11 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import com.ug.air.uci_cacx.Fragments.Patient.Citizen;
+import com.ug.air.uci_cacx.Fragments.Patient.Clinicians;
 import com.ug.air.uci_cacx.Fragments.Patient.Height;
 import com.ug.air.uci_cacx.Fragments.Patient.Identification;
 import com.ug.air.uci_cacx.Fragments.Patient.Nok_1;
@@ -41,7 +46,7 @@ public class Screening extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.fragment_container, new Visit());
+//        fragmentTransaction.add(R.id.fragment_container, new Height());
         fragmentTransaction.add(R.id.fragment_container, new Citizen());
         fragmentTransaction.commit();
     }
@@ -70,15 +75,12 @@ public class Screening extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getString(SCREENING_NUMBER, "").isEmpty()){
-                    dialog.dismiss();
-                    startActivity(new Intent(Screening.this, Home.class));
+                boolean complete = sharedPreferences.getBoolean(COMPLETE, false);
+                if (!sharedPreferences.getString(FIRST_NAME, "").isEmpty()) {
+                    FunctionalUtils.save_file(Screening.this, complete);
                 }
-                else {
-                    FunctionalUtils.save_file(Screening.this, false);
-                    dialog.dismiss();
-                    startActivity(new Intent(Screening.this, Home.class));
-                }
+                dialog.dismiss();
+                startActivity(new Intent(Screening.this, Home.class));
             }
         });
 

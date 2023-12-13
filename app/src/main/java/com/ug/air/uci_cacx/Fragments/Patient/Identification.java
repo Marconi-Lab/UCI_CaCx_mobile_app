@@ -29,7 +29,7 @@ public class Identification extends Fragment {
     EditText editText_screening_number, editText_first_name, editText_last_name, editText_age, editText_middle_name;
     String middle, first, last, ax;
     int age;
-    public static  final String SCREENING_NUMBER ="screening_number";
+//    public static  final String SCREENING_NUMBER ="screening_number";
     public static  final String FIRST_NAME ="first_name";
     public static  final String MIDDLE_NAME ="middle_name";
     public static  final String LAST_NAME ="last_name";

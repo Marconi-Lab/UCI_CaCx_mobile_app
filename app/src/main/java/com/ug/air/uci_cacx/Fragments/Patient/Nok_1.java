@@ -87,7 +87,7 @@ public class Nok_1 extends Fragment {
                 if (contact.equals("Select one") || name.isEmpty() || relationship.equals("Select one")){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (!nin_id.equals("Select one") && nin.isEmpty()){
+                else if (!nin_id.isEmpty() && nin.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {

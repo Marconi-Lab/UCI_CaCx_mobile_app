@@ -115,6 +115,15 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="Negative"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:text="HPV16"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/small"
@@ -155,6 +164,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:visibility="gone">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Negative"
+                        android:fontFamily="@font/sora_regular"
+                        android:textSize="@dimen/small"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="-10dp"/>
 
                     <RadioButton
                         android:layout_width="match_parent"
