@@ -26,11 +26,14 @@ public class Parity extends Fragment {
     SharedPreferences sharedPreferences;
     View view;
     Button next_btn, back_btn;
-    EditText editText_parity, editText_partners, editText_debut;
-    String parity, partner, debut;
-    int pa, pr, de;
+    EditText editText_parity, editText_partners, editText_debut, editText_abortion, editText_ectopic;
+    String parity, partner, debut, abortion, ectopic;
+    int pa, pr, de, gravida, ab, ec;
     public static  final String PARITY ="parity";
     public static  final String PARTNER ="number_of_sexual_partners";
+    public static  final String ABORTIONS ="abortions";
+    public static  final String ECTOPIC ="ectopics";
+    public static  final String GRAVIDA ="gravida";
     public static  final String DEBUT ="age_at_sex_debut";
 
     @Override
@@ -47,6 +50,8 @@ public class Parity extends Fragment {
 
         editText_debut = view.findViewById(R.id.age);
         editText_partners = view.findViewById(R.id.partners);
+        editText_abortion = view.findViewById(R.id.abort);
+        editText_ectopic = view.findViewById(R.id.ecto);
         editText_parity = view.findViewById(R.id.parity);
 
         update_views();
@@ -74,8 +79,10 @@ public class Parity extends Fragment {
                 parity = editText_parity.getText().toString().trim();
                 partner = editText_partners.getText().toString().trim();
                 debut = editText_debut.getText().toString().trim();
+                abortion = editText_abortion.getText().toString().trim();
+                ectopic = editText_ectopic.getText().toString().trim();
 
-                if (parity.isEmpty() || partner.isEmpty() || debut.isEmpty()){
+                if (parity.isEmpty() || partner.isEmpty() || debut.isEmpty() || abortion.isEmpty() || ectopic.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -91,6 +98,10 @@ public class Parity extends Fragment {
         editor.putInt(PARITY, Integer.parseInt(parity));
         editor.putInt(PARTNER, Integer.parseInt(partner));
         editor.putInt(DEBUT, Integer.parseInt(debut));
+        editor.putInt(ABORTIONS, Integer.parseInt(abortion));
+        editor.putInt(ECTOPIC, Integer.parseInt(ectopic));
+        gravida = Integer.parseInt(parity) + Integer.parseInt(abortion) + Integer.parseInt(ectopic);
+        editor.putInt(GRAVIDA, gravida);
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -103,5 +114,7 @@ public class Parity extends Fragment {
         FunctionalUtils.checkZeroValue(editText_parity, sharedPreferences.getInt(PARITY, 0));
         FunctionalUtils.checkZeroValue(editText_partners, sharedPreferences.getInt(PARTNER, 0));
         FunctionalUtils.checkZeroValue(editText_debut, sharedPreferences.getInt(DEBUT, 0));
+        FunctionalUtils.checkZeroValue(editText_abortion, sharedPreferences.getInt(ABORTIONS, 0));
+        FunctionalUtils.checkZeroValue(editText_ectopic, sharedPreferences.getInt(ECTOPIC, 0));
     }
 }

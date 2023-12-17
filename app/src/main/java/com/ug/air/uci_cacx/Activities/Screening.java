@@ -46,8 +46,8 @@ public class Screening extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.fragment_container, new Height());
-        fragmentTransaction.add(R.id.fragment_container, new Citizen());
+        fragmentTransaction.add(R.id.fragment_container, new Clinicians());
+//        fragmentTransaction.add(R.id.fragment_container, new Citizen());
         fragmentTransaction.commit();
     }
 

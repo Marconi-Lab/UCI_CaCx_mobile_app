@@ -6,14 +6,17 @@ import static com.ug.air.uci_cacx.Fragments.Patient.Photo_2.IMAGE_PATH_2;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_3.IMAGE_PATH_3;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_4.IMAGE_PATH_4;
 import static com.ug.air.uci_cacx.Fragments.Patient.Screening_1.SCREEN_METHOD;
+import static com.ug.air.uci_cacx.Fragments.Patient.Screening_2.RESULT_VIA;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -54,7 +57,7 @@ public class Results extends Fragment {
     TextView textView_model, textView_clinician, textView_agree;
     RadioGroup radioGroup;
     LinearLayout linearLayout;
-    String model, clinician, agree, method, result, model_result;
+    String model, clinician, agree, method, result, model_result, via;
     String consult = "";
     float negative, positive, pos3;
     public static  final String MODEL_RESULT ="model_result";
@@ -80,9 +83,10 @@ public class Results extends Fragment {
         editor = sharedPreferences.edit();
 
         method = sharedPreferences.getString(SCREEN_METHOD, "");
+        via = sharedPreferences.getString(RESULT_VIA, "");
 //        clinician = sharedPreferences.getString(RESULT, "");
         
-        save_btn = view.findViewById(R.id.send);
+//        save_btn = view.findViewById(R.id.send);
         fill_btn = view.findViewById(R.id.form);
         home_btn = view.findViewById(R.id.home);
 
@@ -100,14 +104,18 @@ public class Results extends Fragment {
             }
         });
 
+//        Toast.makeText(requireActivity(), method, Toast.LENGTH_SHORT).show();
+
         if (method.equals("VIA")){
             imageList.add(new Image(sharedPreferences.getString(IMAGE_PATH, ""), IMAGE_PREDICTION_1, IMAGE_RESULT_1));
             imageList.add(new Image(sharedPreferences.getString(IMAGE_PATH_2, ""), IMAGE_PREDICTION_2, IMAGE_RESULT_2));
             imageList.add(new Image(sharedPreferences.getString(IMAGE_PATH_3, ""), IMAGE_PREDICTION_3, IMAGE_RESULT_3));
             imageList.add(new Image(sharedPreferences.getString(IMAGE_PATH_4, ""), IMAGE_PREDICTION_4, IMAGE_RESULT_4));
 
-            run_model();
-            
+//            run_model();
+            new runningBackgroundTask(requireActivity(), imageList, editor, sharedPreferences,
+                    linearLayout, textView_model, textView_clinician, textView_agree, via).execute();
+
         }
         
         home_btn.setOnClickListener(new View.OnClickListener() {
@@ -130,18 +138,159 @@ public class Results extends Fragment {
             }
         });
 
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (check_consult()) {
-//                    FunctionalUtils.save_file(requireActivity(), true);
-//                    startActivity(new Intent(requireActivity(), Home.class));
-                    Toast.makeText(requireActivity(), "This functionality is not yet available", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        save_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (check_consult()) {
+////                    FunctionalUtils.save_file(requireActivity(), true);
+////                    startActivity(new Intent(requireActivity(), Home.class));
+//                    Toast.makeText(requireActivity(), "This functionality is not yet available", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         
         return view;
+    }
+
+    private static class runningBackgroundTask extends AsyncTask<Void, Void, Void>{
+
+        private Context context;
+        private ProgressDialog progressDialog;
+        private ArrayList<Image> imageList;
+        SharedPreferences.Editor editor;
+        SharedPreferences sharedPreferences;
+        float negative, positive, pos3;
+        String model, clinician, agree, method, result, model_result, via;
+        LinearLayout linearLayout;
+        TextView textView_model, textView_clinician, textView_agree;
+
+        public runningBackgroundTask(Context context, ArrayList<Image> imageList,
+                                     SharedPreferences.Editor editor,
+                                     SharedPreferences sharedPreferences, LinearLayout linearLayout,
+                                     TextView textView_model, TextView textView_clinician,
+                                     TextView textView_agree, String via) {
+            this.context = context;
+            this.imageList = imageList;
+            this.editor = editor;
+            this.sharedPreferences = sharedPreferences;
+            this.linearLayout = linearLayout;
+            this.textView_model = textView_model;
+            this.textView_clinician = textView_clinician;
+            this.textView_agree = textView_agree;
+            this.via = via;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Show a progress dialog before starting the task
+            progressDialog = ProgressDialog.show(context, "Running Image Classification model...", "", true);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            run_model(imageList);
+
+            return null;
+        }
+
+        private void run_model(ArrayList<Image> imageList) {
+            for (int i = 0; i < imageList.size(); i++){
+                Image image = imageList.get(i);
+                run_tensorflow_model(image, i);
+            }
+        }
+
+        private void run_tensorflow_model(Image image, int index) {
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(image.getImage_path());
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+
+                Model model = Model.newInstance(context);
+
+                TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
+
+                TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
+                tensorImage.load(resizedBitmap);
+                ByteBuffer byteBuffer_2 = tensorImage.getBuffer();
+                inputFeature0.loadBuffer(byteBuffer_2);
+
+                Model.Outputs outputs = model.process(inputFeature0);
+                TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                model.close();
+
+                negative = outputFeature0.getFloatArray()[0];
+                positive = outputFeature0.getFloatArray()[1];
+
+                if (index == 2){
+                    pos3 = positive;
+                }
+
+                editor.putString(image.getPrediction(), "[" + negative +", " + positive +"]");
+                if (negative > positive){
+                    result = "Negative";
+                }else {
+                    result = "Positive";
+                }
+                Log.d("TAG", "run_tensorflow_model: index" + index  + " results " + result);
+                editor.putString(image.getResult(), result);
+                editor.apply();
+
+                if (index == 3){
+                    float threshold = (float) 0.5;
+                    String res_img_3 = sharedPreferences.getString(IMAGE_RESULT_3, "");
+                    if (res_img_3.equals(result)){
+                        model_result = result;
+                    }
+                    else {
+                        if (res_img_3.equals("Positive")){
+                            if (pos3 >= threshold){
+                                model_result = "Positive";
+                            }
+                            else {
+                                model_result = "Negative";
+                            }
+                        }
+                        else {
+                            if (positive >= threshold){
+                                model_result = "Positive";
+                            }
+                            else {
+                                model_result = "Negative";
+                            }
+                        }
+                    }
+                    editor.putString(MODEL_RESULT, model_result);
+                    editor.apply();
+                    Log.d("TAG", "run_tensorflow_model: result " + model_result);
+
+                }
+
+            } catch (IOException e) {
+                // TODO Handle the exception
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            // Dismiss the progress dialog after the task is complete
+            progressDialog.dismiss();
+            linearLayout.setVisibility(View.VISIBLE);
+            textView_model.setText(model_result);
+            textView_clinician.setText(via);
+
+            if (model_result.equals(via)) {
+                textView_agree.setText("Agreement");
+            }
+            else {
+                textView_agree.setText("Disagreement");
+            }
+            // Show a completion message or perform any post-task actions
+        }
+
     }
     
     private boolean check_consult(){
@@ -159,104 +308,98 @@ public class Results extends Fragment {
         return layout;
     }
 
-    private void run_model() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setMessage("Running model, Please wait...");
-        builder.setCancelable(false);
+//    private static void run_model(ArrayList<Image> imageList, Context context) {
+//        for (int i = 0; i < imageList.size(); i++){
+//            Image image = imageList.get(i);
+//            run_tensorflow_model(image, i, context);
+//        }
+//    }
 
-        dialog = builder.create();
-        dialog.show();
-        for (int i = 0; i < imageList.size(); i++){
-            Image image = imageList.get(i);
-            run_tensorflow_model(image, i);
-        }
-    }
+//    private static void run_tensorflow_model(Image image, int index, Context context){
+//        try {
+//            Bitmap bitmap = BitmapFactory.decodeFile(image.getImage_path());
+//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+//
+//            Model model = Model.newInstance(context);
+//
+//            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
+//
+//            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
+//            tensorImage.load(resizedBitmap);
+//            ByteBuffer byteBuffer_2 = tensorImage.getBuffer();
+//            inputFeature0.loadBuffer(byteBuffer_2);
+//
+//            Model.Outputs outputs = model.process(inputFeature0);
+//            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+//
+//            model.close();
+//
+//            negative = outputFeature0.getFloatArray()[0];
+//            positive = outputFeature0.getFloatArray()[1];
+//
+//            if (index == 2){
+//                pos3 = positive;
+//            }
+//
+//            editor.putString(image.getPrediction(), "[" + negative +", " + positive +"]");
+//            if (negative > positive){
+//                result = "Negative";
+//            }else {
+//                result = "Positive";
+//            }
+//            Log.d("TAG", "run_tensorflow_model: index" + index  + " results " + result);
+//            editor.putString(image.getResult(), result);
+//            editor.apply();
+//
+//            if (index == 3){
+//                float threshold = (float) 0.5;
+//                String res_img_3 = sharedPreferences.getString(IMAGE_RESULT_3, "");
+//                if (res_img_3.equals(result)){
+//                    model_result = result;
+//                }
+//                else {
+//                    if (res_img_3.equals("Positive")){
+//                        if (pos3 >= threshold){
+//                            model_result = "Positive";
+//                        }
+//                        else {
+//                            model_result = "Negative";
+//                        }
+//                    }
+//                    else {
+//                        if (positive >= threshold){
+//                            model_result = "Positive";
+//                        }
+//                        else {
+//                            model_result = "Negative";
+//                        }
+//                    }
+//                }
+//                editor.putString(MODEL_RESULT, model_result);
+//                editor.apply();
+//                Log.d("TAG", "run_tensorflow_model: result " + model_result);
+//                dialog.dismiss();
+//
+//                load_results();
+//            }
+//        }
+//        catch (IOException e) {
+//            // TODO Handle the exception
+//        }
+//
+//    }
 
-    private void run_tensorflow_model(Image image, int index){
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(image.getImage_path());
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-
-            Model model = Model.newInstance(requireActivity());
-
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
-
-            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
-            tensorImage.load(resizedBitmap);
-            ByteBuffer byteBuffer_2 = tensorImage.getBuffer();
-            inputFeature0.loadBuffer(byteBuffer_2);
-
-            Model.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            model.close();
-
-            negative = outputFeature0.getFloatArray()[0];
-            positive = outputFeature0.getFloatArray()[1];
-
-            if (index == 2){
-                pos3 = positive;
-            }
-
-            editor.putString(image.getPrediction(), "[" + negative +", " + positive +"]");
-            if (negative > positive){
-                result = "Negative";
-            }else {
-                result = "Positive";
-            }
-            Log.d("TAG", "run_tensorflow_model: index" + index  + " results " + result);
-            editor.putString(image.getResult(), result);
-            editor.apply();
-
-            if (index == 3){
-                float threshold = (float) 0.5;
-                String res_img_3 = sharedPreferences.getString(IMAGE_RESULT_3, "");
-                if (res_img_3.equals(result)){
-                    model_result = result;
-                }
-                else {
-                    if (res_img_3.equals("Positive")){
-                        if (pos3 >= threshold){
-                            model_result = "Positive";
-                        }
-                        else {
-                            model_result = "Negative";
-                        }
-                    }
-                    else {
-                        if (positive >= threshold){
-                            model_result = "Positive";
-                        }
-                        else {
-                            model_result = "Negative";
-                        }
-                    }
-                }
-                editor.putString(MODEL_RESULT, model_result);
-                editor.apply();
-                Log.d("TAG", "run_tensorflow_model: result " + model_result);
-                dialog.dismiss();
-
-                load_results();
-            }
-        }
-        catch (IOException e) {
-            // TODO Handle the exception
-        }
-
-    }
-
-    private void load_results() {
-        linearLayout.setVisibility(View.VISIBLE);
-        textView_model.setText(model_result);
-        textView_clinician.setText(clinician);
-
-        if (model_result.equals(clinician)) {
-            textView_agree.setText("Agreement");
-        }
-        else {
-            textView_agree.setText("Disagreement");
-        }
-    }
+//    private void load_results() {
+//        linearLayout.setVisibility(View.VISIBLE);
+//        textView_model.setText(model_result);
+//        textView_clinician.setText(via);
+//
+//        if (model_result.equals(via)) {
+//            textView_agree.setText("Agreement");
+//        }
+//        else {
+//            textView_agree.setText("Disagreement");
+//        }
+//    }
 
 }

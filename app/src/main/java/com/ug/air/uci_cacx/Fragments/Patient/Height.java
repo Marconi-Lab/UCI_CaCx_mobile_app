@@ -167,6 +167,7 @@ public class Height extends Fragment {
         FunctionalUtils.checkZeroValue(editText_height, height);
         FunctionalUtils.checkZeroValue(editText_systolic, systolic);
         FunctionalUtils.checkZeroValue(editText_diastolic, diastolic);
+        textView.setText(String.valueOf(sharedPreferences.getFloat(BMI, 0)));
 
     }
 

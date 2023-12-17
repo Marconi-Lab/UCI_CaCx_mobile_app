@@ -66,16 +66,14 @@ public class Clinicians extends Fragment {
         linearLayout = view.findViewById(R.id.staff_layout);
 
         staff = sharedPreferences_2.getString(PROVIDERS, null);
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
-        stringList = gson.fromJson(staff, type);
-        if (stringList == null) {
-            stringList = new ArrayList<>();
+        if (staff != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<String>>() {}.getType();
+            stringList = gson.fromJson(staff, type);
+            if (stringList == null) {
+                stringList = new ArrayList<>();
+            }
         }
-
-//        staff = "John Mathews, Musisi Norbels, Senoga Mark";
-//        staffList.clear();
-//        staffList = Arrays.asList(staff.split(", "));
 
         for (String staff : stringList){
             CheckBox checkBox = new CheckBox(requireActivity());
@@ -96,6 +94,8 @@ public class Clinicians extends Fragment {
             linearLayout.addView(checkBox);
         }
 
+        load_data();
+
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +109,7 @@ public class Clinicians extends Fragment {
             @Override
             public void onClick(View view) {
                 available = FunctionalUtils.convertListToString(checkBoxList);
+//                Toast.makeText(requireActivity(), available, Toast.LENGTH_SHORT).show();
 
                 if (available.isEmpty()){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
@@ -134,4 +135,12 @@ public class Clinicians extends Fragment {
         fr.addToBackStack(null);
         fr.commit();
     }
+
+    private void load_data(){
+        available = sharedPreferences.getString(AVAILABLE, "");
+        checkBoxList = null;
+        checkBoxList = FunctionalUtils.convertStringToList(available);
+        FunctionalUtils.checkBoxes(linearLayout, checkBoxList);
+    }
+
 }

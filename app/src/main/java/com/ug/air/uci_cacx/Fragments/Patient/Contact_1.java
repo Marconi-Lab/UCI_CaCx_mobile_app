@@ -107,6 +107,34 @@ public class Contact_1 extends Fragment {
             }
         });
 
+        editText_alternative.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String userInput = charSequence.toString().toLowerCase();
+                if (charSequence.length() > 0 && charSequence.charAt(0) != '0'){
+                    next_btn.setEnabled(false);
+                    editText_alternative.setError("Let the first number be 0");
+                }
+                else if (charSequence.length() < 10 || charSequence.length() > 10){
+                    next_btn.setEnabled(false);
+                    editText_alternative.setError("The phone number should have 10 numbers");
+                }
+                else {
+                    next_btn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return view;
     }
 

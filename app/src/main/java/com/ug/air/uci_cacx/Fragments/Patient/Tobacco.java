@@ -156,7 +156,12 @@ public class Tobacco extends Fragment {
 
     private void save_data() {
         editor.putString(TOBACCO, tobacco);
-        editor.putString(DURATION, duration);
+        if (duration.isEmpty()){
+            editor.putInt(DURATION, 0);
+        }
+        else {
+            editor.putInt(DURATION, Integer.parseInt(duration));
+        }
         editor.putString(UNITS, units);
         editor.apply();
 
@@ -168,7 +173,7 @@ public class Tobacco extends Fragment {
 
     private void load_data() {
         tobacco = sharedPreferences.getString(TOBACCO, "");
-        duration = sharedPreferences.getString(DURATION, "");
+        time = sharedPreferences.getInt(DURATION, 0);
         units = sharedPreferences.getString(UNITS, "");
     }
 
@@ -179,7 +184,7 @@ public class Tobacco extends Fragment {
 
             if (tobacco.equals("Yes")) {
                 linearLayout.setVisibility(View.VISIBLE);
-                editText_duration.setText(duration);
+                FunctionalUtils.checkZeroValue(editText_duration, time);
                 setSpinner(0, adapter1, units);
             }
 

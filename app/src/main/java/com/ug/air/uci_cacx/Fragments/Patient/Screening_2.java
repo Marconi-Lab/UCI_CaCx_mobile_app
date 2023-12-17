@@ -197,7 +197,7 @@ public class Screening_2 extends Fragment {
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        if (result.equals("Positive") || (method.equals("HPV") && !result.equals("Negative"))){
+        if (result.equals("Positive") || (method.equals("HPV") && !result.equals("Negative")) || (method.equals("Pap Smear") && !result.equals("Negative"))){
             fr.replace(R.id.fragment_container, new Treatment());
         }
         else {

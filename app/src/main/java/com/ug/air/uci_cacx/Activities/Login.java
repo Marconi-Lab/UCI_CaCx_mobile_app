@@ -132,12 +132,16 @@ public class Login extends AppCompatActivity {
                 if (response.isSuccessful()){
                     List<String> stringList = response.body();
                     if(stringList != null){
+
+                        if (stringList.contains(person)){
+                            stringList.remove(person);
+                        }
+
                         Gson gson = new Gson();
                         String json2 = gson.toJson(stringList);
                         editor.putString(PROVIDERS, json2);
                         editor.apply();
                         String providers = sharedPreferences.getString(PROVIDERS, null);
-                        Log.d("UCI_CaCx", "Facilities: " + providers);
                         getFacilities();
                     }
                     else {

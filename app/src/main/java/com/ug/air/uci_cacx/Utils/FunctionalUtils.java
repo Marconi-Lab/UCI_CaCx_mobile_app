@@ -66,19 +66,38 @@ public class FunctionalUtils {
     }
 
     public static void checkBoxes(LinearLayout linearLayout, List<String> checkBoxList){
+        List<CheckBox> checkBoxesToCheck = new ArrayList<>();
+
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             if (linearLayout.getChildAt(i) instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
                 String value = checkBox.getText().toString();
 
-                for (String check: checkBoxList){
-                    if (value.equals(check)){
-                        checkBox.setChecked(true);
+                for (String check : checkBoxList) {
+                    if (value.equals(check)) {
+                        checkBoxesToCheck.add(checkBox);
                     }
                 }
-
             }
         }
+
+        for (CheckBox checkBox : checkBoxesToCheck) {
+            checkBox.setChecked(true);
+        }
+
+//        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//            if (linearLayout.getChildAt(i) instanceof CheckBox) {
+//                CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
+//                String value = checkBox.getText().toString();
+//
+//                for (String check: checkBoxList){
+//                    if (value.equals(check)){
+//                        checkBox.setChecked(true);
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
     public static List<String> convertStringToList(String value){

@@ -51,7 +51,6 @@ public class Facilities extends AppCompatActivity {
 
         Gson gson = new Gson();
         facilities = sharedPreferences.getString(FACILITIES, null);
-        Log.d("UCI_CaCx", "onCreate: " + facilities);
         Type type = new TypeToken<ArrayList<Facility>>() {}.getType();
         facilityArrayList = gson.fromJson(facilities, type);
         if (facilityArrayList == null) {
