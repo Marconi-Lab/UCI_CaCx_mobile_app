@@ -17,7 +17,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ug.air.uci_cacx.APIs.ApiClient;
 import com.ug.air.uci_cacx.APIs.JsonPlaceHolder;
+import com.ug.air.uci_cacx.Models.Check;
 import com.ug.air.uci_cacx.Models.Facility;
+import com.ug.air.uci_cacx.Models.Message;
 import com.ug.air.uci_cacx.Models.User;
 import com.ug.air.uci_cacx.R;
 
@@ -100,7 +102,8 @@ public class Login extends AppCompatActivity {
                     editor.putString(TOKEN, token);
                     editor.putString(PERSON, person);
                     editor.apply();
-                    get_providers();
+                    check_for_provider();
+//                    get_providers();
 //                    getFacilities();
 //                    startActivity(new Intent(Login.this, Permissions.class));
                 }
@@ -118,6 +121,36 @@ public class Login extends AppCompatActivity {
                 Log.d("TAG", "onFailure: " + t.getMessage());
 //                dialog.dismiss();
 //                Toast.makeText(requireActivity(), "Something went wrong, please try again later", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void check_for_provider() {
+        jsonPlaceHolder = ApiClient.getClient_2().create(JsonPlaceHolder.class);
+        Check check = new Check(token);
+        Call<Message> call = jsonPlaceHolder.check_for_provider(check);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                if (response.isSuccessful()){
+                    String message = response.body().getMessage();
+//                    Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+                    get_providers();
+                }
+                else {
+                    btn_signin.setEnabled(true);
+                    progressBar.setVisibility(View.GONE);
+                    int code = response.code();
+                    Toast.makeText(Login.this, code + ": Couldn't check if the provider exists", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+                btn_signin.setEnabled(true);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(Login.this, "Couldn't check if the provider exists", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -141,7 +174,7 @@ public class Login extends AppCompatActivity {
                         String json2 = gson.toJson(stringList);
                         editor.putString(PROVIDERS, json2);
                         editor.apply();
-                        String providers = sharedPreferences.getString(PROVIDERS, null);
+//                        String providers = sharedPreferences.getString(PROVIDERS, null);
                         getFacilities();
                     }
                     else {
@@ -185,7 +218,7 @@ public class Login extends AppCompatActivity {
                         editor.putString(FACILITIES, json2);
                         editor.apply();
                         String facilities = sharedPreferences.getString(FACILITIES, null);
-                        Log.d("UCI_CaCx", "Facilities: " + facilities);
+//                        Log.d("UCI_CaCx", "Facilities: " + facilities);
 //                        Log.d("UCI_CaCx", "onResponse: saved list");
                     }
                     startActivity(new Intent(Login.this, Facilities.class));

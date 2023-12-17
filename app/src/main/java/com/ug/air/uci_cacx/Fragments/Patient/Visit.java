@@ -175,17 +175,14 @@ public class Visit extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String userInput = charSequence.toString().toLowerCase();
+
                 if (charSequence.length() > 0 && charSequence.charAt(0) != '0'){
-                    next_btn.setEnabled(false);
                     editText_contact.setError("Let the first number be 0");
                 }
                 else if (charSequence.length() < 10 || charSequence.length() > 10){
-                    next_btn.setEnabled(false);
                     editText_contact.setError("The phone number should have 10 numbers");
                 }
-                else {
-                    next_btn.setEnabled(true);
-                }
+
             }
 
             @Override
