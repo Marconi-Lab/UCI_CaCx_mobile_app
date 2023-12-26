@@ -54,23 +54,26 @@
 
         </ScrollView>
 
-        <RelativeLayout
-            android:id="@+id/buttons"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_alignParentBottom="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/buttons"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?actionBarSize"-->
+<!--            android:layout_alignParentBottom="true">-->
 
-            <Button
-                android:id="@+id/upload"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:text="Upload Forms"
-                android:fontFamily="@font/sora_regular"
-                android:textSize="@dimen/bigger"/>
+<!--            <Button-->
+<!--                android:id="@+id/upload"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:fontFamily="@font/sora_regular"-->
+<!--                android:text="Upload Forms"-->
+<!--                android:textSize="@dimen/bigger" />-->
 
-        </RelativeLayout>
+<!--        </RelativeLayout>-->
 
     </RelativeLayout>
 

@@ -78,12 +78,7 @@ public class Height extends Fragment {
                 sys = editText_systolic.getText().toString().trim();
                 dis = editText_diastolic.getText().toString().trim();
 
-                if (we.isEmpty() || he.isEmpty() || sys.isEmpty() || dis.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    save_data();
-                }
+                save_data();
             }
         });
 
@@ -137,15 +132,32 @@ public class Height extends Fragment {
     }
 
     private void save_data() {
-        editor.putFloat(WEIGHT, Float.parseFloat(we));
-        editor.putInt(HEIGHT, Integer.parseInt(he));
-        editor.putInt(SYSTOLIC, Integer.parseInt(sys));
-        editor.putInt(DIASTOLIC, Integer.parseInt(dis));
-        String bp = sys + "/" + dis;
-        editor.putString(BLOOD_PRESSURE, bp);
+        float wei = FunctionalUtils.check_float_value(we);
+        int hei = FunctionalUtils.check_int_value(he);
+        int sysi = FunctionalUtils.check_int_value(sys);
+        int disi = FunctionalUtils.check_int_value(dis);
 
-        float bmi = FunctionalUtils.bmi(Integer.parseInt(he), Float.parseFloat(we));
-        editor.putFloat(BMI, bmi);
+        editor.putFloat(WEIGHT, wei);
+        editor.putInt(HEIGHT, hei);
+        editor.putInt(SYSTOLIC,sysi);
+        editor.putInt(DIASTOLIC, disi);
+        if (sys.isEmpty() || dis.isEmpty()){
+            editor.putString(BLOOD_PRESSURE, "");
+        }
+        else {
+            String bp = sys + "/" + dis;
+            editor.putString(BLOOD_PRESSURE, bp);
+        }
+
+
+        if (we.isEmpty() || he.isEmpty()){
+            editor.putFloat(BMI, 0);
+        }
+        else {
+            float bmi = FunctionalUtils.bmi(Integer.parseInt(he), Float.parseFloat(we));
+            editor.putFloat(BMI, bmi);
+        }
+
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();

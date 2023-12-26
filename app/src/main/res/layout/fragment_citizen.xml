@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sora_regular"
                         android:textSize="@dimen/big"
-                        android:text="Passport Number *"
+                        android:text="Passport Number"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"/>
 

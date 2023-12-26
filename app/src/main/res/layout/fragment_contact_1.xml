@@ -47,10 +47,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact *"
+                    android:text="Contact"
                     android:fontFamily="@font/sora_regular"
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is optional"
+                    android:fontFamily="@font/sora_regular"
+                    android:textSize="@dimen/smaller"
+                    android:textColor="@color/light_gray"/>
 
                 <EditText
                     android:id="@+id/contact"

@@ -41,6 +41,30 @@ public class FunctionalUtils {
         return bd;
     }
 
+    public static float check_float_value(String value){
+        float flo;
+        if (value.isEmpty()){
+            flo = 0;
+        }
+        else {
+            flo = Float.parseFloat(value);
+        }
+
+        return flo;
+    }
+
+    public static int check_int_value(String value){
+        int flo;
+        if (value.isEmpty()){
+            flo = 0;
+        }
+        else {
+            flo = Integer.parseInt(value);
+        }
+
+        return flo;
+    }
+
     public static void setRadioButton(RadioGroup radioGroup, String radio_button){
         for (int i = 0; i < radioGroup.getChildCount(); i++) {
             if (radioGroup.getChildAt(i) instanceof RadioButton) {
@@ -133,7 +157,7 @@ public class FunctionalUtils {
     }
 
 
-    public static void save_file(Context context, boolean status){
+    public static String save_file(Context context, boolean status){
         SharedPreferences sharedPreferences, sharedPreferencesX;
         SharedPreferences.Editor editor, editorX;
 
@@ -178,6 +202,8 @@ public class FunctionalUtils {
         editorX.commit();
         editor.clear();
         editor.commit();
+
+        return filename;
 
     }
 
@@ -225,7 +251,7 @@ public class FunctionalUtils {
             String last_name = sharedPreferences.getString(LAST_NAME, "");
             String name = first_name + " " + last_name;
 
-            Form form = new Form("Patient: " + name, "Saved on: " + date, filename);
+            Form form = new Form(name, date, filename);
             formList.add(form);
 
         }

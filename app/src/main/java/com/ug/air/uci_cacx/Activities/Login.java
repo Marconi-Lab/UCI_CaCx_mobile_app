@@ -43,12 +43,13 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     public static final String CREDENTIALS_PREFS ="credentials";
     public static  final String TOKEN ="access_token";
+    public static  final String SESSION ="session_id";
     public static  final String PERSON ="display_name";
     public static  final String PROVIDERS ="providers";
     public static  final String FACILITIES ="facilities";
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
-    String token, password, email, person;
+    String token, password, email, person, session_id;
     JsonPlaceHolder jsonPlaceHolder;
     List<Facility> facilityList = new ArrayList<>();
     @Override
@@ -97,15 +98,24 @@ public class Login extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
 
                 if(response.isSuccessful()){
-                    token = response.body().getProvider().getUuid();
-                    person = response.body().getAnother_user().getPerson().getDisplay();
-                    editor.putString(TOKEN, token);
-                    editor.putString(PERSON, person);
-                    editor.apply();
-                    check_for_provider();
-//                    get_providers();
-//                    getFacilities();
-//                    startActivity(new Intent(Login.this, Permissions.class));
+
+                    boolean auth = response.body().isAuthenticated();
+                    if (auth){
+                        token = response.body().getProvider().getUuid();
+                        person = response.body().getAnother_user().getPerson().getDisplay();
+                        session_id = response.body().getSession_id();
+                        editor.putString(TOKEN, token);
+                        editor.putString(PERSON, person);
+                        editor.putString(SESSION, session_id);
+                        editor.apply();
+                        check_for_provider();
+                    }
+                    else {
+                        btn_signin.setEnabled(true);
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(Login.this, "Please provide the right credentials", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else {
                     btn_signin.setEnabled(true);
@@ -166,7 +176,7 @@ public class Login extends AppCompatActivity {
                     List<String> stringList = response.body();
                     if(stringList != null){
 
-                        if (stringList.contains(person)){
+                        if (stringList.contains(person) || stringList.contains("Super User")){
                             stringList.remove(person);
                         }
 

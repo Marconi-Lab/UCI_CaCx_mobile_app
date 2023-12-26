@@ -2,6 +2,7 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,15 +10,20 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
+
+import java.util.Calendar;
 
 public class Identification extends Fragment {
 
@@ -25,15 +31,20 @@ public class Identification extends Fragment {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     View view;
-    Button next_btn, back_btn;
+    Button next_btn, back_btn, select_btn;
     EditText editText_screening_number, editText_first_name, editText_last_name, editText_age, editText_middle_name;
     String middle, first, last, ax;
     int age;
+    int months = 0;
+    int weeks = 0;
 //    public static  final String SCREENING_NUMBER ="screening_number";
     public static  final String FIRST_NAME ="first_name";
     public static  final String MIDDLE_NAME ="middle_name";
     public static  final String LAST_NAME ="last_name";
     public static  final String AGE ="age";
+    public static  final String DOB ="date_of_birth";
+    public static  final String MONTHS ="months";
+    public static  final String WEEKS ="weeks";
 
 
     @Override
@@ -54,6 +65,7 @@ public class Identification extends Fragment {
         editText_age = view.findViewById(R.id.age);
         editText_age = view.findViewById(R.id.age);
         editText_age = view.findViewById(R.id.age);
+        select_btn = view.findViewById(R.id.select);
 
         load_data();
         update_views();
@@ -80,7 +92,15 @@ public class Identification extends Fragment {
                 }
                 else {
                     save_data();
+//                    Toast.makeText(requireActivity(), "months " + months + " weeks " + weeks, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        select_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open_dialog();
             }
         });
 
@@ -92,6 +112,16 @@ public class Identification extends Fragment {
         editor.putString(FIRST_NAME, first);
         editor.putString(LAST_NAME, last);
         editor.putInt(AGE, Integer.parseInt(ax));
+        editor.putInt(MONTHS, months);
+        editor.putInt(WEEKS, weeks);
+
+        if (select_btn.getText().toString().trim() == "Select Date"){
+            editor.putString(DOB, "");
+        }
+        else {
+            editor.putString(DOB, select_btn.getText().toString().trim());
+        }
+
         editor.apply();
 
         FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -114,5 +144,46 @@ public class Identification extends Fragment {
 
         FunctionalUtils.checkZeroValue(editText_age, age);
 //        editText_age.setText(String.valueOf(age));
+    }
+
+    private void open_dialog(){
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(requireActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                select_btn.setText(day + "/" + (month+1) + "/" + year);
+
+                // Calculate age
+                Calendar dob = Calendar.getInstance();
+                dob.set(year, month, day);
+
+                age = currentYear - year;
+                months = currentMonth - month;
+                int ageDays = currentDay - day;
+
+                // Adjust age values based on negative differences
+                if (ageDays < 0) {
+                    months--;
+                    ageDays += dob.getActualMaximum(Calendar.DAY_OF_MONTH);
+                }
+
+                if (months < 0) {
+                    age--;
+                    months += 12;
+                }
+
+                // Calculate weeks (assuming 7 days per week)
+                weeks = ageDays / 7;
+                editText_age.setText(String.valueOf(age));
+
+            }
+        }, currentYear, currentMonth, currentDay);
+
+        dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dialog.show();
     }
 }

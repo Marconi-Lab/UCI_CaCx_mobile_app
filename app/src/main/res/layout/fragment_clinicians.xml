@@ -52,12 +52,19 @@
                     android:textSize="@dimen/big"
                     android:textColor="@color/black"/>
 
+               <CheckBox
+                   android:id="@+id/select_all"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Select All"
+                   android:layout_marginTop="10dp"/>
+
                 <LinearLayout
                     android:id="@+id/staff_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="10dp">
 
 
                 </LinearLayout>

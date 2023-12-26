@@ -56,6 +56,11 @@ public class Incomplete extends Fragment {
 
 
             }
+
+            @Override
+            public void onUploadClick(int position) {
+
+            }
         });
 
         return view;

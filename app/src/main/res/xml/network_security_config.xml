@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Configurations for specific domains -->
+<!--    <domain-config cleartextTrafficPermitted="true">-->
+<!--        <domain includeSubdomains="true">ucicompute.org</domain>-->
+<!--    </domain-config>-->
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">preventcancer.ug</domain>
+    </domain-config>
+
+    <!-- Add more configurations if needed -->
+</network-security-config>

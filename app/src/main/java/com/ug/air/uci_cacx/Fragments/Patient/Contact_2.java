@@ -39,15 +39,15 @@ public class Contact_2 extends Fragment {
     LinearLayout linearLayout;
     Button next_btn, back_btn;
     Spinner spinner_marital, spinner_education, spinner_sector, spinner_region;
-    EditText editText_employer, editText_occupation;
+    EditText editText_occupation;
     AutoCompleteTextView autoCompleteTextView;
-    String marital, eduction, region, employer, occupation, sector, district;
+    String marital, eduction, region, occupation, sector, district;
     public static  final String EDUCATION ="Highest_eduction_level";
     public static  final String MARITAL ="marital_status";
     public static  final String OCCUPATION ="occupation";
     public static  final String REGION ="region";
     public static  final String SECTOR ="employment_sector";
-    public static  final String EMPLOYEE ="employee";
+//    public static  final String EMPLOYEE ="employee";
     public static  final String DISTRICT ="district";
     List<Spinner> spinnerList = new ArrayList<>();
     ArrayList<String> districtList;
@@ -66,7 +66,7 @@ public class Contact_2 extends Fragment {
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
 
-        editText_employer = view.findViewById(R.id.employer);
+//        editText_employer = view.findViewById(R.id.employer);
         editText_occupation = view.findViewById(R.id.occupation);
         autoCompleteTextView = view.findViewById(R.id.district);
 
@@ -90,13 +90,11 @@ public class Contact_2 extends Fragment {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                employer = editText_employer.getText().toString().trim();
+//                employer = editText_employer.getText().toString().trim();
                 occupation = editText_occupation.getText().toString().trim();
                 district = autoCompleteTextView.getText().toString().trim();
 
-                if (employer.isEmpty() || occupation.isEmpty() || district.isEmpty() ||
-                        eduction.equals("Select one") || marital.equals("Select one") ||
-                        region.equals("Select one") || sector.equals("Select one")){
+                if (district.isEmpty() || region.equals("Select one")){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -207,7 +205,7 @@ public class Contact_2 extends Fragment {
         editor.putString(MARITAL, marital);
         editor.putString(REGION, region);
         editor.putString(DISTRICT, district);
-        editor.putString(EMPLOYEE, employer);
+//        editor.putString(EMPLOYEE, employer);
         editor.putString(OCCUPATION, occupation);
         editor.putString(SECTOR, sector);
         editor.apply();
@@ -221,7 +219,7 @@ public class Contact_2 extends Fragment {
     private void load_data() {
         eduction = sharedPreferences.getString(EDUCATION, "");
         marital = sharedPreferences.getString(MARITAL, "");
-        employer = sharedPreferences.getString(EMPLOYEE, "");
+//        employer = sharedPreferences.getString(EMPLOYEE, "");
         occupation = sharedPreferences.getString(OCCUPATION, "");
         sector = sharedPreferences.getString(SECTOR, "");
         region = sharedPreferences.getString(REGION, "");
@@ -231,7 +229,7 @@ public class Contact_2 extends Fragment {
     private void update_views() {
         autoCompleteTextView.setText(district);
         editText_occupation.setText(occupation);
-        editText_employer.setText(employer);
+//        editText_employer.setText(employer);
 
         setSpinner(0, adapter1, marital);
         setSpinner(1, adapter2, eduction);

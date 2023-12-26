@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
 
     public interface OnItemClickListener {
         void onShowClick(int position);
+        void onUploadClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -57,12 +59,14 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
     public static class FormViewHolder extends RecyclerView.ViewHolder {
 
         TextView screening, date;
+        ImageView upload;
 
         public FormViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             screening = itemView.findViewById(R.id.screen);
             date = itemView.findViewById(R.id.date);
+            upload = itemView.findViewById(R.id.upload);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +75,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION){
                             listener.onShowClick(position);
+                        }
+                    }
+                }
+            });
+
+            upload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onUploadClick(position);
                         }
                     }
                 }

@@ -89,7 +89,7 @@ public class Nok_2 extends Fragment {
                 contact = editText_contact.getText().toString().trim();
                 district = autoCompleteTextView.getText().toString().trim();
 
-                if (contact.isEmpty() || district.isEmpty() || region.equals("Select one")) {
+                if (contact.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {

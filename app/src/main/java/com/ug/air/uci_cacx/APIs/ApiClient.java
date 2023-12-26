@@ -12,12 +12,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL_1 = "https://ucicompute.org/";
-    private static final String BASE_URL_2 = "http://104.198.50.209:8008/";
+//    private static final String BASE_URL_1 = "https://ucicompute.org/";
+//    private static final String BASE_URL_2 = "https://metabackend.ucicompute.org/";
+
+    private static final String BASE_URL_1 = "https://preventcancer.ug/";
+    private static final String BASE_URL_2 = "https://metabackend.preventcancer.ug/";
     private static Retrofit retrofit_1 = null;
     private static BasicAuthInterceptor basicAuthInterceptor;
     private static Retrofit retrofit_2 = null;
-
     public static Retrofit getClient_1(String username, String password) {
 
         if (retrofit_1 == null){
@@ -44,7 +46,6 @@ public class ApiClient {
         }
         return retrofit_1;
     }
-
     public static Retrofit getClient_2() {
 
         if (retrofit_2 == null){

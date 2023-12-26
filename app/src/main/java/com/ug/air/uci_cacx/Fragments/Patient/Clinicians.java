@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -39,8 +42,10 @@ public class Clinicians extends Fragment {
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
-    String staff, available;
+    CheckBox checkBox_select;
+    String staff, available, selected_all;
     public static  final String AVAILABLE ="screening staff";
+    public static  final String SELECTED_ALL ="selected_all";
     public static final String DATE = "created_on";
     public static final String COMPLETE = "complete_form";
     public static final String FILENAME = "filename";
@@ -64,6 +69,7 @@ public class Clinicians extends Fragment {
         back_btn = view.findViewById(R.id.back);
 
         linearLayout = view.findViewById(R.id.staff_layout);
+        checkBox_select = view.findViewById(R.id.select_all);
 
         staff = sharedPreferences_2.getString(PROVIDERS, null);
         if (staff != null){
@@ -83,16 +89,49 @@ public class Clinicians extends Fragment {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    // Add or remove values based on individual checkbox state
                     if (isChecked) {
                         checkBoxList.add(staff);
                     } else {
                         checkBoxList.remove(staff);
                     }
+
+                    // Check the master checkbox state based on the individual checkbox states
+                    boolean allChecked = true;
+                    for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                        if (linearLayout.getChildAt(i) instanceof CheckBox) {
+                            CheckBox cb = (CheckBox) linearLayout.getChildAt(i);
+                            if (!cb.isChecked()) {
+                                allChecked = false;
+                                break;
+                            }
+                        }
+                    }
+                    checkBox_select.setChecked(allChecked);
                 }
             });
 
             linearLayout.addView(checkBox);
         }
+
+        checkBox_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                    if (linearLayout.getChildAt(i) instanceof CheckBox) {
+                        CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
+                        checkBox.setChecked(isChecked);
+
+                        // Add or remove values based on the master checkbox state
+                        if (isChecked) {
+                            checkBoxList.add(checkBox.getText().toString());
+                        } else {
+                            checkBoxList.remove(checkBox.getText().toString());
+                        }
+                    }
+                }
+            }
+        });
 
         load_data();
 
@@ -109,6 +148,7 @@ public class Clinicians extends Fragment {
             @Override
             public void onClick(View view) {
                 available = FunctionalUtils.convertListToString(checkBoxList);
+
 //                Toast.makeText(requireActivity(), available, Toast.LENGTH_SHORT).show();
 
                 if (available.isEmpty()){

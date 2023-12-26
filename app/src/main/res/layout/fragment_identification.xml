@@ -133,20 +133,62 @@
                     android:textColor="@color/black"
                     android:layout_marginTop="20dp"/>
 
-                <EditText
-                    android:id="@+id/age"
-                    android:layout_width="150dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/primary_edit_text"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/small"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColorHint="@color/gray"
-                    android:inputType="number"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp"/>
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/select"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        style="@style/Custom.OutlinedButton"
+                        android:backgroundTint="@color/light_blue"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="18dp"
+                        android:paddingBottom="18dp"
+                        android:textSize="@dimen/small"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColorHint="@color/gray"
+                        android:text="Select Date"
+                        android:layout_marginEnd="5dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="OR"
+                        android:fontFamily="@font/sora_semi_bold"
+                        android:textSize="@dimen/biggest"
+                        android:textColor="@color/gray"
+                        android:gravity="center"
+                        android:layout_marginTop="20dp"/>
+
+                    <EditText
+                        android:id="@+id/age"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        android:background="@drawable/primary_edit_text"
+                        android:textSize="@dimen/small"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColorHint="@color/gray"
+                        android:inputType="number"
+                        android:hint="Enter Age"
+                        android:gravity="center"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="18dp"
+                        android:paddingBottom="18dp"
+                        android:layout_marginStart="5dp"/>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

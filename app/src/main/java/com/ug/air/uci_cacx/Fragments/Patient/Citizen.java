@@ -141,10 +141,10 @@ public class Citizen extends Fragment {
                 if (citizen.isEmpty()) {
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (citizen.equals("Non Citizen") && (passport.isEmpty() || country.isEmpty())){
+                else if (citizen.equals("Non Citizen") && (country.isEmpty())){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
-                else if (citizen.equals("Citizen") && (nin_id.isEmpty() || nin.isEmpty())){
+                else if (citizen.equals("Citizen") && (nin_id.isEmpty())){
                     Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {

@@ -70,12 +70,7 @@ public class Contact_1 extends Fragment {
                 contact = editText_contact.getText().toString().trim();
                 alternative = editText_alternative.getText().toString().trim();
 
-                if (contact.isEmpty()){
-                    Toast.makeText(requireActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    save_data();
-                }
+                save_data();
             }
         });
 

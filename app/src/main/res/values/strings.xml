@@ -162,6 +162,7 @@
         <item>Live call from HW</item>
         <item>SMS</item>
         <item>Automated Attendant (IVR)</item>
+<!--        <item>All Modes</item>-->
     </string-array>
 
     <string-array name="using">
