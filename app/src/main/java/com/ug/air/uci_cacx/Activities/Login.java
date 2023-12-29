@@ -103,7 +103,7 @@ public class Login extends AppCompatActivity {
                     if (auth){
                         token = response.body().getProvider().getUuid();
                         person = response.body().getAnother_user().getPerson().getDisplay();
-                        session_id = response.body().getSession_id();
+                        session_id = response.body().getSessionId();
                         editor.putString(TOKEN, token);
                         editor.putString(PERSON, person);
                         editor.putString(SESSION, session_id);
@@ -176,9 +176,8 @@ public class Login extends AppCompatActivity {
                     List<String> stringList = response.body();
                     if(stringList != null){
 
-                        if (stringList.contains(person) || stringList.contains("Super User")){
-                            stringList.remove(person);
-                        }
+                        stringList.remove(person);
+                        stringList.remove("Super User");
 
                         Gson gson = new Gson();
                         String json2 = gson.toJson(stringList);

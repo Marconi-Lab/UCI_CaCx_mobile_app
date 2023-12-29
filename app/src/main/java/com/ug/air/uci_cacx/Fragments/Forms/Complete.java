@@ -428,7 +428,14 @@ public class Complete extends Fragment {
                                 else if(statusCode == 500){
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
-
+                                }
+                                else if(statusCode == 422) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Header variables missing", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(statusCode == 413) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             catch (IOException e) {
@@ -440,6 +447,7 @@ public class Complete extends Fragment {
                     @Override
                     public void onFailure(Call<Message> call, Throwable t) {
                         progressDialog.dismiss();
+                        Log.d(TAG, "onFailure: " + t.getMessage());
                         Toast.makeText(requireActivity(), t.getMessage() + ": Please try again later", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -458,11 +466,13 @@ public class Complete extends Fragment {
 
                 MultipartBody.Part[] imagesUpload = new MultipartBody.Part[imagesList.size()];
                 for(String url: imagesList){
-                    Log.d("UCI_CaCx", "" + url);
+                    Log.d("UCI_CaCx", "send_file_to_server: " + url);
                     File file2 = new File(url);
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file2);
                     imagesUpload[imagesList.indexOf(url)] = MultipartBody.Part.createFormData("image_files", file2.getPath(), fileBody);
                 }
+
+                Log.d(TAG, "send_file_to_server: " + imagesList);
 
                 Call<Message> call = jsonPlaceHolder.upload_files(imagesUpload, fileUpload, map);
                 call.enqueue(new Callback<Message>() {
@@ -493,7 +503,14 @@ public class Complete extends Fragment {
                                 else if(statusCode == 500){
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
-
+                                }
+                                else if(statusCode == 422) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Header variables missing", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(statusCode == 413) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             catch (IOException e) {

@@ -38,16 +38,18 @@ public class FunctionalUtils {
 
         float changed_height = (float) (height / 100.0);
         float bd = weight / (changed_height * changed_height);
-        return bd;
+        float roundedFloat = Math.round(bd * 10.0f) / 10.0f;
+        return roundedFloat;
     }
 
     public static float check_float_value(String value){
         float flo;
         if (value.isEmpty()){
-            flo = 0;
+            flo = 0.0F;
         }
         else {
             flo = Float.parseFloat(value);
+            flo = Math.round(flo * 10.0f) / 10.0f;
         }
 
         return flo;

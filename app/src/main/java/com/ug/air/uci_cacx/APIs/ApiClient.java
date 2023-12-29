@@ -3,20 +3,22 @@ package com.ug.air.uci_cacx.APIs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
-//    private static final String BASE_URL_1 = "https://ucicompute.org/";
-//    private static final String BASE_URL_2 = "https://metabackend.ucicompute.org/";
+    private static final String BASE_URL_1 = "https://ucicompute.org/";
+    private static final String BASE_URL_2 = "https://metabackend.ucicompute.org/";
 
-    private static final String BASE_URL_1 = "https://preventcancer.ug/";
-    private static final String BASE_URL_2 = "https://metabackend.preventcancer.ug/";
+//    private static final String BASE_URL_1 = "https://preventcancer.ug/";
+//    private static final String BASE_URL_2 = "https://metabackend.preventcancer.ug/";
     private static Retrofit retrofit_1 = null;
     private static BasicAuthInterceptor basicAuthInterceptor;
     private static Retrofit retrofit_2 = null;
@@ -58,6 +60,7 @@ public class ApiClient {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .protocols(Collections.singletonList(Protocol.HTTP_1_1))
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .addInterceptor(loggingInterceptor)
                     .build();

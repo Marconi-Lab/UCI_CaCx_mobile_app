@@ -2,6 +2,7 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Facilities.CODE;
 import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.SESSION;
 import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_1.IMAGE_PATH;
@@ -435,10 +436,13 @@ public class Results extends Fragment {
             progressDialog = ProgressDialog.show(requireActivity(), "Sending form", "Please wait...", true);
             token = sharedPreferences_2.getString(TOKEN, "");
             facility_code = sharedPreferences_2.getString(CODE, "");
+            String session_id = sharedPreferences_2.getString(SESSION, "");
+
 
             Map<String, RequestBody> map = new HashMap<>();
             map.put("provider_id", toRequestBody(token));
             map.put("facility_id", toRequestBody(facility_code));
+            map.put("session_id", toRequestBody(session_id));
 
             RequestBody filePart = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileUpload = MultipartBody.Part.createFormData("file", file.getName(),filePart);
@@ -473,6 +477,14 @@ public class Results extends Fragment {
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
 
+                                }
+                                else if(statusCode == 422) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Header variables missing", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(statusCode == 413) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             catch (IOException e) {
@@ -524,6 +536,14 @@ public class Results extends Fragment {
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
 
+                                }
+                                else if(statusCode == 422) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Header variables missing", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(statusCode == 413) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             catch (IOException e) {

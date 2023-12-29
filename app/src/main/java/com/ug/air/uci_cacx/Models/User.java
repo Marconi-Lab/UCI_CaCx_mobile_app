@@ -7,16 +7,16 @@ import java.util.List;
 public class User {
 
     boolean authenticated;
-    String session_id;
+    String sessionId;
     @SerializedName("currentProvider")
     Provider provider;
 
     @SerializedName("user")
     Another another_user;
 
-    public User(boolean authenticated, String session_id, Provider provider, Another another_user) {
+    public User(boolean authenticated, String sessionId, Provider provider, Another another_user) {
         this.authenticated = authenticated;
-        this.session_id = session_id;
+        this.sessionId = sessionId;
         this.provider = provider;
         this.another_user = another_user;
     }
@@ -33,7 +33,7 @@ public class User {
         return another_user;
     }
 
-    public String getSession_id() {
-        return session_id;
+    public String getSessionId() {
+        return sessionId;
     }
 }

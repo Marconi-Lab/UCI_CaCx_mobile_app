@@ -151,7 +151,8 @@ public class Height extends Fragment {
 
 
         if (we.isEmpty() || he.isEmpty()){
-            editor.putFloat(BMI, 0);
+            float val = 0.0F;
+            editor.putFloat(BMI, val);
         }
         else {
             float bmi = FunctionalUtils.bmi(Integer.parseInt(he), Float.parseFloat(we));
@@ -179,7 +180,7 @@ public class Height extends Fragment {
         FunctionalUtils.checkZeroValue(editText_height, height);
         FunctionalUtils.checkZeroValue(editText_systolic, systolic);
         FunctionalUtils.checkZeroValue(editText_diastolic, diastolic);
-        textView.setText(String.valueOf(sharedPreferences.getFloat(BMI, 0)));
+        textView.setText(String.valueOf(sharedPreferences.getFloat(BMI, 0.0F)));
 
     }
 
