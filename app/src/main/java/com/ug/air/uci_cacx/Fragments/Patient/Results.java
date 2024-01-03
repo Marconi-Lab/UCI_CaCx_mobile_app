@@ -516,6 +516,10 @@ public class Results extends Fragment {
                         if (response.isSuccessful()){
                             progressDialog.dismiss();
                             file.delete();
+                            for(Image image: imageList){
+                                File file2 = new File(image.getImage_path());
+                                file2.delete();
+                            }
                             Toast.makeText(requireActivity(), "Form submitted successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(requireActivity(), Home.class));
                         }

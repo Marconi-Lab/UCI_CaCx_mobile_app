@@ -251,9 +251,10 @@ public class FunctionalUtils {
             String first_name = sharedPreferences.getString(FIRST_NAME, "");
             String filename = sharedPreferences.getString(FILENAME, "");
             String last_name = sharedPreferences.getString(LAST_NAME, "");
+            boolean complete = sharedPreferences.getBoolean(COMPLETE, false);
             String name = first_name + " " + last_name;
 
-            Form form = new Form(name, date, filename);
+            Form form = new Form(name, date, filename, complete);
             formList.add(form);
 
         }

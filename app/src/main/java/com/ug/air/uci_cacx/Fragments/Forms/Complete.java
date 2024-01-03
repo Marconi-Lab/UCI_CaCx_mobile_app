@@ -410,7 +410,9 @@ public class Complete extends Fragment {
                             formAdapter.notifyItemRemoved(position);
                             Log.d(TAG, "onFailure: Form List - " + formList);
                             Toast.makeText(requireActivity(), "Form submitted successfully", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(requireActivity(), Home.class));
+                            if (formList.size() == 0){
+                                startActivity(new Intent(requireActivity(), Home.class));
+                            }
                         }
                         else {
                             try {
@@ -484,8 +486,14 @@ public class Complete extends Fragment {
                             formList.remove(position);
                             formAdapter.notifyItemRemoved(position);
                             Log.d(TAG, "onFailure: Form List - " + formList);
+                            for(String url: imagesList){
+                                File file2 = new File(url);
+                                file2.delete();
+                            }
                             Toast.makeText(requireActivity(), "Form submitted successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(requireActivity(), Home.class));
+                            if (formList.size() == 0){
+                                startActivity(new Intent(requireActivity(), Home.class));
+                            }
                         }
                         else {
                             try {

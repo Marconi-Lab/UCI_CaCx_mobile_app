@@ -2,16 +2,18 @@ package com.ug.air.uci_cacx.Models;
 
 public class Form {
 
-    String scrrening_id, date, filename;
+    String screening_id, date, filename;
+    boolean complete;
 
-    public Form(String scrrening_id, String date, String filename) {
-        this.scrrening_id = scrrening_id;
+    public Form(String screening_id, String date, String filename, boolean complete) {
+        this.screening_id = screening_id;
         this.date = date;
         this.filename = filename;
+        this.complete = complete;
     }
 
-    public String getScrrening_id() {
-        return scrrening_id;
+    public String getScreening_id() {
+        return screening_id;
     }
 
     public String getDate() {
@@ -20,5 +22,9 @@ public class Form {
 
     public String getFilename() {
         return filename;
+    }
+
+    public boolean isComplete() {
+        return complete;
     }
 }

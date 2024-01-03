@@ -53,8 +53,6 @@ public class Incomplete extends Fragment {
                 FunctionalUtils.moveSharedPreferences(requireActivity(), filename, "shared_pref");
                 Intent intent = new Intent(requireActivity(), Screening.class);
                 startActivity(intent);
-
-
             }
 
             @Override

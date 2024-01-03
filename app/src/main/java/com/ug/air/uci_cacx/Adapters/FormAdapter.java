@@ -47,8 +47,16 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
     @Override
     public void onBindViewHolder(@NonNull FormAdapter.FormViewHolder holder, int position) {
         Form form = formList.get(position);
-        holder.screening.setText(form.getScrrening_id());
+        holder.screening.setText(form.getScreening_id());
         holder.date.setText(form.getDate());
+
+        boolean complete = form.isComplete();
+        if (complete){
+            holder.upload.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.upload.setVisibility(View.GONE);
+        }
     }
 
     @Override

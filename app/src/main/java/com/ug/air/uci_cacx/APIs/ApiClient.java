@@ -14,11 +14,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL_1 = "https://ucicompute.org/";
-    private static final String BASE_URL_2 = "https://metabackend.ucicompute.org/";
+//    private static final String BASE_URL_1 = "https://ucicompute.org/";
+//    private static final String BASE_URL_2 = "https://metabackend.ucicompute.org/";
 
-//    private static final String BASE_URL_1 = "https://preventcancer.ug/";
-//    private static final String BASE_URL_2 = "https://metabackend.preventcancer.ug/";
+    private static final String BASE_URL_1 = "https://preventcancer.ug/";
+    private static final String BASE_URL_2 = "https://metabackend.preventcancer.ug/";
     private static Retrofit retrofit_1 = null;
     private static BasicAuthInterceptor basicAuthInterceptor;
     private static Retrofit retrofit_2 = null;
