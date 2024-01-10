@@ -50,7 +50,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
         String name = patient.getPatient_name();
         String age = patient.getAge() + " years";
         holder.name.setText(name + " (" + age + ")");
-        holder.contact.setText(patient.getContact());
+        holder.contact.setText("+" + patient.getContact());
     }
 
     @Override
