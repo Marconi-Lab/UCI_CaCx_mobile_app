@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="Patient's Additional Information - 3"
+            android:text="Patient's Additional Information - 1"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
@@ -103,18 +103,21 @@
             android:layout_height="?actionBarSize"
             android:layout_alignParentBottom="true">
 
-            <Button
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
-                android:text="@string/back"
-                android:fontFamily="@font/sora_regular"
-                android:textSize="@dimen/bigger"
-                android:textColor="@color/blue"
-                style="@style/Custom.OutlinedButton"
-                android:backgroundTint="@color/light_blue"/>
+<!--            <Button-->
+<!--                android:id="@+id/back"-->
+<!--                style="@style/Custom.OutlinedButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:backgroundTint="@color/light_blue"-->
+<!--                android:fontFamily="@font/sora_regular"-->
+<!--                android:text="@string/back"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:textSize="@dimen/bigger" />-->
 
             <Button
                 android:id="@+id/next"

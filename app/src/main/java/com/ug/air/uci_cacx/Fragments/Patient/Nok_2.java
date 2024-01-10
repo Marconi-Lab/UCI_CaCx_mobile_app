@@ -1,8 +1,13 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
+import static com.ug.air.uci_cacx.Activities.Facilities.CODE;
+import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.SESSION;
+import static com.ug.air.uci_cacx.Activities.Register.REGISTER_SHARED_PREFS;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +26,42 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ug.air.uci_cacx.APIs.ApiClient;
+import com.ug.air.uci_cacx.APIs.JsonPlaceHolder;
+import com.ug.air.uci_cacx.Activities.FormMenu;
+import com.ug.air.uci_cacx.Models.Error;
+import com.ug.air.uci_cacx.Models.Message;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Nok_2 extends Fragment {
 
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor, editor_2;
+    private SharedPreferences sharedPreferences, sharedPreferences_2;
     View view;
     LinearLayout linearLayout;
     Button next_btn, back_btn;
+    ProgressBar progressBar;
     Spinner spinner_region;
     EditText editText_contact, editText_email;
     AutoCompleteTextView autoCompleteTextView;
@@ -45,10 +70,12 @@ public class Nok_2 extends Fragment {
     public static  final String NOK_REGION ="nok_region";
     public static  final String NOK_DISTRICT ="nok_district";
     public static  final String NOK_CONTACT ="nok_contact_number";
+    public static  final String TAG ="UCI_CaCx";
     List<Spinner> spinnerList = new ArrayList<>();
     ArrayList<String> districtList;
     ArrayAdapter<String> singleAdapter;
     ArrayAdapter<CharSequence> adapter1;
+    JsonPlaceHolder jsonPlaceHolder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,11 +83,15 @@ public class Nok_2 extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_nok_2, container, false);
 
-        sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences = requireActivity().getSharedPreferences(REGISTER_SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        sharedPreferences_2 = requireActivity().getSharedPreferences(CREDENTIALS_PREFS, Context.MODE_PRIVATE);
+        editor_2 = sharedPreferences_2.edit();
 
         next_btn = view.findViewById(R.id.next);
         back_btn = view.findViewById(R.id.back);
+        progressBar = view.findViewById(R.id.login_progress_bar);
 
         editText_contact = view.findViewById(R.id.contact);
         editText_email = view.findViewById(R.id.email);
@@ -200,10 +231,11 @@ public class Nok_2 extends Fragment {
         editor.putString(NOK_DISTRICT, district);
         editor.apply();
 
-        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Contact_3());
-        fr.addToBackStack(null);
-        fr.commit();
+//        FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+//        fr.replace(R.id.fragment_container, new Contact_3());
+//        fr.addToBackStack(null);
+//        fr.commit();
+        send_data();
     }
 
     private void load_data(){
@@ -220,5 +252,71 @@ public class Nok_2 extends Fragment {
         else {
             spinnerList.get(index).setSelection(adapter.getPosition(value));
         }
+    }
+
+    private void send_data(){
+        progressBar.setVisibility(View.VISIBLE);
+        next_btn.setEnabled(false);
+
+        jsonPlaceHolder = ApiClient.getClient_2().create(JsonPlaceHolder.class);
+        String facility_code = sharedPreferences_2.getString(CODE, "");
+        String session_id = sharedPreferences_2.getString(SESSION, "");
+
+        File file = new File(requireActivity().getApplicationInfo().dataDir + "/shared_prefs/register_pref.xml");
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("facility_id", toRequestBody(facility_code));
+        map.put("session_id", toRequestBody(session_id));
+
+        RequestBody filePart = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileUpload = MultipartBody.Part.createFormData("file", file.getName(),filePart);
+
+        Call<Message> call = jsonPlaceHolder.register_patient(fileUpload, map);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                progressBar.setVisibility(View.GONE);
+                next_btn.setEnabled(true);
+                if (response.isSuccessful()){
+                    editor.clear();
+                    editor.apply();
+                    startActivity(new Intent(requireActivity(), FormMenu.class));
+                }
+                else {
+                    int code = response.code();
+                    if (code == 401 ||  code == 402 || code == 403 || code == 404 || code == 400 || code == 409){
+                        try {
+                            String error = response.errorBody().string();
+                            Gson gson = new Gson();
+                            Error error1 = gson.fromJson(error, Error.class);
+                            String message = error1.getError();
+                            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                        }
+                        catch (IOException e) {
+                            Log.e("UCI_CaCx", "onResponse: exception");
+                        }
+                    }
+                    else if(code == 500) {
+                        Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(requireActivity(), "Error code: " + code, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                next_btn.setEnabled(true);
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                Toast.makeText(requireActivity(), "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public static RequestBody toRequestBody (String value) {
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
+        return body ;
     }
 }

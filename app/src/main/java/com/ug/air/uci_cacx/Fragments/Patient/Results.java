@@ -2,6 +2,9 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Facilities.CODE;
 import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.FACILITIES;
+import static com.ug.air.uci_cacx.Activities.Login.PERSON;
+import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Login.SESSION;
 import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
@@ -40,6 +43,7 @@ import com.google.gson.Gson;
 import com.ug.air.uci_cacx.APIs.ApiClient;
 import com.ug.air.uci_cacx.APIs.JsonPlaceHolder;
 import com.ug.air.uci_cacx.Activities.Home;
+import com.ug.air.uci_cacx.Activities.Login;
 import com.ug.air.uci_cacx.Activities.Screening;
 import com.ug.air.uci_cacx.Models.Error;
 import com.ug.air.uci_cacx.Models.Image;
@@ -334,103 +338,9 @@ public class Results extends Fragment {
         return layout;
     }
 
-//    private static void run_model(ArrayList<Image> imageList, Context context) {
-//        for (int i = 0; i < imageList.size(); i++){
-//            Image image = imageList.get(i);
-//            run_tensorflow_model(image, i, context);
-//        }
-//    }
-
-//    private static void run_tensorflow_model(Image image, int index, Context context){
-//        try {
-//            Bitmap bitmap = BitmapFactory.decodeFile(image.getImage_path());
-//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-//
-//            Model model = Model.newInstance(context);
-//
-//            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
-//
-//            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
-//            tensorImage.load(resizedBitmap);
-//            ByteBuffer byteBuffer_2 = tensorImage.getBuffer();
-//            inputFeature0.loadBuffer(byteBuffer_2);
-//
-//            Model.Outputs outputs = model.process(inputFeature0);
-//            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-//
-//            model.close();
-//
-//            negative = outputFeature0.getFloatArray()[0];
-//            positive = outputFeature0.getFloatArray()[1];
-//
-//            if (index == 2){
-//                pos3 = positive;
-//            }
-//
-//            editor.putString(image.getPrediction(), "[" + negative +", " + positive +"]");
-//            if (negative > positive){
-//                result = "Negative";
-//            }else {
-//                result = "Positive";
-//            }
-//            Log.d("TAG", "run_tensorflow_model: index" + index  + " results " + result);
-//            editor.putString(image.getResult(), result);
-//            editor.apply();
-//
-//            if (index == 3){
-//                float threshold = (float) 0.5;
-//                String res_img_3 = sharedPreferences.getString(IMAGE_RESULT_3, "");
-//                if (res_img_3.equals(result)){
-//                    model_result = result;
-//                }
-//                else {
-//                    if (res_img_3.equals("Positive")){
-//                        if (pos3 >= threshold){
-//                            model_result = "Positive";
-//                        }
-//                        else {
-//                            model_result = "Negative";
-//                        }
-//                    }
-//                    else {
-//                        if (positive >= threshold){
-//                            model_result = "Positive";
-//                        }
-//                        else {
-//                            model_result = "Negative";
-//                        }
-//                    }
-//                }
-//                editor.putString(MODEL_RESULT, model_result);
-//                editor.apply();
-//                Log.d("TAG", "run_tensorflow_model: result " + model_result);
-//                dialog.dismiss();
-//
-//                load_results();
-//            }
-//        }
-//        catch (IOException e) {
-//            // TODO Handle the exception
-//        }
-//
-//    }
-
-//    private void load_results() {
-//        linearLayout.setVisibility(View.VISIBLE);
-//        textView_model.setText(model_result);
-//        textView_clinician.setText(via);
-//
-//        if (model_result.equals(via)) {
-//            textView_agree.setText("Agreement");
-//        }
-//        else {
-//            textView_agree.setText("Disagreement");
-//        }
-//    }
-
     private void send_file_to_server(String filename) {
-        filename = filename + ".xml";
-        File file = new File(requireActivity().getApplicationInfo().dataDir + "/shared_prefs/" + filename);
+        String file_name_x = filename + ".xml";
+        File file = new File(requireActivity().getApplicationInfo().dataDir + "/shared_prefs/" + file_name_x);
         Log.d("UCI_CaCx", "send_file_to_server: " + file);
         if (file.exists()){
             progressDialog = ProgressDialog.show(requireActivity(), "Sending form", "Please wait...", true);
@@ -443,6 +353,7 @@ public class Results extends Fragment {
             map.put("provider_id", toRequestBody(token));
             map.put("facility_id", toRequestBody(facility_code));
             map.put("session_id", toRequestBody(session_id));
+            map.put("patient_id", toRequestBody(filename));
 
             RequestBody filePart = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileUpload = MultipartBody.Part.createFormData("file", file.getName(),filePart);
@@ -465,12 +376,24 @@ public class Results extends Fragment {
                                 int statusCode = response.code();
                                 if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
                                     String error = response.errorBody().string();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (statusCode == 401){
+                                    String error = response.errorBody().string();
+                                    progressDialog.dismiss();
                                     Gson gson = new Gson();
                                     Error error1 = gson.fromJson(error, Error.class);
                                     String message = error1.getError();
-                                    if (message.equals("patient record already exists")){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(requireActivity(), "There are some issues with the screening information", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                                    if(message.equals("Not authorized")){
+                                        Toast.makeText(requireActivity(), "Please first login again", Toast.LENGTH_SHORT).show();
+                                        editor_2.putString(TOKEN, "");
+                                        editor_2.putString(PERSON, "");
+                                        editor_2.putString(PROVIDERS, null);
+                                        editor_2.putString(FACILITIES, null);
+                                        editor_2.apply();
+                                        startActivity(new Intent(requireActivity(), Login.class));
                                     }
                                 }
                                 else if(statusCode == 500){
@@ -528,12 +451,24 @@ public class Results extends Fragment {
                                 int statusCode = response.code();
                                 if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
                                     String error = response.errorBody().string();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (statusCode == 401){
+                                    String error = response.errorBody().string();
+                                    progressDialog.dismiss();
                                     Gson gson = new Gson();
                                     Error error1 = gson.fromJson(error, Error.class);
                                     String message = error1.getError();
-                                    if (message.equals("patient record already exists")){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(requireActivity(), "There are some issues with the screening information", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                                    if(message.equals("Not authorized")){
+                                        Toast.makeText(requireActivity(), "Please first login again", Toast.LENGTH_SHORT).show();
+                                        editor_2.putString(TOKEN, "");
+                                        editor_2.putString(PERSON, "");
+                                        editor_2.putString(PROVIDERS, null);
+                                        editor_2.putString(FACILITIES, null);
+                                        editor_2.apply();
+                                        startActivity(new Intent(requireActivity(), Login.class));
                                     }
                                 }
                                 else if(statusCode == 500){

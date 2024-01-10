@@ -20,6 +20,8 @@
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="identification_category">Identification Category</string>
+    <string name="patients">Patients</string>
+    <string name="save_and_submit">Save and Submit</string>
 
     <string-array name="income">
         <item>Select one</item>
@@ -162,7 +164,7 @@
         <item>Live call from HW</item>
         <item>SMS</item>
         <item>Automated Attendant (IVR)</item>
-<!--        <item>All Modes</item>-->
+        <!--        <item>All Modes</item>-->
     </string-array>
 
     <string-array name="using">

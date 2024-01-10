@@ -170,12 +170,14 @@ public class FunctionalUtils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
         String formattedDate = df.format(currentTime);
 
-        UUID uuid = UUID.randomUUID();
-        String filename = uuid.toString();
+//        UUID uuid = UUID.randomUUID();
+        String filename = sharedPreferences.getString(FILENAME, "");
+        Log.d("UCI_CaCx", "onCreate: " + filename);
 
         editor.putString(DATE, formattedDate);
+        editor.putString("patient_id", filename);
         editor.putBoolean(COMPLETE, status);
-        editor.putString(FILENAME, filename);
+//        editor.putString(FILENAME, filename);
         Log.d("TAG", "saveData: file saved");
         editor.apply();
 
@@ -250,11 +252,9 @@ public class FunctionalUtils {
             String date = sharedPreferences.getString(DATE, "");
             String first_name = sharedPreferences.getString(FIRST_NAME, "");
             String filename = sharedPreferences.getString(FILENAME, "");
-            String last_name = sharedPreferences.getString(LAST_NAME, "");
             boolean complete = sharedPreferences.getBoolean(COMPLETE, false);
-            String name = first_name + " " + last_name;
 
-            Form form = new Form(name, date, filename, complete);
+            Form form = new Form(first_name, date, filename, complete);
             formList.add(form);
 
         }

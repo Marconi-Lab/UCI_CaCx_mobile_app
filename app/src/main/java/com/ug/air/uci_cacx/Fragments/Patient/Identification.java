@@ -1,5 +1,6 @@
 package com.ug.air.uci_cacx.Fragments.Patient;
 
+import static com.ug.air.uci_cacx.Activities.Register.REGISTER_SHARED_PREFS;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
 import android.app.DatePickerDialog;
@@ -53,7 +54,7 @@ public class Identification extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_identification, container, false);
 
-        sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences = requireActivity().getSharedPreferences(REGISTER_SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         next_btn = view.findViewById(R.id.next);

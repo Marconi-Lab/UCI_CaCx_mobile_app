@@ -4,6 +4,7 @@ import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
 import static com.ug.air.uci_cacx.Activities.Login.FACILITIES;
 import static com.ug.air.uci_cacx.Activities.Login.PERSON;
 import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
+import static com.ug.air.uci_cacx.Activities.Login.SESSION;
 import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +41,9 @@ public class Home extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(CREDENTIALS_PREFS,MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        String session_id = sharedPreferences.getString(SESSION, "");
+        Log.d("UCI_CaCx", "onCreate: " + session_id);
+
         inputString = sharedPreferences.getString(PERSON, "");
         String[] parts = inputString.split(" ");
         if (parts.length > 0) {
@@ -51,7 +56,8 @@ public class Home extends AppCompatActivity {
         findViewById(R.id.screen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this, Screening.class));
+//                startActivity(new Intent(Home.this, Screening.class));
+                startActivity(new Intent(Home.this, FormMenu.class));
             }
         });
 

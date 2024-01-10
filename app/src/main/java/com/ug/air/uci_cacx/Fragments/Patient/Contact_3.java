@@ -51,7 +51,7 @@ public class Contact_3 extends Fragment {
         editor = sharedPreferences.edit();
 
         next_btn = view.findViewById(R.id.next);
-        back_btn = view.findViewById(R.id.back);
+//        back_btn = view.findViewById(R.id.back);
 
 //        editText_income = view.findViewById(R.id.income);
 
@@ -60,14 +60,14 @@ public class Contact_3 extends Fragment {
 
         load_data();
 
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Nok_2());
-                fr.commit();
-            }
-        });
+//        back_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction fr = requireActivity().getSupportFragmentManager().beginTransaction();
+//                fr.replace(R.id.fragment_container, new Nok_2());
+//                fr.commit();
+//            }
+//        });
 
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override

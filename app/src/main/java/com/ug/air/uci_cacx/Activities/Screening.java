@@ -3,6 +3,7 @@ package com.ug.air.uci_cacx.Activities;
 
 import static com.ug.air.uci_cacx.Fragments.Patient.Citizen.CITIZEN;
 import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.COMPLETE;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
 import static com.ug.air.uci_cacx.Fragments.Patient.Identification.FIRST_NAME;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +19,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.ug.air.uci_cacx.Fragments.Forms.Complete;
+import com.ug.air.uci_cacx.Fragments.Forms.Incomplete;
 import com.ug.air.uci_cacx.Fragments.Patient.Citizen;
 import com.ug.air.uci_cacx.Fragments.Patient.Clinicians;
+import com.ug.air.uci_cacx.Fragments.Patient.Contact_3;
 import com.ug.air.uci_cacx.Fragments.Patient.Height;
 import com.ug.air.uci_cacx.Fragments.Patient.Identification;
 import com.ug.air.uci_cacx.Fragments.Patient.Nok_1;
@@ -36,6 +40,8 @@ public class Screening extends AppCompatActivity {
 //    public static  final String TOKEN ="access_token";
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
+    String frag = "none";
+    String name = "none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +51,25 @@ public class Screening extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.fragment_container, new Clinicians());
-        fragmentTransaction.add(R.id.fragment_container, new Citizen());
-        fragmentTransaction.commit();
+        Intent intent = getIntent();
+        if (intent.hasExtra("Patient")) {
+            frag = intent.getExtras().getString("Patient");
+            name = intent.getExtras().getString("Name");
+            Log.d("UCI_CaCx", "onCreate: " + frag);
+            editor.putString(FILENAME, frag);
+            editor.putString(FIRST_NAME, name);
+            editor.apply();
+            Log.d("UCI_CaCx", "onCreate: " + frag);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, new Contact_3());
+            fragmentTransaction.commit();
+        }
+        else {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, new Contact_3());
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override
@@ -76,11 +97,14 @@ public class Screening extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean complete = sharedPreferences.getBoolean(COMPLETE, false);
-                if (!sharedPreferences.getString(FIRST_NAME, "").isEmpty()) {
+                String filename = sharedPreferences.getString(FILENAME, "");
+                Log.d("UCI_CaCx", "filename: " + filename);
+                if (!filename.isEmpty()) {
                     FunctionalUtils.save_file(Screening.this, complete);
+                    Log.d("UCI_CaCx", "file saved: " + filename);
                 }
                 dialog.dismiss();
-                startActivity(new Intent(Screening.this, Home.class));
+                startActivity(new Intent(Screening.this, FormMenu.class));
             }
         });
 

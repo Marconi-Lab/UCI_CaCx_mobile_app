@@ -3,6 +3,9 @@ package com.ug.air.uci_cacx.Fragments.Forms;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.ug.air.uci_cacx.Activities.Facilities.CODE;
 import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.FACILITIES;
+import static com.ug.air.uci_cacx.Activities.Login.PERSON;
+import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Login.SESSION;
 import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
@@ -39,6 +42,7 @@ import com.google.gson.Gson;
 import com.ug.air.uci_cacx.APIs.ApiClient;
 import com.ug.air.uci_cacx.APIs.JsonPlaceHolder;
 import com.ug.air.uci_cacx.Activities.Home;
+import com.ug.air.uci_cacx.Activities.Login;
 import com.ug.air.uci_cacx.Activities.Screening;
 import com.ug.air.uci_cacx.Adapters.FormAdapter;
 import com.ug.air.uci_cacx.Models.Error;
@@ -419,17 +423,30 @@ public class Complete extends Fragment {
                                 int statusCode = response.code();
                                 if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
                                     String error = response.errorBody().string();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (statusCode == 401){
+                                    String error = response.errorBody().string();
+                                    progressDialog.dismiss();
                                     Gson gson = new Gson();
                                     Error error1 = gson.fromJson(error, Error.class);
                                     String message = error1.getError();
-                                    if (message.equals("patient record already exists")){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(requireActivity(), "There are some issues with the screening information", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                                    if(message.equals("Not authorized")){
+                                        Toast.makeText(requireActivity(), "Please first login again", Toast.LENGTH_SHORT).show();
+                                        editor_2.putString(TOKEN, "");
+                                        editor_2.putString(PERSON, "");
+                                        editor_2.putString(PROVIDERS, null);
+                                        editor_2.putString(FACILITIES, null);
+                                        editor_2.apply();
+                                        startActivity(new Intent(requireActivity(), Login.class));
                                     }
                                 }
                                 else if(statusCode == 500){
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
+
                                 }
                                 else if(statusCode == 422) {
                                     progressDialog.dismiss();
@@ -500,17 +517,30 @@ public class Complete extends Fragment {
                                 int statusCode = response.code();
                                 if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
                                     String error = response.errorBody().string();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (statusCode == 401){
+                                    String error = response.errorBody().string();
+                                    progressDialog.dismiss();
                                     Gson gson = new Gson();
                                     Error error1 = gson.fromJson(error, Error.class);
                                     String message = error1.getError();
-                                    if (message.equals("patient record already exists")){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(requireActivity(), "There are some issues with the screening information", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                                    if(message.equals("Not authorized")){
+                                        Toast.makeText(requireActivity(), "Please first login again", Toast.LENGTH_SHORT).show();
+                                        editor_2.putString(TOKEN, "");
+                                        editor_2.putString(PERSON, "");
+                                        editor_2.putString(PROVIDERS, null);
+                                        editor_2.putString(FACILITIES, null);
+                                        editor_2.apply();
+                                        startActivity(new Intent(requireActivity(), Login.class));
                                     }
                                 }
                                 else if(statusCode == 500){
                                     progressDialog.dismiss();
                                     Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
+
                                 }
                                 else if(statusCode == 422) {
                                     progressDialog.dismiss();
