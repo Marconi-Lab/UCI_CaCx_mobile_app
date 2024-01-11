@@ -4,6 +4,7 @@ import com.ug.air.uci_cacx.Models.Check;
 import com.ug.air.uci_cacx.Models.Facility;
 import com.ug.air.uci_cacx.Models.Message;
 import com.ug.air.uci_cacx.Models.Result;
+import com.ug.air.uci_cacx.Models.Search;
 import com.ug.air.uci_cacx.Models.User;
 
 import java.util.List;
@@ -52,10 +53,7 @@ public interface JsonPlaceHolder {
     Call<Message> register_patient(@Part MultipartBody.Part file,
                                  @PartMap Map<String, RequestBody> params);
 
-    @FormUrlEncoded
-    @POST("search_patient")
-    Call<Result> patients(@Field("session_id") String session_id,
-                          @Field("first_name") String first_name,
-                          @Field("last_name") String last_name);
+    @POST("search_for_patient")
+    Call<Result> patients(@Body Search search);
 
 }

@@ -2,7 +2,11 @@ package com.ug.air.uci_cacx.Fragments.Patient;
 
 import static com.ug.air.uci_cacx.Activities.Facilities.CODE;
 import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.FACILITIES;
+import static com.ug.air.uci_cacx.Activities.Login.PERSON;
+import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Login.SESSION;
+import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 import static com.ug.air.uci_cacx.Activities.Register.REGISTER_SHARED_PREFS;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
 
@@ -34,6 +38,7 @@ import com.google.gson.Gson;
 import com.ug.air.uci_cacx.APIs.ApiClient;
 import com.ug.air.uci_cacx.APIs.JsonPlaceHolder;
 import com.ug.air.uci_cacx.Activities.FormMenu;
+import com.ug.air.uci_cacx.Activities.Login;
 import com.ug.air.uci_cacx.Models.Error;
 import com.ug.air.uci_cacx.Models.Message;
 import com.ug.air.uci_cacx.R;
@@ -282,24 +287,41 @@ public class Nok_2 extends Fragment {
                     startActivity(new Intent(requireActivity(), FormMenu.class));
                 }
                 else {
-                    int code = response.code();
-                    if (code == 401 ||  code == 402 || code == 403 || code == 404 || code == 400 || code == 409){
-                        try {
+                    try {
+                        int statusCode = response.code();
+                        if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
+                            String error = response.errorBody().string();
+                            Toast.makeText(requireActivity(), error, Toast.LENGTH_SHORT).show();
+                        }
+                        else if (statusCode == 401){
                             String error = response.errorBody().string();
                             Gson gson = new Gson();
                             Error error1 = gson.fromJson(error, Error.class);
                             String message = error1.getError();
                             Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Not authorized")){
+                                Toast.makeText(requireActivity(), "Please first login again", Toast.LENGTH_SHORT).show();
+                                editor_2.putString(TOKEN, "");
+                                editor_2.putString(PERSON, "");
+                                editor_2.putString(PROVIDERS, null);
+                                editor_2.putString(FACILITIES, null);
+                                editor_2.apply();
+                                startActivity(new Intent(requireActivity(), Login.class));
+                            }
                         }
-                        catch (IOException e) {
-                            Log.e("UCI_CaCx", "onResponse: exception");
+                        else if(statusCode == 500){
+                            Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if(statusCode == 422) {
+                            Toast.makeText(requireActivity(), "Header variables missing", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(statusCode == 413) {
+                            Toast.makeText(requireActivity(), "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else if(code == 500) {
-                        Toast.makeText(requireActivity(), "There was an internal server error", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(requireActivity(), "Error code: " + code, Toast.LENGTH_SHORT).show();
+                    catch (IOException e) {
+                        Log.e("UCI_CaCx", "onResponse: exception");
                     }
                 }
             }
@@ -311,6 +333,7 @@ public class Nok_2 extends Fragment {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 Toast.makeText(requireActivity(), "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
             }
+
         });
 
     }

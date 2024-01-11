@@ -8,6 +8,7 @@ import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Login.SESSION;
 import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 import static com.ug.air.uci_cacx.Activities.Screening.SHARED_PREFS;
+import static com.ug.air.uci_cacx.Fragments.Patient.Clinicians.FILENAME;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_1.IMAGE_PATH;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_2.IMAGE_PATH_2;
 import static com.ug.air.uci_cacx.Fragments.Patient.Photo_3.IMAGE_PATH_3;
@@ -115,7 +116,7 @@ public class Results extends Fragment {
 //        clinician = sharedPreferences.getString(RESULT, "");
         
         save_btn = view.findViewById(R.id.send);
-        fill_btn = view.findViewById(R.id.form);
+//        fill_btn = view.findViewById(R.id.form);
         home_btn = view.findViewById(R.id.home);
 
         textView_agree = view.findViewById(R.id.agree);
@@ -156,15 +157,15 @@ public class Results extends Fragment {
             }
         });
 
-        fill_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (check_consult()) {
-                    FunctionalUtils.save_file(requireActivity(), true);
-                    startActivity(new Intent(requireActivity(), Screening.class));
-                }
-            }
-        });
+//        fill_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (check_consult()) {
+//                    FunctionalUtils.save_file(requireActivity(), true);
+//                    startActivity(new Intent(requireActivity(), Screening.class));
+//                }
+//            }
+//        });
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override

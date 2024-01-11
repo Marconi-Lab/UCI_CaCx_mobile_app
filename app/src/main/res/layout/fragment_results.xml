@@ -158,16 +158,16 @@
                         style="@style/Custom.OutlinedButton"
                         android:backgroundTint="@color/light_blue"/>
 
-                    <Button
-                        android:id="@+id/form"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Save form and Fill in another form"
-                        android:fontFamily="@font/sora_semi_bold"
-                        android:textSize="@dimen/big"
-                        style="@style/Custom.OutlinedButton"
-                        android:backgroundTint="@color/light_blue"
-                        android:layout_marginTop="10dp"/>
+<!--                    <Button-->
+<!--                        android:id="@+id/form"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Save form and Fill in another form"-->
+<!--                        android:fontFamily="@font/sora_semi_bold"-->
+<!--                        android:textSize="@dimen/big"-->
+<!--                        style="@style/Custom.OutlinedButton"-->
+<!--                        android:backgroundTint="@color/light_blue"-->
+<!--                        android:layout_marginTop="10dp"/>-->
 
                     <Button
                         android:id="@+id/home"

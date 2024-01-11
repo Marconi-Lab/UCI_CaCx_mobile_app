@@ -396,6 +396,7 @@ public class Complete extends Fragment {
             map.put("provider_id", toRequestBody(token));
             map.put("facility_id", toRequestBody(facility_code));
             map.put("session_id", toRequestBody(session_id));
+            map.put("patient_id", toRequestBody(filename));
 
             RequestBody filePart = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileUpload = MultipartBody.Part.createFormData("file", file.getName(),filePart);
@@ -568,6 +569,7 @@ public class Complete extends Fragment {
         else {
             Toast.makeText(requireActivity(), "Something went wrong while saving the form.", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public static RequestBody toRequestBody (String value) {

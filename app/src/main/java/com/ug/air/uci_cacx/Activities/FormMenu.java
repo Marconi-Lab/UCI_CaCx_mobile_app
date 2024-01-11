@@ -1,7 +1,11 @@
 package com.ug.air.uci_cacx.Activities;
 
 import static com.ug.air.uci_cacx.Activities.Login.CREDENTIALS_PREFS;
+import static com.ug.air.uci_cacx.Activities.Login.FACILITIES;
+import static com.ug.air.uci_cacx.Activities.Login.PERSON;
+import static com.ug.air.uci_cacx.Activities.Login.PROVIDERS;
 import static com.ug.air.uci_cacx.Activities.Login.SESSION;
+import static com.ug.air.uci_cacx.Activities.Login.TOKEN;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,6 +33,7 @@ import com.ug.air.uci_cacx.Adapters.PatientAdapter;
 import com.ug.air.uci_cacx.Models.Error;
 import com.ug.air.uci_cacx.Models.Patient;
 import com.ug.air.uci_cacx.Models.Result;
+import com.ug.air.uci_cacx.Models.Search;
 import com.ug.air.uci_cacx.R;
 import com.ug.air.uci_cacx.Utils.FunctionalUtils;
 
@@ -81,27 +86,6 @@ public class FormMenu extends AppCompatActivity {
         relativeLayout = findViewById(R.id.search_layout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-//        patientsList.clear();
-//        Patient patient1 = new Patient("310aa40e-9018-4202-8042-a74031cb4a8d", "john johns", "256 771234212", 34);
-//        patientsList.add(patient1);
-//        Patient patient2 = new Patient("9602f177-e29a-45e6-90c1-6a777fa0bea7", "mathew johns", "None", 23);
-//        patientsList.add(patient2);
-//        relativeLayout.setVisibility(View.VISIBLE);
-
-        patientAdapter = new PatientAdapter(this, patientsList);
-        recyclerView.setAdapter(patientAdapter);
-
-        patientAdapter.setOnItemClickListener(new PatientAdapter.OnItemClickListener() {
-            @Override
-            public void onScreenClick(int position) {
-                Patient patient = patientsList.get(position);
-                patient_id = patient.getPatient_id();
-                patient_name = patient.getPatient_name();
-                find_user();
-
-            }
-        });
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +145,6 @@ public class FormMenu extends AppCompatActivity {
 
         String session_id = sharedPreferences_2.getString(SESSION, "");
 
-        Map<String, RequestBody> map = new HashMap<>();
-        map.put("session_id", toRequestBody(session_id));
         String[] parts = search_name.split(" ");
 
         if (parts.length > 1) {
@@ -174,7 +156,8 @@ public class FormMenu extends AppCompatActivity {
             last_name = "";
         }
 
-        Call<Result> call = jsonPlaceHolder.patients(session_id, first_name, last_name);
+        Search search = new Search(first_name, last_name, session_id);
+        Call<Result> call = jsonPlaceHolder.patients(search);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -185,32 +168,69 @@ public class FormMenu extends AppCompatActivity {
                     if (patientsList == null){
                         textView_empty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
+                        System.out.println("empty");
                     }
                     else {
+                        System.out.println("not empty");
+                        System.out.println(patientsList);
                         textView_empty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        patientAdapter.notifyDataSetChanged();
+                        patientAdapter = new PatientAdapter(FormMenu.this, patientsList);
+                        recyclerView.setAdapter(patientAdapter);
+
+                        patientAdapter.setOnItemClickListener(new PatientAdapter.OnItemClickListener() {
+                            @Override
+                            public void onScreenClick(int position) {
+                                Patient patient = patientsList.get(position);
+                                patient_id = patient.getPatient_id();
+                                patient_name = patient.getPatient_name();
+                                find_user();
+
+                            }
+                        });
                     }
                 }
                 else {
-                    int code = response.code();
-                    if (code == 401 ||  code == 402 || code == 403 || code == 404 || code == 400 || code == 409){
-                        try {
+                    try {
+                        int statusCode = response.code();
+                        if (statusCode == 400 || statusCode == 409 || statusCode == 403 || statusCode == 404){
                             String error = response.errorBody().string();
-//                            Gson gson = new Gson();
-//                            Error error1 = gson.fromJson(error, Error.class);
-//                            String message = error1.getError();
+                            progressDialog.dismiss();
                             Toast.makeText(FormMenu.this, error, Toast.LENGTH_SHORT).show();
                         }
-                        catch (IOException e) {
-                            Log.e("UCI_CaCx", "onResponse: exception");
+                        else if (statusCode == 401){
+                            String error = response.errorBody().string();
+                            progressDialog.dismiss();
+                            Gson gson = new Gson();
+                            Error error1 = gson.fromJson(error, Error.class);
+                            String message = error1.getError();
+                            Toast.makeText(FormMenu.this, message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Not authorized")){
+                                Toast.makeText(FormMenu.this, "Please first login again", Toast.LENGTH_SHORT).show();
+                                editor_2.putString(TOKEN, "");
+                                editor_2.putString(PERSON, "");
+                                editor_2.putString(PROVIDERS, null);
+                                editor_2.putString(FACILITIES, null);
+                                editor_2.apply();
+                                startActivity(new Intent(FormMenu.this, Login.class));
+                            }
+                        }
+                        else if(statusCode == 500){
+                            progressDialog.dismiss();
+                            Toast.makeText(FormMenu.this, "There was an internal server error", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if(statusCode == 422) {
+                            progressDialog.dismiss();
+                            Toast.makeText(FormMenu.this, "Header variables missing", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(statusCode == 413) {
+                            progressDialog.dismiss();
+                            Toast.makeText(FormMenu.this, "Request Entity Too Large", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else if(code == 500) {
-                        Toast.makeText(FormMenu.this, "There was an internal server error", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(FormMenu.this, "Error code: " + code, Toast.LENGTH_SHORT).show();
+                    catch (IOException e) {
+                        Log.e("UCI_CaCx", "onResponse: exception");
                     }
                 }
             }

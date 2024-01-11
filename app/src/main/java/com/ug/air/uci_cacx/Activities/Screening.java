@@ -57,6 +57,7 @@ public class Screening extends AppCompatActivity {
             name = intent.getExtras().getString("Name");
             Log.d("UCI_CaCx", "onCreate: " + frag);
             editor.putString(FILENAME, frag);
+            editor.putString("patient_id", frag);
             editor.putString(FIRST_NAME, name);
             editor.apply();
             Log.d("UCI_CaCx", "onCreate: " + frag);
